@@ -21,6 +21,9 @@ feed = $.ajax
 	contentType: "application/jsonp;"
 	dataType: "jsonp"
 	jsonpCallback: "callback"
+
+feed.error ->
+	print "no products"
 	
 feed.success (data) ->
 	$.each data.products,(i,e) ->
