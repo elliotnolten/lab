@@ -1,0 +1,26 @@
+/*
+Font: 		Clarendon URW
+Style: 		Medium
+URL: 		http://www.youworkforthem.com/font/T1183/urw-clarendon
+Foundry: 	URW++
+Foundry: 	http://www.youworkforthem.com/designer/204/urw
+Copyright:	Copyright 2010 URW++ Design & Development
+Version: 	1.4
+Created:	April 18, 2014
+License: 	http://www.youworkforthem.com/font-license 
+License: 	The WebFont(s) listed in this document must follow the YouWorkForThem
+			WebFont license rules. All other parties are strictly restricted 
+			from using the WebFonts(s) listed without a purchased license. 
+			All details above must always remain unaltered and visible in your CSS.
+*/
+
+@font-face {
+	font-family: 'ClarendonURW-Med';
+	src: url('clarendon-urw-medium.eot');
+	src: url('clarendon-urw-medium.eot?#iefix') format('embedded-opentype'),
+	     url('clarendon-urw-medium.woff') format('woff'),
+	     url('clarendon-urw-medium.ttf') format('truetype'),
+	     url('clarendon-urw-medium.svg#ywftsvg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

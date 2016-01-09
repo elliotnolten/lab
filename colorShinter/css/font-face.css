@@ -1,0 +1,78 @@
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010-2014 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      FontSite Inc.
+ * License URL: http://www.fontspring.com/fflicense/fontsite
+ *
+ *
+ */
+
+@font-face {
+    font-family: 'ClarendonURW-Med';
+    src: url('webfonts/clarendon-urw-medium.eot');
+    src: url('webfonts/clarendon-urw-medium.eot?#iefix') format('embedded-opentype'),
+         url('webfonts/clarendon-urw-medium.woff') format('woff'),
+         url('webfonts/clarendon-urw-medium.ttf') format('truetype'),
+         url('webfonts/clarendon-urw-medium.svg#clarendon_fsmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Vendor:      Canada Type
+* License URL: http://www.fontspring.com/fflicense/canada-type
+*
+*
+*/
+
+@font-face {
+  font-family: 'ClarendonTextProBold';
+  src: url('webfonts/clarendon_text_pro_bold-webfont.eot');
+  src: url('webfonts/clarendon_text_pro_bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('webfonts/clarendon_text_pro_bold-webfont.woff') format('woff'),
+    url('webfonts/clarendon_text_pro_bold-webfont.ttf') format('truetype'),
+    url('webfonts/clarendon_text_pro_bold-webfont.svg#clarendon_text_pro_bold-webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Vendor:      FontSite Inc.
+ * License URL: http://www.fontspring.com/fflicense/fontsite
+ */
+
+@font-face {
+  font-family: 'FunctionProLight';
+  src: url('webfonts/webfonts/FunctionPro-Light-webfont.eot');
+  src: url('webfonts/webfonts/FunctionPro-Light-webfont.eot?iefix') format('embedded-opentype'),
+    url('webfonts/webfonts/FunctionPro-Light-webfont.woff') format('woff'),
+    url('webfonts/webfonts/FunctionPro-Light-webfont.ttf') format('truetype'),
+    url('webfonts/webfonts/FunctionPro-Light-webfont.svg#FunctionPro-Light-webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Bol Symbols';
+  src:url('webfonts/Bol-Symbols.eot?2ffdnq');
+  src:url('webfonts/Bol-Symbols.eot?#iefix2ffdnq') format('embedded-opentype'),
+    url('webfonts/Bol-Symbols.woff?2ffdnq') format('woff'),
+    url('webfonts/Bol-Symbols.ttf?2ffdnq') format('truetype'),
+    url('webfonts/Bol-Symbols.svg?2ffdnq#icobol') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
