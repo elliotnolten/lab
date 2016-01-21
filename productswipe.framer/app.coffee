@@ -2,6 +2,8 @@
 $ = require("npm").jquery
 TextLayer = require("TextLayer")
 
+bg = new BackgroundLayer backgroundColor: "#f0ede7"
+
 # Set-up PageComponent
 page = new PageComponent
   width: Screen.width, height: Screen.height
@@ -25,12 +27,15 @@ feed.done (data) ->
 			backgroundColor: null
 			width: page.width, height: 1040 
 			x: page.width * i, superLayer: page.content
+			clip: false
 	
 		cardContent = new Layer
 			superLayer: card
 			backgroundColor: "#fff", borderRadius: 8
 			width: card.width - 64, height: card.height
 		cardContent.centerX()
+		cardContent.style =
+			"box-shadow": "0 16px 32px rgba(49,49,47,0.25)"
 		
 		image = new Layer
 			superLayer: cardContent
