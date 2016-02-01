@@ -11,6 +11,13 @@ textOn = "Open"
 textOff = "Dicht"
 openText = "Op het moment dat je je winkel weer opent is het voor 5 minuten niet mogelijk om je winkel weer te sluiten. Weet je zeker dat je je winkel weer wilt openen?"
 closeText = "Op het moment dat je je winkel (tijdelijk) sluit is het voor 5 minuten niet mogelijk om je winkel weer open te zetten. Weet je zeker dat je je winkel weer wilt sluiten?"
+timeOutText = "Je hebt zeer kort geleden deze instelling al een keer gewijzigd. Vanaf het moment van wijzigen duurt het 5 minuten voordat je je winkel weer kunt openen of sluiten... Nog even geduld!"
+timeout = false
+timeoutLength = 5 * 1000
+print timeout
+timeoutOff = () ->
+	timeout = false
+	print timeout
 
 btnStyle = 
 	fontFamily: "Open Sans"
@@ -130,14 +137,14 @@ modalShow = new Animation
 	properties:
 		opacity: 1
 		scale: 1
-	curve: "spring(500,50,10)"
+	curve: "spring(700,50,10)"
 modalHide = new Animation	
 	layer: modal
 	properties: 
 		opacity: 0
 		scale: 0.9
 	curve: "ease-in-out"
-	time: 0.2
+	time: 0.1
 
 toggleOpen = new Animation
 	layer: toggle
@@ -178,10 +185,17 @@ maskShow.on Events.AnimationEnd, ->
 
 # Show the right model text when open is true or false
 modalShow.on Events.AnimationStart, ->
-	if open
-		modalTxtContainer.text = openText
-	else
-		modalTxtContainer.text = closeText
+	if not timeout
+		modalBtn.text = "Ja, zeker"
+		cancelBtn.opacity = 1
+		if open
+			modalTxtContainer.text = openText
+		else
+			modalTxtContainer.text = closeText
+	else if timeout
+		modalTxtContainer.text = timeOutText
+		modalBtn.text = "Ok, sluit deze melding"
+		cancelBtn.opacity = 0
 
 # When the mask is hidden, hide modal and make events on toggle available
 modalHide.on Events.AnimationEnd, ->
@@ -207,21 +221,27 @@ knobClose.on Events.AnimationStart, ->
 	open = false
 
 toggle.on Events.Click, ->
-	if not open
-		knobOpen.start()
-	else
-		knobClose.start()
+	if not timeout
+		if not open
+			knobOpen.start()
+		else
+			knobClose.start()
 	
 	Utils.delay 0.2, ->
 		maskShow.start()
 
 modalBtn.on Events.Click, ->
+	if not timeout
+		timeout = true
+		print timeout
+		setTimeout timeoutOff, timeoutLength
 	modalHide.start()
 
 cancelBtn.on Events.Click, ->
 	modalHide.start()
-	Utils.delay 0.5, ->
-		if open
-			knobClose.start()
-		else
-			knobOpen.start()
+	if not timeout
+		Utils.delay 0.5, ->
+			if open
+				knobClose.start()
+			else
+				knobOpen.start()
