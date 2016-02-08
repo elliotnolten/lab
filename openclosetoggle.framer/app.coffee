@@ -9,9 +9,9 @@ fontSize = 27
 tuatara = "#31312f"
 textOn = "Open"
 textOff = "Dicht"
-openText = "Op het moment dat je je winkel weer opent is het voor 5 minuten niet mogelijk om je winkel weer te sluiten. Weet je zeker dat je je winkel weer wilt openen?"
-closeText = "Op het moment dat je je winkel (tijdelijk) sluit is het voor 5 minuten niet mogelijk om je winkel weer open te zetten. Weet je zeker dat je je winkel weer wilt sluiten?"
-timeOutText = "Je hebt zeer kort geleden deze instelling al een keer gewijzigd. Vanaf het moment van wijzigen duurt het 5 minuten voordat je je winkel weer kunt openen of sluiten... Nog even geduld!"
+openText = "Het openen van je winkel gaat onmiddellijk. Als je van gedachten verandert kun je, na 5 minuten, je winkel altijd opnieuw sluiten. Weet je zeker dat je je winkel weer wilt openen?"
+closeText = "Het sluiten van je winkel gaat onmiddellijk. Als je van gedachten verandert, kun je na 5 minuten, je winkel altijd opnieuw openen. Weet je zeker dat je je winkel (tijdelijk) wilt sluiten?"
+timeOutText = "Na 5 minuten kun je je winkel weer openen of sluiten... Nog even geduld!"
 timeout = false
 timeoutLength = 5 * 1000
 print timeout
@@ -28,7 +28,7 @@ bg = new BackgroundLayer
 	backgroundColor: "#f0ede7"
 
 container = new Layer
-	width: 220, height: 200
+	width: 260, height: 200
 	backgroundColor: "transparent"
 	y: 200
 container.centerX()
@@ -52,6 +52,13 @@ toggle.style =
 	"border": "2px solid #c5c2be"
 
 toggle.center()
+
+check = new Layer
+	superLayer: container
+	image: "images/check.pdf"
+	width: 24, height: 24
+	x: toggle.width + 70, y: toggle.height + label.height - 6
+	scale: 0
 
 text = new TextLayer
 	superLayer: toggle
@@ -178,6 +185,18 @@ textOpen = new Animation
 	time: 0.2
 textClose = textOpen.reverse()
 
+checkShow = new Animation
+	layer: check
+	properties: 
+		scale: 1
+	curve: "spring(800,30,10)"
+checkHide = new Animation
+	layer: check
+	properties: 
+		scale: 0
+	curve: "ease-in-out"
+	time: 0.1
+
 # When the mask is shown, show modal and ignore events on toggle
 maskShow.on Events.AnimationEnd, ->
 	toggle.ignoreEvents = true
@@ -235,6 +254,7 @@ modalBtn.on Events.Click, ->
 		timeout = true
 		print timeout
 		setTimeout timeoutOff, timeoutLength
+		Utils.delay 0.5, -> checkShow.start()
 	modalHide.start()
 
 cancelBtn.on Events.Click, ->
@@ -245,3 +265,7 @@ cancelBtn.on Events.Click, ->
 				knobClose.start()
 			else
 				knobOpen.start()
+
+checkShow.on Events.AnimationEnd, ->
+	Utils.delay 1, ->
+		checkHide.start()
