@@ -7,7 +7,7 @@ window.Framer.Defaults.DeviceView = {"deviceScale":-1,"deviceType":"fullscreen",
 
 window.Framer.Defaults.DeviceComponent = {"deviceScale":-1,"deviceType":"fullscreen","contentScale":1,"orientation":-90};
 
-window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"openclosetoggle.framer"};
+window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"langtoggle.framer"};
 
 Framer.Device = new Framer.DeviceView();
 Framer.Device.setupContext();

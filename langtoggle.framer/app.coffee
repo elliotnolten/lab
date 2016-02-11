@@ -7,14 +7,15 @@ colorOff = new Color("#c5c2be")
 OpenSans = "Open Sans"
 fontSize = 27
 tuatara = "#31312f"
-textOn = "Open"
-textOff = "Dicht"
+textOn = "BE"
+textOff = "NL"
 openText = "Het openen van je winkel gaat onmiddellijk. Als je van gedachten verandert kun je, na 5 minuten, je winkel altijd opnieuw sluiten. Weet je zeker dat je je winkel weer wilt openen?"
 closeText = "Het sluiten van je winkel gaat onmiddellijk. Als je van gedachten verandert, kun je na 5 minuten, je winkel altijd opnieuw openen. Weet je zeker dat je je winkel (tijdelijk) wilt sluiten?"
+nlColors = ["#AE1C28","#FFFFFF","#21468B"]
+beColors = ["#000000","#FFE936","#FF0F21"]
 timeOutText = "Na 5 minuten kun je je winkel weer openen of sluiten... Nog even geduld!"
 timeout = false
 timeoutLength = 5 * 1000
-print timeout
 timeoutOff = () ->
 	timeout = false
 	print timeout
@@ -75,7 +76,6 @@ knob = new Layer
 	width: 36
 	height: 36
 	borderRadius: 20
-	backgroundColor: colorOff
 	x: 10
 	y: 10
 knobOn = new Layer
@@ -83,8 +83,35 @@ knobOn = new Layer
 	width: knob.width
 	height: knob.height
 	borderRadius: knob.borderRadius
-	backgroundColor: colorOn
 	opacity: 0
+	index: 2
+
+# Define flags
+# NL flag
+nlFlag = new Layer
+	superLayer: knob
+	width: knob.width, height: knob.height, borderRadius: knob.borderRadius
+	clip: true
+	index: 0
+# NL colors
+for i in [0..(nlColors.length - 1)]
+	color = new Layer
+		superLayer: nlFlag
+		width: nlFlag.width, height: nlFlag.height / 3, y: (nlFlag.height / 3) * i
+		backgroundColor: nlColors[i]
+
+# BE flag
+beFlag = new Layer
+	superLayer: knobOn
+	width: knob.width, height: knob.height, borderRadius: knob.borderRadius
+	backgroundColor: null
+	clip: true
+# BE colors
+for i in [0..(beColors.length - 1)]
+	color = new Layer
+		superLayer: beFlag
+		width: beFlag.width / 3, height: beFlag.height, x: (beFlag.width / 3) * i
+		backgroundColor: beColors[i]
 	
 mask = new Layer
 	backgroundColor: "rgba(49,49,47,0.25)"

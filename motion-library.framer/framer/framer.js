@@ -21310,7 +21310,7 @@
 	
 	  Context.define("width", {
 	    get: function() {
-	      if (this.parent != null) {
+	      if (this.parent) {
 	        return this.parent.width;
 	      }
 	      return window.innerWidth;
@@ -21319,7 +21319,7 @@
 	
 	  Context.define("height", {
 	    get: function() {
-	      if (this.parent != null) {
+	      if (this.parent) {
 	        return this.parent.height;
 	      }
 	      return window.innerHeight;
@@ -21351,7 +21351,7 @@
 	
 	  Context.define("canvasFrame", {
 	    get: function() {
-	      if (this.parent == null) {
+	      if (!parent) {
 	        return this.frame;
 	      }
 	      return this.parent.canvasFrame;
@@ -23105,9 +23105,6 @@
 	    ref = this._getOrientationDimensions(this.phone.width, this.phone.height), width = ref[0], height = ref[1];
 	    paddingOffset = ((ref1 = this._device) != null ? ref1.paddingOffset : void 0) || 0;
 	    phoneScale = _.min([(window.innerWidth - ((this.padding + paddingOffset) * 2)) / width, (window.innerHeight - ((this.padding + paddingOffset) * 2)) / height]);
-	    if (phoneScale > 1) {
-	      phoneScale = 1;
-	    }
 	    return phoneScale;
 	  };
 	
@@ -24981,13 +24978,13 @@
 /* 53 */
 /***/ function(module, exports) {
 
-	exports.date = 1455054129;
+	exports.date = 1455016941;
 	
 	exports.branch = "master";
 	
-	exports.hash = "df4f12a";
+	exports.hash = "0563b21";
 	
-	exports.build = 1450;
+	exports.build = 1447;
 	
 	exports.version = exports.branch + "/" + exports.hash;
 
