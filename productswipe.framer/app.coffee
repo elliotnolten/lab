@@ -12,7 +12,7 @@ page = new PageComponent
 eans = []
 
 feed = $.ajax
-	url: "http://nolten.co/bolcomapi.php/lists/retailid=12554&limit=50"
+	url: "http://nolten.co/bolcomapi.php/lists/limit=50"
 	contentType: "application/jsonp;"
 	dataType: "jsonp"
 	jsonpCallback: "callback"
