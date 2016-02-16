@@ -48,7 +48,7 @@ feed.done (data) ->
 			width: card.width - 64, height: card.height
 		cardContent.centerX()
 		cardContent.style =
-			"box-shadow": "0 16px 32px rgba(49,49,47,0.5)"
+			"box-shadow": "0 16px 48px rgba(49,49,47,0.5)"
 		
 		image = new Layer
 			superLayer: cardContent
