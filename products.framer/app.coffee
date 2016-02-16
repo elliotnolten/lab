@@ -54,16 +54,20 @@ feed.done (data) ->
 			x: -cardW, y: (cardH + 48) * i
 			backgroundColor: "#fff"
 			borderRadius: 14
-			clip: true
+			clip: false
 		card.product = e
 		
 		image = new Layer
 			superLayer: card
 			width: cardH, height: cardH
 			image: e.images[4].url
-		image.style =
-			"border-top-left-radius": "14px"
-			"border-bottom-left-radius": "14px"
+		image.states.add
+			large:
+				scale: Screen.width / cardH
+			small:
+				scale: cardH / Screen.width
+		image.originX = 0
+		image.originY = 0
 			
 		
 		title = new TextLayer
@@ -76,9 +80,35 @@ feed.done (data) ->
 			fontFamily: "Open Sans"
 			fontWeight: 300
 		
-		card.on Events.Click, ->
-			image.width = Screen.width	
-# 			createPDP(@product)
+		card.onClick ->
+			image.states.next("large")
+			image.animate
+				properties:
+					x: -24
+					y: -48
+					borderRadius: 0
+			this.index = 999
+			title.opacity = 0
+			
+			detail = new ScrollComponent
+				width: Screen.width, height: 2000
+			
+			detail.y = image.height * Screen.width / cardH + 100
+			detail.content.backgroundColor = "#fff"
+			detail.scrollHorizontal = false
+			
+			detailTitle = new TextLayer
+				parent: detail.content
+				text: e.title
+				fontSize: 32, fontFamily: "Open Sans"
+				width: detail.width - 64, x: 32, y: 32
+				color: "#000"
+			detailDescription = new TextLayer
+				parent: detail.content
+				text: e.longDescription
+				fontSize: 32, fontFamily: "Open Sans"
+				width: detail.width - 64, x: 32, y: 100
+				color: "#000"
 		
 		card.animate
 			properties:
@@ -90,6 +120,7 @@ feed.done (data) ->
 			card.ignoreEvents = true
 		list.on Events.ScrollAnimationDidEnd, ->
 			card.ignoreEvents = false
+			
 		
 # 	Function for creating a product detail page
 createPDP = (product) ->

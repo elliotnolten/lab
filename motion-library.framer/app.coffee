@@ -18,13 +18,23 @@ white = "#fff"
 # General function for pointer on hover
 mouse = (layer) ->
 	layer.onMouseOver -> this.style.cursor = "pointer"
-	layer.onMouseOut -> this.style.curosr = "default"
+	layer.onMouseOut -> this.style.cursor = "default"
 
 # Create popin animation function
 popin = (layer) ->
 	layer.animate
 		properties:
 			scale: 1
+		curve: "spring(800,30,10)"
+
+# Create expand animation function
+expand = (layer, expX, expY) ->
+	layer.originX = 1
+	layer.originY = 1
+	layer.animate
+		properties:
+			width: layer.width + expX
+			height: layer.height + expY
 		curve: "spring(800,30,10)"
 
 # Create popout function that loops back to popin animation
@@ -60,7 +70,8 @@ Utils.delay 1, ->
 	popin(alert)
 	
 alert.onClick ->
-	popout(this)
+	expand(this, 100, 100)
+
 mouse(alert)
 
 # Create dropdown
