@@ -36,7 +36,7 @@ class product extends Layer
 		
 
 feed = $.ajax
-	url: "http://nolten.co/bolcomapi.php/lists/retailid=12554&limit=5"
+	url: "http://nolten.co/bolcomapi.php/lists/retailid=12554&limit=15"
 	contentType: "application/jsonp;"
 	dataType: "jsonp"
 	jsonpCallback: "callback"

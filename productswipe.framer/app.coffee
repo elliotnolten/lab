@@ -45,8 +45,11 @@ feed.done (data) ->
 
 page.on "change:currentPage", ->
 	page.previousPage.animate
-		properties:
-			scale: 0.75
-			time: 0.2
-	page.previousPage.once Events.AnimationEnd, ->
-		this.scale = 1
+		properties: 
+			scale: 0.8
+		time: 0.4
+	
+	page.currentPage.animate
+		properties: 
+			scale: 1
+		time: 0.4
