@@ -15,6 +15,7 @@ sketch.tooltipMsg.opacity = 0
 
 sketch.google.opacity = 0
 sketch.google.y = Screen.height - sketch.google.height + 100
+sketch.custom.destroy()
 
 sketch.pilotBtn.y = Screen.height - sketch.pilotBtn.height
 

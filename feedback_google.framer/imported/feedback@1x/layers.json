@@ -6,18 +6,18 @@
     "children" : [
       {
         "maskFrame" : null,
-        "id" : "D3606723-C456-46CB-B216-55F40236775F",
+        "id" : "598F23F6-50D9-4F9F-BF4B-F24EDEFB9657",
         "visible" : true,
         "children" : [
           {
             "maskFrame" : null,
-            "id" : "86198FAE-78E9-483D-B7EF-D66C8C152EFE",
+            "id" : "7234AB34-5B6B-452A-A05D-FB2E2A54E666",
             "visible" : true,
             "children" : [
 
             ],
             "image" : {
-              "path" : "images\/Layer-close-86198FAE-78E9-483D-B7EF-D66C8C152EFE.png",
+              "path" : "images\/Layer-close-7234AB34-5B6B-452A-A05D-FB2E2A54E666.png",
               "frame" : {
                 "y" : 375,
                 "x" : 977,
@@ -47,11 +47,11 @@
           }
         ],
         "image" : {
-          "path" : "images\/Layer-google-D3606723-C456-46CB-B216-55F40236775F.png",
+          "path" : "images\/Layer-custom-598F23F6-50D9-4F9F-BF4B-F24EDEFB9657.png",
           "frame" : {
             "y" : 351,
-            "x" : 548,
-            "width" : 463,
+            "x" : 361,
+            "width" : 650,
             "height" : 541
           }
         },
@@ -62,9 +62,73 @@
         },
         "layerFrame" : {
           "y" : 351,
-          "x" : 548,
-          "width" : 463,
+          "x" : 361,
+          "width" : 650,
           "height" : 541
+        },
+        "name" : "custom"
+      },
+      {
+        "maskFrame" : null,
+        "id" : "D3606723-C456-46CB-B216-55F40236775F",
+        "visible" : false,
+        "children" : [
+          {
+            "maskFrame" : null,
+            "id" : "86198FAE-78E9-483D-B7EF-D66C8C152EFE",
+            "visible" : true,
+            "children" : [
+
+            ],
+            "image" : {
+              "path" : "images\/Layer-close-86198FAE-78E9-483D-B7EF-D66C8C152EFE.png",
+              "frame" : {
+                "y" : 372,
+                "x" : 975,
+                "width" : 12,
+                "height" : 14
+              }
+            },
+            "imageType" : "png",
+            "kind" : "text",
+            "metadata" : {
+              "css" : [
+                "\/* Type something: *\/",
+                "font-family: BolSymbols;",
+                "font-size: 12px;",
+                "color: #000000;",
+                "line-height: 12px;"
+              ],
+              "string" : ""
+            },
+            "layerFrame" : {
+              "y" : 372,
+              "x" : 975,
+              "width" : 12,
+              "height" : 14
+            },
+            "name" : "close"
+          }
+        ],
+        "image" : {
+          "path" : "images\/Layer-google-D3606723-C456-46CB-B216-55F40236775F.png",
+          "frame" : {
+            "y" : 357,
+            "x" : 560,
+            "width" : 439,
+            "height" : 517
+          }
+        },
+        "imageType" : "png",
+        "kind" : "group",
+        "metadata" : {
+          "opacity" : 1
+        },
+        "layerFrame" : {
+          "y" : 357,
+          "x" : 560,
+          "width" : 439,
+          "height" : 517
         },
         "name" : "google"
       },
