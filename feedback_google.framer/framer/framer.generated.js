@@ -12,7 +12,7 @@ window.__imported__["feedback/layers.json.js"] = [
       {
         "maskFrame" : null,
         "id" : "598F23F6-50D9-4F9F-BF4B-F24EDEFB9657",
-        "visible" : true,
+        "visible" : false,
         "children" : [
           {
             "maskFrame" : null,
@@ -24,10 +24,10 @@ window.__imported__["feedback/layers.json.js"] = [
             "image" : {
               "path" : "images\/Layer-close-7234AB34-5B6B-452A-A05D-FB2E2A54E666.png",
               "frame" : {
-                "y" : 375,
-                "x" : 977,
-                "width" : 8,
-                "height" : 8
+                "y" : 372,
+                "x" : 975,
+                "width" : 12,
+                "height" : 14
               }
             },
             "imageType" : "png",
@@ -43,10 +43,10 @@ window.__imported__["feedback/layers.json.js"] = [
               "string" : ""
             },
             "layerFrame" : {
-              "y" : 375,
-              "x" : 977,
-              "width" : 8,
-              "height" : 8
+              "y" : 372,
+              "x" : 975,
+              "width" : 12,
+              "height" : 14
             },
             "name" : "close"
           }
@@ -54,10 +54,10 @@ window.__imported__["feedback/layers.json.js"] = [
         "image" : {
           "path" : "images\/Layer-custom-598F23F6-50D9-4F9F-BF4B-F24EDEFB9657.png",
           "frame" : {
-            "y" : 351,
-            "x" : 361,
-            "width" : 650,
-            "height" : 541
+            "y" : 357,
+            "x" : 373,
+            "width" : 626,
+            "height" : 517
           }
         },
         "imageType" : "png",
@@ -66,10 +66,10 @@ window.__imported__["feedback/layers.json.js"] = [
           "opacity" : 1
         },
         "layerFrame" : {
-          "y" : 351,
-          "x" : 361,
-          "width" : 650,
-          "height" : 541
+          "y" : 357,
+          "x" : 373,
+          "width" : 626,
+          "height" : 517
         },
         "name" : "custom"
       },
@@ -86,33 +86,26 @@ window.__imported__["feedback/layers.json.js"] = [
 
             ],
             "image" : {
-              "path" : "images\/Layer-close-86198FAE-78E9-483D-B7EF-D66C8C152EFE.png",
+              "path" : "images\/Layer-gclose-86198FAE-78E9-483D-B7EF-D66C8C152EFE.png",
               "frame" : {
-                "y" : 375,
-                "x" : 977,
-                "width" : 8,
-                "height" : 8
+                "y" : 360,
+                "x" : 956,
+                "width" : 40,
+                "height" : 39
               }
             },
             "imageType" : "png",
-            "kind" : "text",
+            "kind" : "group",
             "metadata" : {
-              "css" : [
-                "\/* Type something: *\/",
-                "font-family: BolSymbols;",
-                "font-size: 12px;",
-                "color: #000000;",
-                "line-height: 12px;"
-              ],
-              "string" : ""
+              "opacity" : 1
             },
             "layerFrame" : {
-              "y" : 375,
-              "x" : 977,
-              "width" : 8,
-              "height" : 8
+              "y" : 360,
+              "x" : 956,
+              "width" : 40,
+              "height" : 39
             },
-            "name" : "close"
+            "name" : "gclose"
           }
         ],
         "image" : {

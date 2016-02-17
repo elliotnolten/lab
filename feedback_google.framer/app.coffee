@@ -17,6 +17,8 @@ sketch.google.opacity = 0
 sketch.google.y = Screen.height - sketch.google.height + 100
 sketch.custom.destroy()
 
+sketch.gclose.index = 10
+
 sketch.pilotBtn.y = Screen.height - sketch.pilotBtn.height
 
 mouse = (layer) ->
@@ -25,7 +27,7 @@ mouse = (layer) ->
 
 mouse(sketch.tooltip)
 mouse(sketch.pilotBtn)
-mouse(sketch.close)
+mouse(sketch.gclose)
 mouse(sketch.highlight)
 	
 # Standard bounce curve
@@ -74,7 +76,7 @@ sketch.tooltip.onClick ->
 		Utils.delay 0.1, ->
 			sketch.google.states.switch("appear")
 
-sketch.close.onClick ->
+sketch.gclose.onClick ->
 	sketch.google.states.switch("disappear", curve: "ease-in-out", time: 0.2)
 	Utils.delay 0.5, ->
 		sketch.pilotBtn.states.switch("onCanvas")
