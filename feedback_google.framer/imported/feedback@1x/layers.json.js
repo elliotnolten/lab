@@ -72,7 +72,7 @@ window.__imported__["feedback/layers.json.js"] = [
       {
         "maskFrame" : null,
         "id" : "D3606723-C456-46CB-B216-55F40236775F",
-        "visible" : false,
+        "visible" : true,
         "children" : [
           {
             "maskFrame" : null,
@@ -84,10 +84,10 @@ window.__imported__["feedback/layers.json.js"] = [
             "image" : {
               "path" : "images\/Layer-close-86198FAE-78E9-483D-B7EF-D66C8C152EFE.png",
               "frame" : {
-                "y" : 372,
-                "x" : 975,
-                "width" : 12,
-                "height" : 14
+                "y" : 375,
+                "x" : 977,
+                "width" : 8,
+                "height" : 8
               }
             },
             "imageType" : "png",
@@ -103,10 +103,10 @@ window.__imported__["feedback/layers.json.js"] = [
               "string" : ""
             },
             "layerFrame" : {
-              "y" : 372,
-              "x" : 975,
-              "width" : 12,
-              "height" : 14
+              "y" : 375,
+              "x" : 977,
+              "width" : 8,
+              "height" : 8
             },
             "name" : "close"
           }
@@ -114,10 +114,10 @@ window.__imported__["feedback/layers.json.js"] = [
         "image" : {
           "path" : "images\/Layer-google-D3606723-C456-46CB-B216-55F40236775F.png",
           "frame" : {
-            "y" : 357,
-            "x" : 560,
-            "width" : 439,
-            "height" : 517
+            "y" : 351,
+            "x" : 548,
+            "width" : 463,
+            "height" : 541
           }
         },
         "imageType" : "png",
@@ -126,10 +126,10 @@ window.__imported__["feedback/layers.json.js"] = [
           "opacity" : 1
         },
         "layerFrame" : {
-          "y" : 357,
-          "x" : 560,
-          "width" : 439,
-          "height" : 517
+          "y" : 351,
+          "x" : 548,
+          "width" : 463,
+          "height" : 541
         },
         "name" : "google"
       },
