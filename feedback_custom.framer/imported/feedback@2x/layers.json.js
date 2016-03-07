@@ -13,8 +13,8 @@ window.__imported__["feedback/layers.json.js"] = [
           "path" : "images\/Layer-pilotBtn-BE1789F4-D169-46B5-8587-D65F599E2064.png",
           "frame" : {
             "y" : 931,
-            "x" : 889,
-            "width" : 123,
+            "x" : 867,
+            "width" : 146,
             "height" : 54
           }
         },
@@ -25,8 +25,8 @@ window.__imported__["feedback/layers.json.js"] = [
         },
         "layerFrame" : {
           "y" : 931,
-          "x" : 889,
-          "width" : 123,
+          "x" : 867,
+          "width" : 146,
           "height" : 54
         },
         "name" : "pilotBtn"
