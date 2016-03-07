@@ -1,7 +1,6 @@
 # Import file "feedback" (sizes and positions are scaled 1:2)
 sketch = Framer.Importer.load("imported/feedback@2x")
 
-Framer.Device.deviceScale = 1
 # Default cursor
 document.body.style.cursor = "default"
 
