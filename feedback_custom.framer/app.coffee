@@ -4,6 +4,8 @@ sketch = Framer.Importer.load("imported/feedback@2x")
 # Default cursor
 document.body.style.cursor = "default"
 
+bg = new BackgroundLayer backgroundColor: "white"
+
 sketch.tooltip.scale = 0.8
 sketch.tooltip.opacity = 0
 
@@ -26,6 +28,21 @@ mouse(sketch.tooltip)
 mouse(sketch.pilotBtn)
 mouse(sketch.close)
 mouse(sketch.highlight)
+
+scroll = new ScrollComponent
+	width: Screen.width, height: Screen.height
+scroll.scrollHorizontal = false
+
+sketch.enrichguioo.parent = scroll.content
+sketch.highlight.parent = scroll.content
+sketch.tooltip.parent = scroll.content
+sketch.enrichment.index = 100
+
+grey = new Layer
+	width: Screen.width, height: 1700, y: 350
+	backgroundColor: "#f0ede7"
+	parent: scroll.content
+	index: 0
 	
 # Standard bounce curve
 bounceCurve = "spring(700,40,10)"

@@ -476,15 +476,6 @@ window.__imported__["feedback/layers.json.js"] = [
         "name" : "enrichguioo"
       }
     ],
-    "image" : {
-      "path" : "images\/Layer-enrichment-52A1183D-37F2-4DAC-BCEF-AEE097049D8A.png",
-      "frame" : {
-        "y" : 13,
-        "x" : 201,
-        "width" : 1024,
-        "height" : 994
-      }
-    },
     "imageType" : "png",
     "kind" : "artboard",
     "metadata" : {
