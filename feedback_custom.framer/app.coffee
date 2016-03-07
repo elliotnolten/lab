@@ -1,9 +1,6 @@
 # Import file "feedback" (sizes and positions are scaled 1:2)
 sketch = Framer.Importer.load("imported/feedback@2x")
 
-# Default cursor
-document.body.style.cursor = "default"
-
 bg = new BackgroundLayer backgroundColor: "white"
 
 sketch.tooltip.scale = 0.8
