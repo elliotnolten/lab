@@ -506,11 +506,11 @@ window.__imported__["feedback/layers.json.js"] = [
   }
 ]
 if (typeof(DeviceComponent) !== "undefined") {DeviceComponent.Devices["iphone-6-silver"].deviceImageJP2 = false};
-window.Framer.Defaults.DeviceView = {"deviceScale":-1,"deviceType":"desktop-safari-1024-600","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceView = {"deviceScale":1,"selectedHand":"","deviceType":"desktop-safari-1024-600","contentScale":1,"orientation":0};
 
-window.Framer.Defaults.DeviceComponent = {"deviceScale":-1,"deviceType":"desktop-safari-1024-600","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceComponent = {"deviceScale":1,"selectedHand":"","deviceType":"desktop-safari-1024-600","contentScale":1,"orientation":0};
 
-window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"feedback_google.framer"};
+window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"feedback_google-update.framer"};
 
 Framer.Device = new Framer.DeviceView();
 Framer.Device.setupContext();
@@ -1151,6 +1151,12 @@ Runtime = (function(superClass) {
           return bridge.send("device:change");
         });
       });
+      Framer.Device.on("change:phoneScale", function(phoneScale) {
+        return bridge.send("change:phoneScale", {
+          phoneScale: phoneScale
+        });
+      });
+      Framer.Device._calculatePhoneScale();
     }
     bridge.send("runtime.init");
     return this._errorHandlerSetup();

@@ -4,6 +4,9 @@ TextLayer = require("TextLayer")
 
 bg = new BackgroundLayer backgroundColor: "#f0ede7"
 
+screenMidX = Screen.width / 2
+screenMidY = Screen.height / 2
+
 title = new TextLayer
 	width: Screen.width - 120
 	textAlign: "center"
@@ -38,20 +41,6 @@ feed = $.ajax
 	jsonpCallback: "callback"
 
 feed.done (data) ->
-# 	Create drage area
-	drag = new Layer
-		width: Screen.width, height: Screen.height
-		backgroundColor: "#f0ede7"
-		
-	drag.draggable.enabled = true
-	drag.draggable.vertical = false
-	drag.draggable.constraints = drag
-	drag.draggable.bounceOptions =
-		friction: 30
-		tension: 500
-	drag.originX = 0.5
-	drag.originY = 1
-	drag.index = 0
 	
 	$.each data.products,(i,e) ->
 		ean = e.ean
@@ -59,23 +48,23 @@ feed.done (data) ->
 		titles.push(e.title)
 			
 		card = new Layer
+			name: e.title
 			width: Screen.width - 64, height: Screen.width - 64
-			clip: false
-			backgroundColor: null
+			clip: false, backgroundColor: null, borderRadius: 32
 		card.centerX()
-		card.centerY(-100 - i * 12)
-		card.scale = 1 - i * 0.01
+		card.y = screenMidY - (card.height / 2 + i * 15) - 75
+		card.scale = 1 - i * 0.02
 		card.index = count - i
 		
 		if i > 0
-			card.rotationZ = 10 * Utils.randomNumber()
+			card.rotationZ = 20 * Utils.randomNumber()
 			card.blur = 2
 		
 		image = new Layer
 			parent: card
 			image: e.images[4].url
 			width: card.width, height: card.height
-			borderRadius: 32
+			borderRadius: 32, clip: true
 		image.center()
 		
 		gradient = new Layer
@@ -86,32 +75,69 @@ feed.done (data) ->
 		
 		allCards.push(card)
 		allCardsXpos.push(card.x)
+	
+	# A function to update card stack
+	updateCards = () ->
+		title.text = titles[0]
 		
-# 		Do the following thing with the card on top
-		if i is 0
-			card.originY = 5
-			image.shadowY = 16
-			image.shadowBlur = 32
-			image.shadowColor = "rgba(0,0,0,0.5)"
-			image.style =
-				"box-shadow": "0 -2px 1px rgba(255,255,255,0.25)"
-							
-			drag.on "change:x", ->
-				offset = drag.draggable.offset.x
-				rotationZ = Utils.modulate offset, [-200,200], [-10,10]
-				card.rotationZ = rotationZ
-# 				print Math.abs(offset)
-				if Math.abs(offset) > 50
-					image.animate
-						properties:
-							scale: 0.8
-						curve: "spring(500,30,10)"
+		if titles[0] is "undefined"
+			title.text = "Done"
+			return
 			
-			drag.on Events.TouchEnd, ->
-				image.animate
+		allCards.forEach (c,i) ->
+			if i isnt 0
+				c.animate
 					properties:
-						scale: 1
+						scale: 1 - i * 0.05
+						y: screenMidY - (c.height / 2 + i * 15) - 75
+					curve: "spring(500,30,10)"
+			
+		firstCard = allCards[0]
+		firstCard.animate
+			properties:
+				scale: 1
+				rotationZ: 0
+				blur: 0
+			curve: "spring(500,30,10)"
+		firstCard.draggable = true
+		firstCard.draggable.speedY = 0
+		firstCard.draggable.constraints = firstCard
+		firstCardX = firstCard.x
+		
+		firstCard.on Events.TouchStart, (event) ->
+			startX = event.x
+			this.on Events.DragMove, (e) ->
+				print "dragmove"
+				delta = e.x - startX
+				deltaAbs = Math.abs(delta)
+				this.rotationZ = Utils.modulate delta, [-screenMidX,screenMidX], [-5,5], true		
+				
+			this.on Events.DragEnd, (event) ->
+				print "dragend"
+				endOffset = this.draggable.constraintsOffset.x
+				
+				this.animate
+					properties:
+						rotationZ: 0
+						x: firstCardX
 					curve: "spring(500,30,10)"
 				
-		
-	title.text = titles[0]
+				print "doe het" + endOffset
+				
+				# if this card is dragged more than 200 pixels, throw it away
+				if endOffset >= 200 or endOffset <= -200
+					this.draggable.bounceOptions = false
+					this.draggable.constraints = false
+					this.animate
+						properties:
+							x: this.x * 5
+						time: 0
+						curve: "ease-in-out"
+# 					Utils.delay 0.1, ->
+					print "opnieuw"
+					this.destroy()
+					allCards.shift()
+					titles.shift()
+					updateCards()
+			
+	updateCards()

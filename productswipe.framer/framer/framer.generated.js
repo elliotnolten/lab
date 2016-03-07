@@ -3,11 +3,11 @@
 
 if (!window.Framer) {window._bridge('runtime.error', {message:'[framer.js] Framer library missing or corrupt. Select File → Update Framer.'})}
 if (typeof(DeviceComponent) !== "undefined") {DeviceComponent.Devices["iphone-6-silver"].deviceImageJP2 = false};
-window.Framer.Defaults.DeviceView = {"deviceScale":-1,"deviceType":"iphone-6-silver-hand","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceView = {"deviceScale":-1,"selectedHand":"","deviceType":"iphone-6-silver-hand","contentScale":1,"orientation":0};
 
-window.Framer.Defaults.DeviceComponent = {"deviceScale":-1,"deviceType":"iphone-6-silver-hand","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceComponent = {"deviceScale":-1,"selectedHand":"","deviceType":"iphone-6-silver-hand","contentScale":1,"orientation":0};
 
-window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"productswipe.framer"};
+window.FramerStudioInfo = {"deviceImagesUrl":"\/\/resources.framerjs.com\/static\/DeviceResources","documentTitle":"productswipe.framer"};
 
 Framer.Device = new Framer.DeviceView();
 Framer.Device.setupContext();
@@ -648,6 +648,12 @@ Runtime = (function(superClass) {
           return bridge.send("device:change");
         });
       });
+      Framer.Device.on("change:phoneScale", function(phoneScale) {
+        return bridge.send("change:phoneScale", {
+          phoneScale: phoneScale
+        });
+      });
+      Framer.Device._calculatePhoneScale();
     }
     bridge.send("runtime.init");
     return this._errorHandlerSetup();
