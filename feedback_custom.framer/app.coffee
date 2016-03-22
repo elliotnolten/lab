@@ -18,8 +18,8 @@ sketch.google.destroy()
 sketch.pilotBtn.y = Screen.height - sketch.pilotBtn.height
 
 mouse = (layer) ->
-	layer.onMouseOver -> this.style.cursor = "pointer"
-	layer.onMouseOut -> this.style.cursor = "default"
+# 	layer.onMouseOver -> this.style.cursor = "pointer"
+# 	layer.onMouseOut -> this.style.cursor = "default"
 
 mouse(sketch.tooltip)
 mouse(sketch.pilotBtn)
