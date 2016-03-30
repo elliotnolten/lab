@@ -3,11 +3,11 @@
 
 if (!window.Framer) {window._bridge('runtime.error', {message:'[framer.js] Framer library missing or corrupt. Select File → Update Framer.'})}
 if (typeof(DeviceComponent) !== "undefined") {DeviceComponent.Devices["iphone-6-silver"].deviceImageJP2 = false};
-window.Framer.Defaults.DeviceView = {"deviceScale":"fit","selectedHand":"","deviceType":"apple-iphone-6s-silver","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceView = {"deviceScale":"fit","selectedHand":"iphone-hands-2","deviceType":"apple-ipad-air-2-gold","contentScale":1,"orientation":0};
 
-window.Framer.Defaults.DeviceComponent = {"deviceScale":"fit","selectedHand":"","deviceType":"apple-iphone-6s-silver","contentScale":1,"orientation":0};
+window.Framer.Defaults.DeviceComponent = {"deviceScale":"fit","selectedHand":"iphone-hands-2","deviceType":"apple-ipad-air-2-gold","contentScale":1,"orientation":0};
 
-window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"products-update.framer"};
+window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"flow.framer"};
 
 Framer.Device = new Framer.DeviceView();
 Framer.Device.setupContext();

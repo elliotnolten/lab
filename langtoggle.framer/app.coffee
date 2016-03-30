@@ -1,298 +1,159 @@
-TextLayer = require "TextLayer"
+class TextLayer extends Layer
 
-open = false
-i = 0
-colorOn = new Color("#36c")
-colorOff = new Color("#c5c2be")
-OpenSans = "Open Sans"
-fontSize = 27
-tuatara = "#31312f"
-textOn = "BE"
-textOff = "NL"
-openText = "Het openen van je winkel gaat onmiddellijk. Als je van gedachten verandert kun je, na 5 minuten, je winkel altijd opnieuw sluiten. Weet je zeker dat je je winkel weer wilt openen?"
-closeText = "Het sluiten van je winkel gaat onmiddellijk. Als je van gedachten verandert, kun je na 5 minuten, je winkel altijd opnieuw openen. Weet je zeker dat je je winkel (tijdelijk) wilt sluiten?"
-nlColors = ["#AE1C28","#FFFFFF","#21468B"]
-beColors = ["#000000","#FFE936","#FF0F21"]
-timeOutText = "Na 5 minuten kun je je winkel weer openen of sluiten... Nog even geduld!"
-timeout = false
-timeoutLength = 5 * 1000
-timeoutOff = () ->
-	timeout = false
-	print timeout
+	constructor: (options={}) ->
+		@doAutoSize = false
+		@doAutoSizeHeight = false
+		options.backgroundColor ?= if options.setup then "hsla(60, 90%, 47%, .4)" else "transparent"
+		options.color ?= "red"
+		options.lineHeight ?= 1.25
+		options.fontFamily ?= "Helvetica"
+		options.fontSize ?= 20
+		options.text ?= "Use layer.text to add text"
+		super options
+		@style.whiteSpace = "pre-line" # allow \n in .text
 
-btnStyle = 
-	fontFamily: "Open Sans"
-	fontSize: 12
-	color: "#fff"
+	setStyle: (property, value, pxSuffix = false) ->
+		@style[property] = if pxSuffix then value+"px" else value
+		@emit("change:#{property}", value)
+		if @doAutoSize then @calcSize()
 
-bg = new BackgroundLayer
-	backgroundColor: "#f0ede7"
-
-container = new Layer
-	width: 260, height: 200
-	backgroundColor: "transparent"
-	y: 200
-container.centerX()
-
-label = new TextLayer
-	superLayer: container
-	text: "Jouw winkel is nu"
-	fontSize: fontSize
-	fontFamily: OpenSans
-	color: tuatara
-	autoSize: true
-	
-toggle = new Layer
-	superLayer: container
-	width: 150
-	height: 60
-	borderRadius: 30
-	backgroundColor: "#FFF"
-
-toggle.style =
-	"border": "2px solid #c5c2be"
-
-toggle.center()
-
-check = new Layer
-	superLayer: container
-	image: "images/check.pdf"
-	width: 36, height: 36
-	x: toggle.width + 70, y: toggle.height + label.height - 12
-	scale: 0
-
-text = new TextLayer
-	superLayer: toggle
-	text: textOff
-	autoSize: true
-	fontSize: 27
-	fontFamily: OpenSans
-	color: "#31312f"
-	lineHeight: toggle.height / 30
-	x: 62
-
-knob = new Layer
-	superLayer: toggle
-	width: 36
-	height: 36
-	borderRadius: 20
-	x: 10
-	y: 10
-knobOn = new Layer
-	superLayer: knob
-	width: knob.width
-	height: knob.height
-	borderRadius: knob.borderRadius
-	opacity: 0
-	index: 2
-
-# Define flags
-# NL flag
-nlFlag = new Layer
-	superLayer: knob
-	width: knob.width, height: knob.height, borderRadius: knob.borderRadius
-	clip: true
-	index: 0
-# NL colors
-for i in [0..(nlColors.length - 1)]
-	color = new Layer
-		superLayer: nlFlag
-		width: nlFlag.width, height: nlFlag.height / 3, y: (nlFlag.height / 3) * i
-		backgroundColor: nlColors[i]
-
-# BE flag
-beFlag = new Layer
-	superLayer: knobOn
-	width: knob.width, height: knob.height, borderRadius: knob.borderRadius
-	backgroundColor: null
-	clip: true
-# BE colors
-for i in [0..(beColors.length - 1)]
-	color = new Layer
-		superLayer: beFlag
-		width: beFlag.width / 3, height: beFlag.height, x: (beFlag.width / 3) * i
-		backgroundColor: beColors[i]
-	
-mask = new Layer
-	backgroundColor: "rgba(49,49,47,0.25)"
-	width: Screen.width, height: Screen.height
-	opacity: 0
-
-modal = new Layer
-	backgroundColor: "#fff"
-	superLayer: mask
-	width: 750, height: 350
-	borderRadius: 8
-	opacity: 0, scale: 0.9
-modal.centerX()
-modal.centerY(-100)
-modalTxtContainer = new TextLayer
-	text: openText
-	superLayer: modal
-	padding: 42
-	fontSize: 24
-	lineHeight: 1.25
-	width: modal.width - 42	
-	height: modal.height - 42
-	color: tuatara
-
-modalBtn = new TextLayer
-	backgroundColor: "#36c"
-	superLayer: modal
-	fontSize: 24
-	padding: 12
-	autoSize: true
-	borderRadius: 3
-	text: "Ja, zeker"
-modalBtn.style = btnStyle
-modalBtn.x = 42
-modalBtn.y = modal.height - 42 - modalBtn.height
-
-cancelBtn = new TextLayer
-	fontSize: 24
-	autoSize: true
-	color: "#36c"
-	text: "Nee, toch niet"
-	superLayer: modal
-cancelBtn.x = modalBtn.width + 21 + 42
-cancelBtn.y = modal.height - 42 - modalBtn.height + 12
-
-# Define some animations
-maskShow = new Animation
-	layer: mask
-	properties:
-		opacity: 1
-	curve: "ease-in-out"
-	time: 0.2
-maskHide = maskShow.reverse()
-
-modalShow = new Animation
-	layer: modal
-	properties:
-		opacity: 1
-		scale: 1
-	curve: "spring(700,50,10)"
-modalHide = new Animation	
-	layer: modal
-	properties: 
-		opacity: 0
-		scale: 0.9
-	curve: "ease-in-out"
-	time: 0.1
-
-toggleOpen = new Animation
-	layer: toggle
-	properties:
-		backgroundColor: "#fff"
-	time: 0.2
-	curve: "ease-in-out"
-toggleClose = toggleOpen.reverse()
-
-knobOpen = new Animation
-	layer: knob
-	properties: 
-		x: toggle.width - 36 - 14
-	time: 0.2
-	curve: "ease-in-out"
-knobClose = knobOpen.reverse()
-
-knobOnOpen = new Animation
-	layer: knobOn
-	properties: 
-		opacity: 1
-	time: 0.2
-	curve: "ease-in-out"
-knobOnClose = knobOnOpen.reverse()
-
-textOpen = new Animation
-	layer: text
-	properties:
-		x: 24
-		color: "#31312f"
-	time: 0.2
-textClose = textOpen.reverse()
-
-checkShow = new Animation
-	layer: check
-	properties: 
-		scale: 1
-	curve: "spring(800,30,10)"
-checkHide = new Animation
-	layer: check
-	properties: 
-		scale: 0
-	curve: "ease-in-out"
-	time: 0.1
-
-# When the mask is shown, show modal and ignore events on toggle
-maskShow.on Events.AnimationEnd, ->
-	toggle.ignoreEvents = true
-	modalShow.start()
-
-# Show the right model text when open is true or false
-modalShow.on Events.AnimationStart, ->
-	if not timeout
-		modalBtn.text = "Ja, zeker"
-		cancelBtn.opacity = 1
-		if open
-			modalTxtContainer.text = openText
+	calcSize: ->
+		sizeAffectingStyles =
+			lineHeight: @style["line-height"]
+			fontSize: @style["font-size"]
+			fontWeight: @style["font-weight"]
+			paddingTop: @style["padding-top"]
+			paddingRight: @style["padding-right"]
+			paddingBottom: @style["padding-bottom"]
+			paddingLeft: @style["padding-left"]
+			textTransform: @style["text-transform"]
+			borderWidth: @style["border-width"]
+			letterSpacing: @style["letter-spacing"]
+			fontFamily: @style["font-family"]
+			fontStyle: @style["font-style"]
+			fontVariant: @style["font-variant"]
+		constraints = {}
+		if @doAutoSizeHeight then constraints.width = @width
+		size = Utils.textSize @text, sizeAffectingStyles, constraints
+		if @style.textAlign is "right"
+			@width = size.width
+			@x = @x-@width
 		else
-			modalTxtContainer.text = closeText
-	else if timeout
-		modalTxtContainer.text = timeOutText
-		modalBtn.text = "Ok, sluit deze melding"
-		cancelBtn.opacity = 0
+			@width = size.width
+		@height = size.height
 
-# When the mask is hidden, hide modal and make events on toggle available
-modalHide.on Events.AnimationEnd, ->
-	toggle.ignoreEvents = false
-	maskHide.start()
+	@define "autoSize",
+		get: -> @doAutoSize
+		set: (value) ->
+			@doAutoSize = value
+			if @doAutoSize then @calcSize()
+	@define "autoSizeHeight",
+		set: (value) ->
+			@doAutoSize = value
+			@doAutoSizeHeight = value
+			if @doAutoSize then @calcSize()
+	@define "contentEditable",
+		set: (boolean) ->
+			@_element.contentEditable = boolean
+			@ignoreEvents = !boolean
+			@on "input", -> @calcSize() if @doAutoSize
+	@define "text",
+		get: -> @_element.textContent
+		set: (value) ->
+			@_element.textContent = value
+			@emit("change:text", value)
+			if @doAutoSize then @calcSize()
+	@define "fontFamily",
+		get: -> @style.fontFamily
+		set: (value) -> @setStyle("fontFamily", value)
+	@define "fontSize",
+		get: -> @style.fontSize.replace("px","")
+		set: (value) -> @setStyle("fontSize", value, true)
+	@define "lineHeight",
+		get: -> @style.lineHeight
+		set: (value) -> @setStyle("lineHeight", value)
+	@define "fontWeight",
+		get: -> @style.fontWeight
+		set: (value) -> @setStyle("fontWeight", value)
+	@define "fontStyle",
+		get: -> @style.fontStyle
+		set: (value) -> @setStyle("fontStyle", value)
+	@define "fontVariant",
+		get: -> @style.fontVariant
+		set: (value) -> @setStyle("fontVariant", value)
+	@define "padding",
+		set: (value) ->
+			@setStyle("paddingTop", value, true)
+			@setStyle("paddingRight", value, true)
+			@setStyle("paddingBottom", value, true)
+			@setStyle("paddingLeft", value, true)
+	@define "paddingTop",
+		get: -> @style.paddingTop.replace("px","")
+		set: (value) -> @setStyle("paddingTop", value, true)
+	@define "paddingRight",
+		get: -> @style.paddingRight.replace("px","")
+		set: (value) -> @setStyle("paddingRight", value, true)
+	@define "paddingBottom",
+		get: -> @style.paddingBottom.replace("px","")
+		set: (value) -> @setStyle("paddingBottom", value, true)
+	@define "paddingLeft",
+		get: -> @style.paddingLeft.replace("px","")
+		set: (value) -> @setStyle("paddingLeft", value, true)
+	@define "textAlign",
+		set: (value) -> @setStyle("textAlign", value)
+	@define "textTransform",
+		get: -> @style.textTransform
+		set: (value) -> @setStyle("textTransform", value)
+	@define "letterSpacing",
+		get: -> @style.letterSpacing.replace("px","")
+		set: (value) -> @setStyle("letterSpacing", value, true)
+	@define "length",
+		get: -> @text.length
 
-# When knob opens, start all consecutive "open" animations
-knobOpen.on Events.AnimationStart, ->
-	knobOnOpen.start()
-	textOpen.start()
-	toggleOpen.start()
-	Utils.delay 0.1, ->
-		text.text = textOn
-	open = true
+convertToTextLayer = (layer) ->
+	t = new TextLayer
+		name: layer.name
+		frame: layer.frame
+		parent: layer.parent
 
-# When knob closes, start all consecutive "close" animations
-knobClose.on Events.AnimationStart, ->
-	knobOnClose.start()
-	textClose.start()
-	toggleClose.start()
-	Utils.delay 0.1, ->
-		text.text = textOff
-	open = false
+	cssObj = {}
+	css = layer._info.metadata.css
+	css.forEach (rule) ->
+		return if _.contains rule, '/*'
+		arr = rule.split(': ')
+		cssObj[arr[0]] = arr[1].replace(';','')
+	t.style = cssObj
 
-toggle.on Events.Click, ->
-	if not timeout
-		if not open
-			knobOpen.start()
-		else
-			knobClose.start()
-	
-	Utils.delay 0.2, ->
-		maskShow.start()
+	importPath = layer.__framerImportedFromPath
+	if _.contains importPath, '@2x'
+		t.fontSize *= 2
+		t.lineHeight = (parseInt(t.lineHeight)*2)+'px'
+		t.letterSpacing *= 2
 
-modalBtn.on Events.Click, ->
-	if not timeout
-		timeout = true
-		print timeout
-		setTimeout timeoutOff, timeoutLength
-		Utils.delay 0.5, -> checkShow.start()
-	modalHide.start()
+	t.y -= (parseInt(t.lineHeight)-t.fontSize)/2 # compensate for how CSS handles line height
+	t.y -= t.fontSize * 0.1 # sketch padding
+	t.x -= t.fontSize * 0.08 # sketch padding
+	t.width += t.fontSize * 0.5 # sketch padding
 
-cancelBtn.on Events.Click, ->
-	modalHide.start()
-	if not timeout
-		Utils.delay 0.5, ->
-			if open
-				knobClose.start()
-			else
-				knobOpen.start()
+	t.text = layer._info.metadata.string
+	layer.destroy()
+	return t
 
-checkShow.on Events.AnimationEnd, ->
-	Utils.delay 1, ->
-		checkHide.start()
+Layer::convertToTextLayer = -> convertToTextLayer(@)
+
+convertTextLayers = (obj) ->
+	for prop,layer of obj
+		if layer._info.kind is "text"
+			obj[prop] = convertToTextLayer(layer)
+
+# Backwards compability. Replaced by convertToTextLayer()
+Layer::frameAsTextLayer = (properties) ->
+    t = new TextLayer
+    t.frame = @frame
+    t.superLayer = @superLayer
+    _.extend t,properties
+    @destroy()
+    t
+
+exports.TextLayer = TextLayer
+exports.convertTextLayers = convertTextLayers
