@@ -1,11 +1,10 @@
 {
-  "deviceOrientation" : 0,
+  "deviceOrientation" : 90,
   "sharedPrototype" : 1,
   "contentScale" : 1,
-  "deviceType" : "apple-iphone-6s-space-gray",
+  "deviceType" : "fullscreen",
   "selectedHand" : "",
   "updateDelay" : 0.3,
-  "deviceScale" : "fit",
-  "orientation" : 0,
-  "fullScreen" : false
+  "deviceScale" : 1,
+  "orientation" : 0
 }

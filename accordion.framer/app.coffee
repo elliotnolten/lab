@@ -2,14 +2,14 @@ bg = new BackgroundLayer backgroundColor: "#f0ede7"
 
 todoW = Screen.width - 80
 todoH = 142
-todoN = 8
+todoN = 5
 expandW = todoW + 40
 expandH = todoH * 2
 animationT = 0.2
 
 Framer.Defaults.Animation =
 # 	curve: "cubic-bezier(.87,-.41,.19,1.44)"
-	curve: "spring(600,38,10)"
+	curve: "spring(400,35,10)"
 	time: animationT
 
 todos = []
@@ -19,6 +19,7 @@ todoIns = []
 
 todoList = new Layer width: Screen.width, height: (todoH + 2) * todoN, backgroundColor: null, y: 80
 todoList.centerX()
+
 
 # Create todos
 
@@ -63,7 +64,7 @@ expandItem = (layer, i) ->
 	# And show button
 	layer.children[1].animate
 		properties: opacity: 1
-		delay: animationT * 3
+		delay: animationT * 2
 
 # Function for collapsing an item
 collapseItem = (layer,i) ->
@@ -82,7 +83,6 @@ collapseItem = (layer,i) ->
 	# And shrink shadow
 	layer.children[0].animate
 		properties: shadowY: 2, shadowBlur: 0, shadowColor: "rgba(49,49,47,0.25)"
-		delay: animationT
 		
 # Loop through all items
 for todoItem in todos
