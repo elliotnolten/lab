@@ -1,0 +1,11 @@
+{
+  "deviceOrientation" : 90,
+  "sharedPrototype" : 0,
+  "contentScale" : 1,
+  "deviceType" : "apple-ipad-air-2-gold",
+  "selectedHand" : "iphone-hands-2",
+  "updateDelay" : 0.3,
+  "deviceScale" : "fit",
+  "orientation" : 90,
+  "fullScreen" : false
+}

@@ -30,11 +30,7 @@ for i in [0...todoN]
 	todBg = new Layer
 		parent: todo
 		width: todo.width, height: todo.height
-		backgroundColor: "white", shadowY: 2, shadowColor: "rgba(49,49,47,0.25)",
-	
-	btn = new Layer parent: todo, backgroundColor: "#36c", borderRadius: 8, x: 40, y: expandH - 100 - 40, height: 88, width: 200, opacity: 0
-	btn.style =
-		"box-shadow": "inset 0 0 -20px solid rgba(49,49,47,1)"
+		backgroundColor: "white", shadowY: 2, shadowColor: "rgba(49,49,47,0.25)"
 
 	todos.push(todo)
 	todoYs.push(todo.y)
@@ -149,6 +145,3 @@ for todoItem in todos
 						# Collapse it
 						collapseItem(item)
 						todoExps[i] = false
-	# Click on button
-	todoItem.children[1].onClick ->
-		collapseItem(this.parent)
