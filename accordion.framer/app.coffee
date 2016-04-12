@@ -30,8 +30,8 @@ for i in [0...todoN]
 	todBg = new Layer
 		parent: todo
 		width: todo.width, height: todo.height
-		backgroundColor: "white", shadowY: 2, shadowColor: "rgba(49,49,47,0.25)"
-
+		backgroundColor: "white", shadowY: 2, shadowColor: "rgba(49,49,47,0.25)",
+	
 	todos.push(todo)
 	todoYs.push(todo.y)
 	todoExps.push(false)
@@ -57,16 +57,9 @@ expandItem = (layer, i) ->
 		delay: animationT
 	# And expand shadow
 	layer.children[0].animate properties: shadowBlur: 40, shadowY: 10, shadowColor: "rgba(49,49,47,0.5)"
-	# And show button
-	layer.children[1].animate
-		properties: opacity: 1
-		delay: animationT * 2
-
+	
 # Function for collapsing an item
 collapseItem = (layer,i) ->
-	# Hide button
-	layer.children[1].animate
-		properties: opacity: 0
 	# First shrink the with
 	layer.children[0].animate properties: scaleX: 1
 	# Second collapse the height and move it back to original place
