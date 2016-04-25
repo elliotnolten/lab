@@ -1,0 +1,2 @@
+{SVGLayer} = require "SVGLayer"
+
