@@ -11,7 +11,16 @@
     window._load_queue.push('http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', '//code.jquery.com/ui/1.11.4/jquery-ui.js', 'http://www.bol.com/nl/static/js/3rdparty/handlebars.runtime-1.0.rc.1.min.js', false);
     window._load_queue.push('ntc.js','shinter.js?v=20150612323', function(){
       (function($){
-        $('#colors').shinter();
+        var hash = $(location).attr('href').split('#')[1];
+        var json;
+        if (hash == 'suits') {
+          json = 'https://sheetsu.com/apis/9f9a937b'
+        } else {
+          json = 'https://sheetsu.com/apis/8fea45d7'
+        }
+        $('#colors').shinter({
+          initSet: json
+        });
       })(jQuery);
     })
   </script>

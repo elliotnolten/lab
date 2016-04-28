@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:2.1
+N:Doe;John
+FN:John Doe
+ORG:Tirhakah Game Corporation
+TITLE:Programmer
+TEL;WORK;VOICE:(555)555-1121
+TEL;HOME;VOICE:(555)555-4568
+TEL;CELL;VOICE:(555)555-4868
+TEL;WORK;FAX:(704)555-4864
+ADR;WORK:;Tirhakah Corporation;3131 Sunstone Dr;Charleton;NC;28083;USA
+URL;WORK:http://www.contactswebsiteURL.com
+EMAIL;INTERNET:jdoe11@tirhakah.com
+END:VCARD

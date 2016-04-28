@@ -1,7 +1,7 @@
 (function($){
   $.fn.shinter = function(options){
     var settings = $.extend({
-      initSet: "https://sheetsu.com/apis/8fea45d7",
+      initSet: 'https://sheetsu.com/apis/8fea45d7',
       debug: false
     },options);
 
@@ -28,7 +28,6 @@
       async: false,
       success: function(data) {
         initSet = data.result;
-        console.log(data.result);
       }
     });
 
