@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lookbook Generator</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    html, body {
+      font-family: "Roboto Condensed";
+      font-size: 1.5rem;
+      color: #183051;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    #dropzone {
+      width: 50%;
+      min-width: 380px;
+      height: 500px;
+      border: 2px dashed #999;
+      margin:5% auto;
+      text-align: center;
+      line-height: 500px;
+      font-size: 96px;
+    }
+    .lookbook {
+      background-color: #f2f2f2;
+      width: 1080px;
+      height: 3610px;
+      text-transform: uppercase;
+      padding:230px 0 0 0;
+      display:inline-block;
+      font-size:72px;
+      line-height: 108px;
+      text-align: left;
+      margin-right: 50px;
+    }
+    .lookbook .image {
+      height:3200px;
+    }
+    .lookbook .image .img {
+      display: block;
+      max-width:100%;
+      max-height:100%;
+      margin: 0 auto;
+    }
+    .lookbook .title {
+      margin-top:60px;
+      margin-left:273px;
+    }
+    .lookbook p {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script type="text/javascript" src="../node_modules/dropzone/dist/min/dropzone.min.js"></script>
+  <script type="text/javascript" src="../node_modules/html2canvas/dist/html2canvas.min.js"></script>
+  <script type="text/javascript" src="js/jquery.blendmode.js"></script>
+  <script type="text/javascript" src="../node_modules/downloadjs/download.min.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="../node_modules/dropzone/dist/dropzone.css"> -->
+  <!-- <script type="text/javascript" src="js/lookbook-generator.js"></script> -->
+  <script type="text/javascript">
+    (function($) {
+
+      $(function() {
+        $('#dropzone').dropzone({
+          url: '/file/post',
+          previewTemplate: $('#preview-template').html(),
+          thumbnailWidth: null,
+          thumbnailHeight: null,
+          previewsContainer: '.dropzone-previews',
+          init: function() {
+
+            this.on('thumbnail', function(file) {
+
+              var lookbook = $(file.previewElement);
+              var txt = lookbook.find('.title span').text();
+              var txtPrts = txt.split('_');
+              var newTxtParts= [];
+              var htmlParts = [];
+              $.each(txtPrts, function(key,val){
+                txtPart = val.replace('.png','');
+                if (key > 0) {
+                  newTxtParts.push(txtPart);
+                }
+              });
+              var newTxtPart2 = newTxtParts.join(' ');
+              var newTitle = txtPrts[0] + ' ' + newTxtPart2;
+              var titleHTML = '<p>' + txtPrts[0] + '</p>' + '<p>' + newTxtPart2 + '</p>';
+              lookbook.find('.title').append(titleHTML);
+              blend(lookbook)
+              .done(png(lookbook,newTitle));
+
+            });
+          }
+        });
+
+        var blend = function(el) {
+          var r = $.Deferred();
+          el.find('img').blendmode({
+            mode:"multiply",
+            object: "#f2f2f2"
+          });
+          return r;
+        };
+
+        var png = function(el,title) {
+          var r = $.Deferred();
+          var imgURL;
+          html2canvas(el, {
+            onrendered: function(canvas) {
+              imgURL = canvas.toDataURL();
+              $('#img-out').append(canvas);
+              canvas.title = title;
+              el.remove();
+            }
+          });
+          return r;
+        };
+
+      });
+
+    })(jQuery);
+  </script>
+</head>
+<body>
+  <div id="preview-template" style="display: none;">
+    <div class="lookbook dz-preview dz-file-preview">
+      <div class="image">
+        <img class="img" data-dz-thumbnail>
+      </div>
+      <div class="title">
+        <span data-dz-name style="display: none;"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropzone">Drop your images here</div>
+
+  <div class="dropzone-previews"></div>
+
+  <div id="img-out"></div>
+
+</body>
+</html>
