@@ -58,13 +58,19 @@ input = new TextLayer
 input.centerY()
 
 label.originX = 0
-label.states.add
-	edit:
-		scale: 0.8
-		y: 0
-	done:
-		scale: 1
-		y: (info.height - 48) / 2
+
+moveLabel = (layer,edit) ->
+	if !edit
+		layer.animate
+			properties:
+				scale: 0.8, y: 0
+	else
+		layer.animate
+			properties:
+				scale: 1, y: (info.height - 48) / 2
+
+toggleInput = (layer,edit) ->
+	if !edit then layer.animate properties: opacity: 1 else layer.animate properties: opacity: 0
 
 input.states.add
 	edit:
@@ -75,14 +81,14 @@ input.states.add
 edit = false
 
 value.onClick ->
+	toggleInput(input,edit)
+	moveLabel(label,edit)
 	if !edit
-		input.states.next("edit")
-		label.states.next("edit")
 		value.text = "done"
+		value.color = "#183051"
 		edit = true
 	else
-		input.states.next("done")
-		label.states.next("done")
 		value.text = input.text
+		value.color = "#999"
 		edit = false
 	value.maxX = info.maxX - 48
