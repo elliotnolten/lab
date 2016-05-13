@@ -72,7 +72,6 @@ input.states.add
 edit = false
 
 value.onClick ->
-	print "edit"
 	if !edit
 		input.states.next("edit")
 		label.states.next("edit")
