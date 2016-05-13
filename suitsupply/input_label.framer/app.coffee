@@ -1,5 +1,8 @@
 bg = new BackgroundLayer backgroundColor: "#f2f2f2"
 
+# Get roboto font
+Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto:300);")
+
 Framer.Defaults.Animation =
 	curve: "spring(350,30,10)"
 
@@ -31,7 +34,7 @@ label.style = small
 value = new TextLayer
 	text: "H.J.E. Wenckebachweg"
 	parent: info
-	fontFamily: "Roboto Condensed"
+	fontFamily: "Roboto"
 	color: "#999"
 	textAlign: "right"
 	autoSize: true
@@ -43,7 +46,7 @@ value.maxX = info.maxX - 48
 input = new TextLayer
 	text: value.text
 	parent: info
-	fontFamily: "Roboto Condensed"
+	fontFamily: "Roboto"
 	color: "#999"
 	textAlign: "left"
 	autoSize: true
