@@ -7,6 +7,9 @@ slider = new PageComponent
 slider.center()
 slider.scrollVertical = false
 
+Events.wrap(window).addEventListener "resize", (event) ->
+    slider.center()
+
 slides = [cd.rts,cd.facts,cd.store]
 
 cd.products.states.add
