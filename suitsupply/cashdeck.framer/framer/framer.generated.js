@@ -199,7 +199,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 					{
 						"objectId": "044FD141-6B18-4BE5-97CF-3924C32AB4FF",
 						"kind": "group",
-						"name": "title",
+						"name": "title1",
 						"maskFrame": null,
 						"layerFrame": {
 							"x": 0,
@@ -212,7 +212,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 							"opacity": 1
 						},
 						"image": {
-							"path": "images/Layer-title-mdq0rkqx.png",
+							"path": "images/Layer-title1-mdq0rkqx.png",
 							"frame": {
 								"x": 0,
 								"y": 0,
@@ -225,7 +225,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 					{
 						"objectId": "092AFFA4-CF70-484F-826A-E3EF26879C25",
 						"kind": "group",
-						"name": "store_img",
+						"name": "store_img1",
 						"maskFrame": null,
 						"layerFrame": {
 							"x": -281,
@@ -238,7 +238,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 							"opacity": 1
 						},
 						"image": {
-							"path": "images/Layer-store_img-mdkyquzg.jpg",
+							"path": "images/Layer-store_img1-mdkyquzg.jpg",
 							"frame": {
 								"x": -281,
 								"y": -240,
@@ -269,7 +269,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 					{
 						"objectId": "7ADFE9D3-E8CC-4082-A591-C92C12701DDB",
 						"kind": "group",
-						"name": "title1",
+						"name": "title0",
 						"maskFrame": null,
 						"layerFrame": {
 							"x": 0,
@@ -282,7 +282,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 							"opacity": 1
 						},
 						"image": {
-							"path": "images/Layer-title-n0ferku5.png",
+							"path": "images/Layer-title0-n0ferku5.png",
 							"frame": {
 								"x": 0,
 								"y": 0,
@@ -295,7 +295,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 					{
 						"objectId": "07EB3B65-736A-4275-8377-70A31B1F608A",
 						"kind": "group",
-						"name": "store_img1",
+						"name": "store_img0",
 						"maskFrame": null,
 						"layerFrame": {
 							"x": -279,
@@ -308,7 +308,7 @@ window.__imported__["cashdeck_pilot_visuals@1x/layers.json.js"] = [
 							"opacity": 1
 						},
 						"image": {
-							"path": "images/Layer-store_img-mddfqjnc.jpg",
+							"path": "images/Layer-store_img0-mddfqjnc.jpg",
 							"frame": {
 								"x": -279,
 								"y": -201,
