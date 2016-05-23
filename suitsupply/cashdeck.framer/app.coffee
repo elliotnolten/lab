@@ -42,8 +42,8 @@ panAnimation = (layer) ->
 	down = new Animation
 		layer: layer
 		properties:
-			minX: 100
-			minY: 100
+			minX: 80
+			minY: 80
 			scale: 0.8
 		time: 15
 		curve: "ease-in-out"
