@@ -3,6 +3,8 @@ framer/backups/backup-1461845934.coffee
 framer/backups/backup-1462365516.coffee
 framer/backups/backup-1462883669.coffee
 framer/backups/backup-1462950513.coffee
+framer/backups/backup-2016-05-12 15.05.32.coffee
+framer/backups/backup-2016-05-13 15.04.06.coffee
 framer/coffee-script.js
 framer/config.json
 framer/framer.generated.js
@@ -28,6 +30,7 @@ framer/images/icon-framer.png
 framer/images/icon-framer@2x.png
 framer/images/icon-share.png
 framer/images/icon-share@2x.png
+framer/manifest.txt
 framer/mirror.css
 framer/style.css
 framer/version
