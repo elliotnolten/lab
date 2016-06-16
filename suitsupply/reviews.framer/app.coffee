@@ -24,7 +24,7 @@ top = new Layer
 
 # Employees
 # Variables
-delay = 1
+delay = 4
 spring = "spring(200,50,0)"
 cardW = 940 * x
 cardH = 220 * x
