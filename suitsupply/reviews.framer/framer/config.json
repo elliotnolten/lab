@@ -10,7 +10,10 @@
   "updateDelay" : 0,
   "deviceScale" : 1,
   "foldedCodeRanges" : [
-    "{1162, 2783}"
+    "{0, 579}",
+    "{580, 100}",
+    "{681, 3419}",
+    "{4101, 97}"
   ],
   "orientation" : 0
 }

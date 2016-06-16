@@ -1,3 +1,4 @@
+# Setup scene
 # Require jQuery
 $ = require("npm").jquery
 
@@ -15,7 +16,12 @@ Framer.DeviceView.Devices["custom"] =
 # Set custom device
 Framer.Device.deviceType = "custom"
 darkblue = "#183051"
+
+# Dark blue background
 bg = new BackgroundLayer backgroundColor: darkblue
+
+# Insert Roboto Condensed font
+Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto Condensed:300);")
 
 # Top Screen
 top = new Layer
@@ -23,6 +29,7 @@ top = new Layer
 	image: "images/top_screen.png"
 
 # Employees
+
 # Variables
 delay = 4
 spring = "spring(200,50,0)"
@@ -37,7 +44,6 @@ employeeTitle = new TextLayer
 	fontWeight: 300
 	x: 70 * x, y: 2016 * x
 	fontSize: 56 * x
-	
 
 reviewsHolder = new Layer
 	width: cardW, height: (cardH + cardP) * 4 + 80 * x, clip: true, backgroundColor: null, y: 2140 * x
@@ -52,7 +58,6 @@ reviews.content.backgroundColor = null
 
 reviews.centerX()
 
-# Cards
 # https://sheetsu.com/apis/v1.0/8fea45d7
 feed = $.ajax
 	url: "employees.json"
@@ -177,6 +182,7 @@ feed.done (data) ->
 	Utils.interval delay, ->
 		moveCards()
 
+# Yelp
 yelp = new Layer
 	width: 1080 * x, height: 518 * x, y: 3236 * x
 	image: "images/yelp.png"
