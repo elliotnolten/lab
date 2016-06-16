@@ -1,7 +1,7 @@
 (function($){
   $.fn.shinter = function(options){
     var settings = $.extend({
-      initSet: 'https://sheetsu.com/apis/8fea45d7',
+      initSet: 'bolcom.json',
       debug: false
     },options);
 
