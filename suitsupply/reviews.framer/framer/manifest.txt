@@ -1,8 +1,5 @@
 app.coffee
 employees.json
-framer/backups/backup-2016-06-16 14.48.15.coffee
-framer/backups/backup-2016-06-16 14.49.15.coffee
-framer/backups/backup-2016-06-16 14.50.15.coffee
 framer/backups/backup-2016-06-16 14.51.15.coffee
 framer/backups/backup-2016-06-16 14.52.15.coffee
 framer/backups/backup-2016-06-16 14.53.15.coffee
@@ -21,6 +18,9 @@ framer/backups/backup-2016-06-16 15.09.15.coffee
 framer/backups/backup-2016-06-16 15.10.15.coffee
 framer/backups/backup-2016-06-16 15.15.15.coffee
 framer/backups/backup-2016-06-16 15.16.15.coffee
+framer/backups/backup-2016-06-16 15.17.15.coffee
+framer/backups/backup-2016-06-16 15.20.15.coffee
+framer/backups/backup-2016-06-16 15.22.15.coffee
 framer/coffee-script.js
 framer/config.json
 framer/framer.generated.js

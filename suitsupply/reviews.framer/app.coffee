@@ -6,7 +6,7 @@ TextLayer = require("TextLayer")
 
 # Device
 # deviceType can be either "phone" or "desktop"
-x = 1
+x = Screen.height / 3840
 Framer.DeviceView.Devices["custom"] =
 "deviceType": "tv"
 "screenWidth": 1080 * x
@@ -52,8 +52,9 @@ reviews.scrollHorizontal = false
 reviews.centerX()
 
 # Cards
+# https://sheetsu.com/apis/v1.0/8fea45d7
 feed = $.ajax
-	url: "https://sheetsu.com/apis/v1.0/8fea45d7"
+	url: "employees.json"
 	contentType: "application/json;"
 	dataType: "json"
 	jsonpCallback: "callback"
