@@ -9,8 +9,11 @@
   "selectedHand" : "",
   "updateDelay" : 0.3,
   "deviceScale" : 1,
-  "codeFolds" : [
-
+  "foldedCodeRanges" : [
+    "{35, 102}",
+    "{289, 1075}",
+    "{1365, 693}",
+    "{2059, 601}"
   ],
   "orientation" : 0
 }

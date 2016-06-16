@@ -13,6 +13,7 @@ p = 1
 if Utils.isPhone()
 	p = 2
 
+# Create elements
 bg = new BackgroundLayer backgroundColor: "#fafafa"
 
 infoH = 56 * p
@@ -57,6 +58,7 @@ edit.style =
 	"white-space": "normal"
 	"word-wrap": "break-word"
 
+# States of elements
 icEdit = new Layer
 	parent: info, backgroundColor: "#fff"
 	width: 48 * p, height: info.height
@@ -93,6 +95,7 @@ icEdit.states.add
 		backgroundColor: "#f2f2f2"
 icEdit.states.switchInstant("blur")
 
+# Events & Clicks
 editState = false
 
 toggleEdit = () ->

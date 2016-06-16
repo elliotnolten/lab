@@ -101,3 +101,7 @@ value.onClick ->
 		value.color = "#999"
 		edit = false
 	value.maxX = info.maxX - 48
+
+document.getElementsByTagName("div").onfocus = () ->
+	print "focus"
+	
