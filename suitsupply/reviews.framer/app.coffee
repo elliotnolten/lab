@@ -48,6 +48,7 @@ reviews = new PageComponent
 	width: reviewsHolder.width, height: cardH
 	backgroundColor: null, clip: false
 reviews.scrollHorizontal = false
+reviews.content.backgroundColor = null
 
 reviews.centerX()
 
