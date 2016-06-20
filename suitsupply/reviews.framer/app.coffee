@@ -21,21 +21,38 @@ darkblue = "#183051"
 bg = new BackgroundLayer backgroundColor: darkblue
 
 # Insert Roboto Condensed font
-Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto Condensed:300);")
+Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300);")
 
 # Top Screen
-top = new Layer
+store = new Layer
 	width: Screen.width, height: 2272 * x
-	image: "images/top_screen.png"
+	image: "images/store.png"
+
+feat = new Layer
+	width: 980 * x, height: 1104 * x, y: 246 * x
+	image: "images/feat.png"
+feat.centerX()
+# featShadow = new Layer
+# 	parent: feat
+# 	width: feat.width * 0.9, height: feat.height * 0.9, y: 40
+# 	backgroundColor: "rgba(0,0,0,0.5)", blur: 10
+# featContainer = new Layer
+# 	parent: feat
+# 	width: feat.width, height: feat.height
+# 	backgroundColor: "#fff"
+# featShadow.centerX()
+	
 
 # Employees
 
 # Variables
-delay = 4
-spring = "spring(200,50,0)"
-cardW = 940 * x
-cardH = 220 * x
-cardP = 40 * x
+delayemp = 4
+springemp = "cubic-bezier(.75,.01,.25,1)"
+cardWemp = 940 * x
+cardHemp = 220 * x
+cardPemp = 40 * x
+cards = []
+cardSet = 6
 
 employeeTitle = new TextLayer
 	text: "All employees"
@@ -46,12 +63,12 @@ employeeTitle = new TextLayer
 	fontSize: 56 * x
 
 reviewsHolder = new Layer
-	width: cardW, height: (cardH + cardP) * 4 + 80 * x, clip: true, backgroundColor: null, y: 2140 * x
+	width: cardWemp, height: (cardHemp + cardPemp) * cardSet + 80 * x, clip: true, backgroundColor: null, y: 2140 * x
 reviewsHolder.centerX()
 
 reviews = new PageComponent
 	parent: reviewsHolder
-	width: reviewsHolder.width, height: cardH
+	width: reviewsHolder.width, height: cardHemp
 	backgroundColor: null, clip: false
 reviews.scrollHorizontal = false
 reviews.content.backgroundColor = null
@@ -70,14 +87,13 @@ feed.error ->
 	
 feed.done (data) ->
 	# Variables
-	cards = []
-	cardSet = 4
+	
 	
 	# Create cards
 	$.each data,(i,e) ->
 		card = new Layer
 			parent: reviews.content
-			width: cardW, height: cardH, y: (i - 1) * (cardH + cardP)
+			width: cardWemp, height: cardHemp, y: (i - 1) * (cardHemp + cardPemp)
 			backgroundColor: null
 		cardShadow = new Layer
 			parent: card
@@ -164,25 +180,29 @@ feed.done (data) ->
 	moveCards = () ->
 		if  index < cardCount - 1 - cardSet
 			nextPage = cards[cardCount - 1 - cardSet - index]
-			lastPage = cards[cardCount - 1 - cardSet - index + 4]
-			reviews.snapToPage(nextPage,true,animationOptions = curve: spring)
-			transformChild(nextPage,spring)
+			lastPage = cards[cardCount - 1 - cardSet - index + cardSet]
+			reviews.snapToPage(nextPage,true,animationOptions = curve: springemp)
+			transformChild(nextPage,springemp)
 			lastPage.sendToBack()
 			lastPage.animate
 				properties:
-					y: lastPage.y - (cardH + cardP)
+					y: lastPage.y - (cardHemp + cardPemp)
 					opacity: 0
 					scale: 0.9
-				curve: spring
+				curve: springemp
 			
 			index++
 		else 
 			return
 
-	Utils.interval delay, ->
+	Utils.interval delayemp, ->
 		moveCards()
 
 # Yelp
-yelp = new Layer
-	width: 1080 * x, height: 518 * x, y: 3236 * x
-	image: "images/yelp.png"
+# yelp = new Layer
+# 	width: 1080 * x, height: 518 * x, y: 3236 * x
+# 	image: "images/yelp.png"
+
+
+	
+
