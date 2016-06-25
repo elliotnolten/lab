@@ -1,0 +1,18 @@
+{
+  "propertyPanelToggleStates" : {
+    "Filters" : false
+  },
+  "deviceOrientation" : 0,
+  "sharedPrototype" : 0,
+  "contentScale" : 1,
+  "deviceType" : "fullscreen",
+  "selectedHand" : "",
+  "updateDelay" : 0,
+  "deviceScale" : 1,
+  "foldedCodeRanges" : [
+    "{0, 927}",
+    "{928, 3547}",
+    "{4476, 2999}"
+  ],
+  "orientation" : 0
+}
