@@ -14,7 +14,7 @@ Framer.DeviceView.Devices["tv"] =
 	"screenHeight": 3840 * x
 
 # Set custom device
-# Framer.Device.deviceType = "tv"
+Framer.Device.deviceType = "tv"
 
 screenMidX = Screen.width / 2
 screenMidY = Screen.height / 2
@@ -26,7 +26,7 @@ bg = new BackgroundLayer backgroundColor: darkblue
 
 # Insert Roboto Condensed font
 Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:100);")
-Utils.insertCSS("-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;")
+Utils.insertCSS("body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}")
 
 # Store image
 store = new Layer
