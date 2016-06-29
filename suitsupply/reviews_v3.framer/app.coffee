@@ -25,7 +25,8 @@ darkblue = "#183051"
 bg = new BackgroundLayer backgroundColor: darkblue
 
 # Insert Roboto Condensed font
-Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300);")
+Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:100);")
+Utils.insertCSS("-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;")
 
 # Store image
 store = new Layer
@@ -42,7 +43,7 @@ storeName = new TextLayer
 	fontFamily: "Roboto Condensed"
 	color: "#fff"
 	fontSize: 120 * x
-	fontWeight: 300
+	fontWeight: 100
 	autoSize: true
 	x: 70 * x, y: 1640 * x
 
@@ -99,7 +100,7 @@ feed.done (data) ->
 		time = new TextLayer
 			parent: timeStamp
 			text: "1 hour ago"
-			color: "#fff", fontFamily: "Roboto Condensed", fontWeight: 300, fontSize: 36 * x, lineHeight: 1, textAlign: "right"
+			color: "#fff", fontFamily: "Roboto Condensed", fontWeight: 100, fontSize: 36 * x, lineHeight: 1, textAlign: "right"
 			maxX: icClock.x - icClock.width
 		cardContainer = new Layer
 			parent: card
@@ -116,7 +117,7 @@ feed.done (data) ->
 			parent: content
 			text: "Willem from Wormerveer rated " + e.name + " with Excellent"
 			width: card.width - 80 * x, x: 40 * x, y: 40 * x
-			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 300, fontSize: 36 * x, lineHeight: 1.5
+			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 100, fontSize: 36 * x, lineHeight: 1.5
 		emp = new Layer
 			parent: content
 			width: card.width, height: 210 * x, backgroundColor: null
@@ -131,10 +132,10 @@ feed.done (data) ->
 			x: 170 * x, y: 40 * x, width: 170 * x
 			autoSize: true
 			text: e.name
-			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 300, fontSize: 56 * x, lineHeight: 1.5
+			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 100, fontSize: 56 * x, lineHeight: 1.5
 		empRole = new TextLayer
 			parent: emp
-			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 300, fontSize: 36 * x, lineHeight: 1.5
+			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 100, fontSize: 36 * x, lineHeight: 1.5
 			text: e.role + " /"
 			x: 170 * x, y: 110 * x
 			autoSize: true
