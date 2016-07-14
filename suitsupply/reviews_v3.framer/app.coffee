@@ -21,6 +21,8 @@ screenMidY = Screen.height / 2
 
 darkblue = "#183051"
 
+document.body.style.cursor = "none"
+
 # Dark blue background
 bg = new BackgroundLayer backgroundColor: darkblue
 
@@ -167,7 +169,7 @@ feed.done (data) ->
 # 	
 	# # Snap to last 4 pages
 	reviews.snapToPage(cards[cardCount - 1 - cardSet],false)
-	# 
+	
 	# # Animation
 	moveCards = () ->
 		if  index < cardCount - 1 - cardSet
