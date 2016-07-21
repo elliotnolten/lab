@@ -9,7 +9,7 @@ TextLayer = require("TextLayer")
 # deviceType can be either "phone" or "desktop"
 x = Screen.height / 3840
 Framer.DeviceView.Devices["tv"] =
-	"deviceType": "phone"
+	"deviceType": "desktop"
 	"screenWidth": 1080 * x
 	"screenHeight": 3840 * x
 
@@ -24,57 +24,54 @@ darkblue = "#183051"
 document.body.style.cursor = "none"
 
 # Dark blue background
-bg = new BackgroundLayer backgroundColor: darkblue
+bg = new BackgroundLayer backgroundColor: null, image: "https://s3-us-west-2.amazonaws.com/tv-app-yelp/stores/Amsterdam.png?v=1", width: Screen.width, height: Screen.height
 
 # Insert Roboto Condensed font
-Utils.insertCSS("@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:100);")
-Utils.insertCSS("body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}")
 
 # Store image
-store = new Layer
-	width: 1080 * x, height: 2272 * x
-	image: "images/amsterdam_store.jpg"
-storeGrad = new Layer
-	width: store.width, height: store.height / 2, maxY: store.maxY
-storeGrad.style.background = "-webkit-linear-gradient(top, transparent 0%, #183051 100%)"
+# store = new Layer
+# 	width: 1080 * x, height: 2272 * x
+# 	image: "images/amsterdam_store.jpg"
+# storeGrad = new Layer
+# 	width: store.width, height: store.height / 2, maxY: store.maxY
+# storeGrad.style.background = "-webkit-linear-gradient(top, transparent 0%, #183051 100%)"
 	
 
 # Store name
-storeName = new TextLayer
-	text: "AMSTERDAM"
-	fontFamily: "Roboto Condensed"
-	color: "#fff"
-	fontSize: 120 * x
-	fontWeight: 100
-	autoSize: true
-	x: 70 * x, y: 1640 * x
+# storeName = new TextLayer
+# 	text: "AMSTERDAM"
+# 	fontFamily: "Roboto Condensed"
+# 	color: "#fff"
+# 	fontSize: 120 * x
+# 	fontWeight: 100
+# 	autoSize: true
+# 	x: 70 * x, y: 1640 * x
 
 # Activity timeline
 
 # Variables
-delayemp = 4
-springemp = "cubic-bezier(.75,.01,.25,1)"
-cardWemp = 940 * x
-cardHemp = 354 * x
-cardPemp = 80 * x
+delay = 4
+spring = "cubic-bezier(.75,.01,.25,1)"
+cardW = 940 * x
+cardH = 354 * x
+cardP = 80 * x
 cards = []
 cardSet = 4
 
 reviewsHolder = new Layer
-	width: cardWemp, height: (cardHemp + cardPemp) * cardSet + 80 * x, clip: true, backgroundColor: null, x: 70 * x, y: 1980 * x
+	width: cardW, height: (cardH + cardP) * cardSet + 80 * x, clip: true, backgroundColor: null, x: 70 * x, y: 1980 * x
 
 reviews = new PageComponent
 	parent: reviewsHolder
-	width: reviewsHolder.width, height: cardHemp
+	width: reviewsHolder.width, height: cardH
 	backgroundColor: null, clip: false
 reviews.scrollHorizontal = false
 reviews.content.backgroundColor = null
 
 reviews.centerX()
 
-# https://sheetsu.com/apis/v1.0/8fea45d7
 feed = $.ajax
-	url: "employees.json"
+	url: "https://sheetsu.com/apis/v1.0/8fea45d7"
 	contentType: "application/json;"
 	dataType: "json"
 	jsonpCallback: "callback"
@@ -90,7 +87,7 @@ feed.done (data) ->
 	$.each data,(i,e) ->
 		card = new Layer
 			parent: reviews.content
-			width: cardWemp, height: cardHemp, y: (i - 1) * (cardHemp + cardPemp)
+			width: cardW, height: cardH, y: (i - 1) * (cardH + cardP)
 			backgroundColor: null
 		timeStamp = new Layer
 			parent: card
@@ -119,7 +116,7 @@ feed.done (data) ->
 			parent: content
 			text: "Willem from Wormerveer rated " + e.name + " with Excellent"
 			width: card.width - 80 * x, x: 40 * x, y: 40 * x
-			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 100, fontSize: 36 * x, lineHeight: 1.5
+			color: darkblue, fontFamily: "Roboto Condensed", fontWeight: 300, fontSize: 36 * x, lineHeight: 1.5
 		emp = new Layer
 			parent: content
 			width: card.width, height: 210 * x, backgroundColor: null
@@ -175,19 +172,19 @@ feed.done (data) ->
 		if  index < cardCount - 1 - cardSet
 			nextPage = cards[cardCount - 1 - cardSet - index]
 			lastPage = cards[cardCount - 1 - cardSet - index + cardSet]
-			reviews.snapToPage(nextPage,true,animationOptions = curve: springemp)
-			transformChild(nextPage,springemp)
+			reviews.snapToPage(nextPage,true,animationOptions = curve: spring)
+			transformChild(nextPage,spring)
 			lastPage.sendToBack()
 			lastPage.animate
 				properties:
-					y: lastPage.y - (cardHemp + cardPemp)
+					y: lastPage.y - (cardH + cardP)
 					opacity: 0
 					scale: 0.9
-				curve: springemp
+				curve: spring
 			
 			index++
 		else 
 			return
 
-	Utils.interval delayemp, ->
+	Utils.interval delay, ->
 		moveCards()

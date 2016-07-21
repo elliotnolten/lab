@@ -1,5 +1,4 @@
 app.coffee
-framer/backups/backup-2016-05-20 16.03.47.coffee
 framer/backups/backup-2016-05-20 16.06.47.coffee
 framer/backups/backup-2016-05-20 16.07.47.coffee
 framer/backups/backup-2016-05-20 16.08.47.coffee
@@ -20,6 +19,7 @@ framer/backups/backup-2016-05-20 16.42.48.coffee
 framer/backups/backup-2016-05-20 16.43.48.coffee
 framer/backups/backup-2016-05-20 16.44.48.coffee
 framer/backups/backup-2016-05-20 16.45.48.coffee
+framer/backups/backup-2016-05-23 13.01.17.coffee
 framer/coffee-script.js
 framer/config.json
 framer/framer.generated.js
@@ -47,6 +47,7 @@ framer/images/icon-share.png
 framer/images/icon-share@2x.png
 framer/manifest.txt
 framer/mirror.css
+framer/preview.png
 framer/style.css
 framer/version
 imported/cashdeck_pilot_visuals@1x/images/Layer-fact0-q0u4qzze.png
