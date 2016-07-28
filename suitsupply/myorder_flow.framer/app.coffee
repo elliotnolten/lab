@@ -1,14 +1,12 @@
 bg = new BackgroundLayer backgroundColor: "#f0ede7"
 
 todoW = Screen.width * 0.5
-print Utils.isMobile()
-if Utils.isMobile()
-	print "is mobile"
+if Framer.Device.deviceType is "apple-iphone-6s-gold"
 	todoW = Screen.width * 0.9
 todoH = todoW / 5
 todoP = 20
 todoListH = Screen.height
-todoN = Utils.randomNumber(5,50)
+todoN = Utils.randomNumber(3,7)
 expandW = todoW + 40
 expandH = todoH * 2
 animationT = 0.2
@@ -56,12 +54,13 @@ for i in [0...todoN]
 	added.push(false)
 
 # Create floating basket
-basket = new Layer width: 80, height: 80, maxX: Screen.width - 40, maxY: Screen.height - 40, backgroundColor: null
+basket = new Layer width: 120, height: 120, maxX: Screen.width - 40, maxY: Screen.height - 40, backgroundColor: null
 
-basketBg = new Layer parent: basket, width: basket.width, height: basket.height, borderRadius: 40
+basketBg = new Layer parent: basket, width: basket.width, height: basket.height, borderRadius: basket.width / 2
 
 basketSum = new Layer parent: basket, width: basket.width, height: basket.height, backgroundColor: null, html: sum
 basket.style =
+	"font-size": "48px"
 	"text-align": "center"
 	"line-height": "#{basket.height}px"
 
