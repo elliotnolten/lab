@@ -1,12 +1,14 @@
 bg = new BackgroundLayer backgroundColor: "#f0ede7"
 
 todoW = Screen.width * 0.5
+print Utils.isMobile()
 if Utils.isMobile()
-	todoW = Screen.width * 0.8
+	print "is mobile"
+	todoW = Screen.width * 0.9
 todoH = todoW / 5
-todoP = 10
+todoP = 20
 todoListH = Screen.height
-todoN = 6
+todoN = Utils.randomNumber(5,50)
 expandW = todoW + 40
 expandH = todoH * 2
 animationT = 0.2
@@ -24,10 +26,11 @@ todoExps = []
 todoIns = []
 added = []
 
-todoList = new ScrollComponent width: Screen.width, height: todoListH, backgroundColor: null
+todoList = new ScrollComponent width: Screen.width, height: todoListH, backgroundColor: null, clip: false
 todoList.centerX()
 todoList.scrollHorizontal = false
-
+todoList.contentInset = top: 80
+todoList.content.clip = false
 
 # Create todos
 for i in [0...todoN]
@@ -50,6 +53,7 @@ for i in [0...todoN]
 		"text-align": "center"
 		"line-height": "#{btn.height}px"
 	btn.sendToBack()
+	added.push(false)
 
 # Create floating basket
 basket = new Layer width: 80, height: 80, maxX: Screen.width - 40, maxY: Screen.height - 40, backgroundColor: null
@@ -67,6 +71,7 @@ popOutBasket = new Animation
 	layer: basketBg
 	properties:
 		scale: 1.2
+		backgroundColor: "red"
 	curve: curve
 popInBasket = popOutBasket.reverse()
 
@@ -190,17 +195,28 @@ for todoItem in todos
 		
 	
 	todoItem.children[1].onClick ->
-		todoWrap = @parent
-		cI = findIndex(todoWrap,todos)
+		todoWrapper = @parent
+		currentI = findIndex(todoWrapper,todos)
 		# If its parent is expanded
-		if todoExps[cI]
-			# Animate the basket and increment the basket sum by 1
+		if todoExps[currentI]
+			# And if this item is not yet added
 			popOutBasket.start()
-			sum += 1
-			basketSum.html = sum
+			if not added[currentI]
+				# Increment the basket sum by 1
+				sum += 1
+				added[currentI] = true
+				basketSum.html = sum
+				@html = "remove"
+			# If the item is added
+			else
+				# Decrement the basket sum by 1
+				sum -= 1
+				added[currentI] = false
+				basketSum.html = sum
+				@html = "add"
 			# When the basket Animation is done
 			popInBasket.onAnimationStart ->
 				# Collapse the item
-				collapseItem(todoWrap,cI)
-				changeOthers(todos,cI)
-			
+				collapseItem(todoWrapper,currentI)
+				changeOthers(todos,currentI)
+				
