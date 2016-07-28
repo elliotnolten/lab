@@ -26,27 +26,6 @@ document.body.style.cursor = "none"
 # Dark blue background
 bg = new BackgroundLayer backgroundColor: null, image: "https://s3-us-west-2.amazonaws.com/tv-app-yelp/stores/Amsterdam.png?v=1", width: Screen.width, height: Screen.height
 
-# Insert Roboto Condensed font
-
-# Store image
-# store = new Layer
-# 	width: 1080 * x, height: 2272 * x
-# 	image: "images/amsterdam_store.jpg"
-# storeGrad = new Layer
-# 	width: store.width, height: store.height / 2, maxY: store.maxY
-# storeGrad.style.background = "-webkit-linear-gradient(top, transparent 0%, #183051 100%)"
-	
-
-# Store name
-# storeName = new TextLayer
-# 	text: "AMSTERDAM"
-# 	fontFamily: "Roboto Condensed"
-# 	color: "#fff"
-# 	fontSize: 120 * x
-# 	fontWeight: 100
-# 	autoSize: true
-# 	x: 70 * x, y: 1640 * x
-
 # Activity timeline
 
 # Variables
@@ -71,7 +50,7 @@ reviews.content.backgroundColor = null
 reviews.centerX()
 
 feed = $.ajax
-	url: "https://sheetsu.com/apis/v1.0/8fea45d7"
+	url: "employees.json"
 	contentType: "application/json;"
 	dataType: "json"
 	jsonpCallback: "callback"
@@ -145,6 +124,7 @@ feed.done (data) ->
 		
 		cards.push(card)
 	
+# 	Set some new variables for the created cards
 	cardCount = cards.length
 	index = 1
 	maxIndex = cardCount - cardSet
