@@ -6,7 +6,7 @@ if Framer.Device.deviceType is "apple-iphone-6s-gold"
 todoH = todoW / 5
 todoP = 20
 todoListH = Screen.height
-todoN = Utils.randomNumber(3,7)
+todoN = Utils.randomNumber(3,8)
 expandW = todoW + 40
 expandH = todoH * 2
 animationT = 0.2
