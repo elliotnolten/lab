@@ -44,7 +44,6 @@ todoList.centerY(-20)
 
 
 # Create todos
-
 for i in [0...todoN]
 	todo = new Layer width: todoW, height: todoH, y: (todoH + todoP) * i, parent: todoList, backgroundColor: null
 	todo.centerX()
@@ -60,6 +59,7 @@ for i in [0...todoN]
 	todoIns.push(todo.index)
 
 # Some functions
+# Function to find the index of an object in its array
 findIndex = (object,arr) ->
 	for i, objects of arr
 		return parseInt(i) if object == objects
@@ -69,13 +69,13 @@ expandItem = (layer, i) ->
 	# And put it in front
 	layer.bringToFront()
 	# First widen it
-	layer.children[0].animate properties: scaleX: expandW / todoW
+	layer.children[0].animate properties: width: expandW, x: (todoW - expandW) / 2
 	# Second expand height and move it 20 pixels up
 	layer.children[0].animate
-		properties: height: expandH
+		properties: height: expandH, y: (todoH - expandW) / 8
 		delay: animationT
 	layer.animate
-		properties: y: todoYs[i] - todoP * 1.5
+		properties: y: todoYs[i] - todo
 		delay: animationT
 	# And expand shadow
 	layer.children[0].animate properties: shadowBlur: 40, shadowY: 10, shadowColor: "rgba(49,49,47,0.5)", opacity: 1
@@ -83,16 +83,18 @@ expandItem = (layer, i) ->
 # Function for collapsing an item
 collapseItem = (layer,i) ->
 	# First shrink the with
-	layer.children[0].animate properties: scaleX: 1
+	layer.children[0].animate properties: width: todoW, x: 0
 	# Second collapse the height and move it back to original place
 	layer.children[0].animate
-		properties: height: todoH
+		properties: height: todoH, y: 0
 		delay: animationT
-	layer.animate
-		properties: y: todoYs[i]
-		delay: animationT
+# 	layer.animate
+# 		properties: y: todoYs[i]
+# 		delay: animationT
 	# And shrink shadow
-	layer.children[0].animate properties: shadowY: 0, shadowBlur: 0, opacity: 0.5
+	layer.children[0].animate
+		properties: shadowY: 0, shadowBlur: 0, opacity: 0.5
+		delay: animationT
 		
 # Loop through all items
 for todoItem in todos
@@ -134,7 +136,7 @@ for todoItem in todos
 					if todoExps[cI]
 						# Move it down with a delay
 						item.animate
-							properties: y: todoYs[i - 1] + expandH - todoP * 1.5
+							properties: y: todoYs[i - 1] + expandH - todoH
 							delay: animationT
 					# If the clicked item is collapsed
 					else if !todoExps[cI]

@@ -1,16 +1,17 @@
 {
   "propertyPanelToggleStates" : {
-    "Filters" : false
+
   },
   "deviceOrientation" : 0,
-  "sharedPrototype" : 1,
+  "sharedPrototype" : 0,
   "contentScale" : 1,
-  "deviceType" : "fullscreen",
+  "deviceType" : "desktop-safari-1440-900",
   "selectedHand" : "",
   "updateDelay" : 0.3,
-  "deviceScale" : 1,
+  "deviceScale" : "fit",
   "foldedCodeRanges" : [
-
+    "{121, 317}"
   ],
-  "orientation" : 0
+  "orientation" : 0,
+  "fullScreen" : false
 }
