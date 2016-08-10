@@ -1,4 +1,3 @@
-Framer.Device.deviceScale = 0.5
 # Import file "20160710_box-office_usa-launch" (sizes and positions are scaled 1:2)
 sketch = Framer.Importer.load("imported/20160710_box-office_usa-launch@2x")
 # >>> Framer Fold >>>
