@@ -39,8 +39,64 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 						"height": 64
 					}
 				},
-				"children": [],
-				"time": 154
+				"children": [
+					{
+						"objectId": "9ACE223C-11E5-4352-90CF-EC9A62D1F44A",
+						"kind": "group",
+						"name": "headerPlayBtn",
+						"maskFrame": null,
+						"layerFrame": {
+							"x": 1078,
+							"y": -45,
+							"width": 162,
+							"height": 26
+						},
+						"visible": true,
+						"metadata": {
+							"opacity": 1
+						},
+						"image": {
+							"path": "images/Layer-headerPlayBtn-oufdrtiy.png",
+							"frame": {
+								"x": 1078,
+								"y": -45,
+								"width": 162,
+								"height": 26
+							}
+						},
+						"children": [
+							{
+								"objectId": "949F731B-5CAF-4EBC-A101-30596D5DA5C2",
+								"kind": "group",
+								"name": "_components_playBtn",
+								"maskFrame": null,
+								"layerFrame": {
+									"x": 1078,
+									"y": -45,
+									"width": 26,
+									"height": 26
+								},
+								"visible": true,
+								"metadata": {
+									"opacity": 1
+								},
+								"image": {
+									"path": "images/Layer-_components_playBtn-otq5rjcz.png",
+									"frame": {
+										"x": 1078,
+										"y": -45,
+										"width": 26,
+										"height": 26
+									}
+								},
+								"children": [],
+								"time": 120
+							}
+						],
+						"time": 254
+					}
+				],
+				"time": 423
 			},
 			{
 				"objectId": "60C9A10D-E588-4FAD-A16D-0499AD3F088D",
@@ -83,7 +139,7 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 112
+						"time": 121
 					},
 					{
 						"objectId": "6A2BE328-5278-4D36-B720-375B942326BD",
@@ -109,8 +165,36 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 								"height": 1156
 							}
 						},
-						"children": [],
-						"time": 1023
+						"children": [
+							{
+								"objectId": "3D527FA4-3DE9-42A8-9FD6-4E84F88D4114",
+								"kind": "group",
+								"name": "playBtn",
+								"maskFrame": null,
+								"layerFrame": {
+									"x": 968,
+									"y": 328,
+									"width": 59,
+									"height": 59
+								},
+								"visible": true,
+								"metadata": {
+									"opacity": 1
+								},
+								"image": {
+									"path": "images/Layer-playBtn-m0q1mjdg.png",
+									"frame": {
+										"x": 968,
+										"y": 328,
+										"width": 59,
+										"height": 59
+									}
+								},
+								"children": [],
+								"time": 118
+							}
+						],
+						"time": 1148
 					},
 					{
 						"objectId": "4E93E168-B856-427E-982F-061FE42E0BFE",
@@ -137,7 +221,7 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 614
+						"time": 756
 					},
 					{
 						"objectId": "324584BC-53C1-462E-9DDF-6FB3830E7CA0",
@@ -164,7 +248,7 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 939
+						"time": 1358
 					},
 					{
 						"objectId": "FEC34F84-0929-4FDB-971A-5B27BAA65F50",
@@ -191,7 +275,7 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 1258
+						"time": 1729
 					},
 					{
 						"objectId": "AF6B3299-3F2D-4B56-B9D4-EBA4E536CCA6",
@@ -218,12 +302,12 @@ window.__imported__["20160710_box-office_usa-launch@1x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 203
+						"time": 201
 					}
 				],
-				"time": 4962
+				"time": 6365
 			}
 		],
-		"time": 5169
+		"time": 6844
 	}
 ]

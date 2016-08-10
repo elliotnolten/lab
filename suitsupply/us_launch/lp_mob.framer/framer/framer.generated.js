@@ -43,8 +43,36 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 						"height": 64
 					}
 				},
-				"children": [],
-				"time": 142
+				"children": [
+					{
+						"objectId": "9D17E44E-022D-482E-B5B7-B78357279DF6",
+						"kind": "group",
+						"name": "headerPlayBtn",
+						"maskFrame": null,
+						"layerFrame": {
+							"x": 186,
+							"y": -45,
+							"width": 26,
+							"height": 26
+						},
+						"visible": true,
+						"metadata": {
+							"opacity": 1
+						},
+						"image": {
+							"path": "images/Layer-headerPlayBtn-ouqxn0u0.png",
+							"frame": {
+								"x": 186,
+								"y": -45,
+								"width": 26,
+								"height": 26
+							}
+						},
+						"children": [],
+						"time": 116
+					}
+				],
+				"time": 253
 			},
 			{
 				"objectId": "F80F143E-A999-4437-8D59-EC456900DA25",
@@ -87,7 +115,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 164
+						"time": 171
 					},
 					{
 						"objectId": "254B381C-136F-4E0D-88CD-447E7010AAFC",
@@ -139,10 +167,10 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 922
+								"time": 1071
 							}
 						],
-						"time": 1944
+						"time": 2032
 					},
 					{
 						"objectId": "52DD5F1D-7AC0-4D1B-A5CF-2B4CA100D538",
@@ -169,7 +197,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 1000
+						"time": 977
 					},
 					{
 						"objectId": "7572C1A8-879F-4C66-9942-72D3F920A08E",
@@ -196,7 +224,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 526
+						"time": 510
 					},
 					{
 						"objectId": "429C045A-B374-4D79-A489-40D1CE6692FC",
@@ -223,7 +251,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 							}
 						},
 						"children": [],
-						"time": 111
+						"time": 115
 					},
 					{
 						"objectId": "75821FC1-40D4-4F9D-9553-3C7F941888C3",
@@ -266,7 +294,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 150
+								"time": 156
 							},
 							{
 								"objectId": "627F7861-1195-4A63-A41A-A6AEBD8983BD",
@@ -293,7 +321,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 146
+								"time": 145
 							},
 							{
 								"objectId": "88FAE2E1-7D66-49FE-9629-4708A5EFDC41",
@@ -320,10 +348,10 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 152
+								"time": 153
 							}
 						],
-						"time": 522
+						"time": 531
 					},
 					{
 						"objectId": "C1700718-6401-4ECD-9F0A-E0C1E45B0B4A",
@@ -366,7 +394,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 119
+								"time": 122
 							},
 							{
 								"objectId": "CD8530E3-37DE-4AEC-AF13-8B46A6827081",
@@ -393,7 +421,7 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 164
+								"time": 155
 							},
 							{
 								"objectId": "7A659939-C4FD-4C5F-90AB-B1BFABF28397",
@@ -425,16 +453,16 @@ window.__imported__["20160710_box-office_usa-launch@2x/layers.json.js"] = [
 									}
 								},
 								"children": [],
-								"time": 656
+								"time": 662
 							}
 						],
-						"time": 1101
+						"time": 1102
 					}
 				],
-				"time": 6020
+				"time": 6128
 			}
 		],
-		"time": 6234
+		"time": 6441
 	}
 ]
 if (DeviceComponent) {DeviceComponent.Devices["iphone-6-silver"].deviceImageJP2 = false};

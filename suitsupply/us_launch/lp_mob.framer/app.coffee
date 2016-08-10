@@ -16,7 +16,7 @@ Framer.Info =
 scroll = ScrollComponent.wrap(sketch.body)
 scroll.scrollHorizontal = false
 scroll.directionLock = true
-# scroll.directionLockThreshold = x: 50, y: 0
+scroll.directionLockThreshold = x: 10, y: 0
 
 lookbooks = new ScrollComponent
 	parent: scroll.content
@@ -30,7 +30,7 @@ lookbooks.contentInset =
 	right: 96
 
 lookbooks.directionLock = true
-# lookbooks.directionLockThreshold = x: 0, y: 50
+lookbooks.directionLockThreshold = x: 0, y: 50
 
 lbContent = new Layer
 	parent: lookbooks.content
@@ -61,11 +61,14 @@ scroll.onMove ->
 
 video = new Layer
 	width: Screen.width, height: Screen.height, opacity: 0
+close = new Layer
+	parent: video, width: video.width, height: video.height
 embed = new Layer
 	width: 750, height: 422
 	parent: video
 	html: '<iframe width="750" height="422" src="https://www.youtube.com/embed/ETOgrbl3FrY" frameborder="0" allowfullscreen></iframe>'
 embed.center()
+video.sendToBack()
 
 showVideo = new Animation
 	layer: video
@@ -75,5 +78,15 @@ showVideo = new Animation
 
 hideVideo = showVideo.reverse()
 
+showVideo.onAnimationStart ->
+	video.bringToFront()
+hideVideo.onAnimationStart ->
+	video.sendToBack()
+
 sketch.playbtn.onClick ->
 	showVideo.start()
+sketch.headerPlayBtn.onClick ->
+	showVideo.start()
+
+close.onClick ->
+	hideVideo.start()

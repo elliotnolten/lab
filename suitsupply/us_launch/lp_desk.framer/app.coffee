@@ -33,4 +33,35 @@ scroll.onMove ->
 		showHeader()
 	else
 		hideHeader()
-		
+
+video = new Layer
+	width: Screen.width, height: Screen.height, opacity: 0
+close = new Layer
+	parent: video, width: video.width, height: video.height
+embed = new Layer
+	width: 1440, height: 810
+	parent: video
+	html: '<iframe width="1440" height="810" src="https://www.youtube.com/embed/ETOgrbl3FrY" frameborder="0" allowfullscreen></iframe>'
+embed.center()
+video.sendToBack()
+
+showVideo = new Animation
+	layer: video
+	properties: opacity: 1
+	time: 0.4
+	curve: "ease-in-out"
+
+hideVideo = showVideo.reverse()
+
+showVideo.onAnimationStart ->
+	video.bringToFront()
+hideVideo.onAnimationStart ->
+	video.sendToBack()
+
+desk.playBtn.onClick ->
+	showVideo.start()
+desk.headerPlayBtn.onClick ->
+	showVideo.start()
+
+close.onClick ->
+	hideVideo.start()
