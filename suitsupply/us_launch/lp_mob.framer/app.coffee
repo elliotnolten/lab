@@ -20,7 +20,7 @@ scroll.directionLock = true
 
 lookbooks = new ScrollComponent
 	parent: scroll.content
-	x: 860, y: 2496 + 112
+	y: 2400
 	width: Screen.width
 	height: 900
 	backgroundColor: "#f2f2f2"
@@ -58,3 +58,22 @@ scroll.onMove ->
 		showHeader()
 	else
 		hideHeader()
+
+video = new Layer
+	width: Screen.width, height: Screen.height, opacity: 0
+embed = new Layer
+	width: 750, height: 422
+	parent: video
+	html: '<iframe width="750" height="422" src="https://www.youtube.com/embed/ETOgrbl3FrY" frameborder="0" allowfullscreen></iframe>'
+embed.center()
+
+showVideo = new Animation
+	layer: video
+	properties: opacity: 1
+	time: 0.4
+	curve: "ease-in-out"
+
+hideVideo = showVideo.reverse()
+
+sketch.playbtn.onClick ->
+	showVideo.start()
