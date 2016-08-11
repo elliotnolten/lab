@@ -15,7 +15,6 @@ Framer.Info =
 scroll = ScrollComponent.wrap(sketch.body)
 scroll.scrollHorizontal = false
 scroll.directionLock = true
-scroll.directionLockThreshold = x: 10, y: 0
 
 lookbooks = new ScrollComponent
 	parent: scroll.content
@@ -25,8 +24,8 @@ lookbooks = new ScrollComponent
 	backgroundColor: "#f2f2f2"
 
 lookbooks.contentInset =
-	left: 96
-	right: 96
+	left: 48
+	right: 48
 
 lookbooks.directionLock = true
 lookbooks.directionLockThreshold = x: 0, y: 50
@@ -41,7 +40,7 @@ lookbooks.parent = scroll.content
 	
 showHeaderAni = new Animation
 	layer: sketch.header_white
-	properties: y: 0
+	properties: y: 130
 	time: 0.3
 	curve: "ease-in-out"
 
