@@ -3,10 +3,10 @@
 # This info is presented in a widget when you share
 
 Framer.Info =
-	title: ""
+	title: "The Garmentor Landing Page"
 	description: ""
 	author: "Elliot Nolten"
-	twitter: ""
+	twitter: "@suitsupply"
 
 # <<< Framer Fold <<<
 
@@ -51,7 +51,7 @@ allIndicators = []
 indicatorYs = []
 indicatorSize = 56
 
-# Create pages
+# Create pages and indicators
 pages = new PageComponent
 	width: Screen.width, height: Screen.height
 pages.scrollHorizontal = false
@@ -59,18 +59,6 @@ pages.scrollHorizontal = false
 pageOverlay = new Layer
 	width: Screen.width, height: Screen.height, backgroundColor: null
 pageOverlay.style = "background": "linear-gradient(to top, rgba(24,48,81,0.8), rgba(24,48,81,0))"
-	
-logo = new Layer
-	image: "images/g_logo.svg"
-	width: 248 * 2, height: 19 * 2
-	y: 200
-	x: 127
-logo.centerX()
-
-logo.states.add
-	small:
-		scale: 0.5
-		y: 120
 
 # Create page sections and indicators
 for i,section of sections
@@ -109,6 +97,19 @@ for i,indicator of allIndicators
 	index = parseInt(i)
 	if index > 0 && index < allIndicators.length - 1
 		indicator.opacity = 1
+
+# All other layers
+logo = new Layer
+	image: "images/g_logo.svg"
+	width: 248 * 2, height: 19 * 2
+	y: 200
+	x: 127
+logo.centerX()
+
+logo.states.add
+	small:
+		scale: 0.5
+		y: 120
 		
 # USP text
 usp = new Layer
@@ -183,11 +184,12 @@ garmentors = [
 	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
 ]
 allGarmentors = []
+allGarY = []
 
 for i,gar of garmentors
 	deviation = Utils.randomNumber(-0.02,0.02)
 	xPos = (skyline.width - 720) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(420,680)
+	yPos = Utils.randomNumber(320,780)
 	garmentor = new Layer
 		parent: skyline
 		image: "images/garmentors/#{gar.name}.png"
@@ -225,6 +227,7 @@ for i,gar of garmentors
 	pointer.height = pointerBottomY - pointerTopY
 	
 	allGarmentors.push(garmentor)
+	allGarY.push(yPos)
 
 city.bringToFront()
 water.bringToFront()
@@ -253,6 +256,10 @@ btn_request.states.add
 	stateB:
 		x: 121
 		y: 919
+
+appStores = btn_second.copySingle()
+appStores.image = "images/app_stores.png"
+appStores.opacity = 0
 
 
 btn_second.states.add
@@ -311,8 +318,11 @@ pages.on "change:currentPage", ->
 	
 	if current == last
 		pageOverlay.animate properties: opacity: 0
+		appStores.animate
+			properties: opacity: 1
 	else
 		pageOverlay.animate properties: opacity: 1
+		appStores.animate properties: opacity: 0
 	
 	# Animate Garmentors
 	if current == last
@@ -324,7 +334,7 @@ pages.on "change:currentPage", ->
 				delay: i * 0.2
 	else
 		for i,garmentor of allGarmentors
-			garmentor.y = garmentor.y + 50
+			garmentor.y = allGarY[i] + 50
 			garmentor.opacity = 0
 
 # if you are skimming through skyline, prevent page scroll
