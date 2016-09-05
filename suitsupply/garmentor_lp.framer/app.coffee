@@ -187,12 +187,12 @@ allGarmentors = []
 for i,gar of garmentors
 	deviation = Utils.randomNumber(-0.02,0.02)
 	xPos = (skyline.width - 720) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(220,580)
+	yPos = Utils.randomNumber(420,680)
 	garmentor = new Layer
 		parent: skyline
 		image: "images/garmentors/#{gar.name}.png"
 		size: 34 * 2
-		x: xPos + xPos * deviation, y: yPos + 50
+		x: xPos + xPos * deviation, y: yPos
 		opacity: 0
 	ring = new Layer
 		parent: garmentor
@@ -280,7 +280,7 @@ pages.on "change:currentPage", ->
 			curve: "ease-in-out"
 	allIndicators[current].states.switch("active")
 		
-	if current > 0
+	if current != 0 or current != last
 		btn_second.ignoreEvents = true
 		usp.animate properties: x: (pages.width - usp.width) / 2 + indicatorSize
 		usp.style = "text-align": "left"
