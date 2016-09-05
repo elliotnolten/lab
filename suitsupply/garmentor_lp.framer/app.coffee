@@ -10,7 +10,7 @@ Framer.Info =
 
 # <<< Framer Fold <<<
 
-Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto';")
+Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto:300';")
 
 # Variables
 sections = [
@@ -122,6 +122,7 @@ usp.style =
 	"font-size": "36px"
 	"line-height": "1.5"
 	"text-align": "center"
+	"font-weight": "300"
 usp.centerX()
 
 ios = new Layer
@@ -186,7 +187,7 @@ allGarmentors = []
 for i,gar of garmentors
 	deviation = Utils.randomNumber(-0.02,0.02)
 	xPos = (skyline.width - 720) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(320,780)
+	yPos = Utils.randomNumber(120,680)
 	garmentor = new Layer
 		parent: skyline
 		image: "images/garmentors/#{gar.name}.png"
@@ -208,6 +209,7 @@ for i,gar of garmentors
 		"font-size": "28px"
 		"line-height": "42px"
 		"font-family": "Roboto"
+		"font-weight": "300"
 	
 	if gar.name == "you"
 		eta.html = "you"
