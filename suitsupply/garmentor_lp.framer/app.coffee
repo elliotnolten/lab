@@ -10,7 +10,7 @@ Framer.Info =
 
 # <<< Framer Fold <<<
 
-Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Karla';")
+Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto';")
 
 # Variables
 sections = [
@@ -118,7 +118,7 @@ usp = new Layer
 	backgroundColor: null
 	y: 402
 usp.style =
-	"font-family": "Karla"
+	"font-family": "Roboto"
 	"font-size": "36px"
 	"line-height": "1.5"
 	"text-align": "center"
@@ -207,6 +207,7 @@ for i,gar of garmentors
 		"text-align": "center"
 		"font-size": "28px"
 		"line-height": "42px"
+		"font-family": "Roboto"
 	
 	if gar.name == "you"
 		eta.html = "you"

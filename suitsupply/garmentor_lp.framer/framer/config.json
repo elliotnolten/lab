@@ -10,10 +10,10 @@
   "updateDelay" : 0.3,
   "deviceScale" : "fit",
   "foldedCodeRanges" : [
-    "{271, 772}",
-    "{2889, 2865}",
-    "{5755, 454}",
-    "{6210, 2104}"
+    "{272, 772}",
+    "{2891, 2891}",
+    "{5783, 454}",
+    "{6238, 2104}"
   ],
   "orientation" : 0,
   "fullScreen" : false
