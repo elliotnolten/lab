@@ -17,22 +17,32 @@ sections = [
 	{
 		content: "Use the suitsupply app to get your perfect fit. Garmentors available between 10am and 6pm."
 		image: "section1.png"
+		name: "intro"
 	}
 	{
 		content: "On demand fitting session at home or office with one of our Garmentors"
 		image: "section2.png"
+		name: "usp1"
 	}
 	{
 		content: "Your garmentor will assist you finding the perfect fit"
 		image: "section3.png"
+		name: "usp2"
 	}
 	{
 		content: "Pay for your alterations on-site and have your altered items delivered at your doorstep."
 		image: "section4.png"
+		name: "usp3"
 	}
 	{
 		content: ""
 		image: ""
+		name: "cta"
+	}
+	{
+		content: ""
+		image: ""
+		name: "footer"
 	}
 ]
 
@@ -44,6 +54,7 @@ indicators = [
 	{image: "pin.svg"}
 	{image: "ruler.svg"}
 	{image: "styled.svg"}
+	{image: ""}
 	{image: ""}
 ]
 allPages = []
@@ -67,16 +78,17 @@ for i,section of sections
 		width: pages.width, height: pages.height
 		y: i * pages.height
 		image: "images/#{section.image}"
+		
 	allPages.push(page)
 	
 	indicator = new Layer 
 		size: indicatorSize * 2
 		midX: -indicatorSize * 2, y: indicatorSize * 2 * i
 		opacity: 0, scale: 0.5
-		image: "images/#{indicators[i].image}"
 		originX: 0.5, originY: 0.5
 	
 	allIndicators.push(indicator)
+	indicator.image = "images/#{indicators[i].image}"
 		
 	# Stay centered regardless of the amount of cards
 	indicator.y += (Screen.height / 2) - (indicatorSize * sections.length)
@@ -130,9 +142,11 @@ ios = new Layer
 	width: 750
 	height: 80
 	image: "images/ios.png"
+ios.onClick ->
+	pages.snapToPage(allPages[0])
 
 # Interactive Garmentor finder
-ctaPage = allPages[allPages.length - 1]
+ctaPage = allPages[allPages.length - 2]
 
 sky = new Layer
 	parent: ctaPage
@@ -177,11 +191,11 @@ garmentors = [
 	{ name: "courtney", x: 1000, y: 350, eta: 39, bottom: 340 }
 	{ name: "estefania", x: 1200, y: 730, eta: 45, bottom: 300 }
 	{ name: "jordan", x: 1340, y: 400, eta: 50, bottom: 280 }
-	{ name: "judy", x: 1500, y: 620, eta: 56, bottom: 340 }
-	{ name: "laura", x: 1600, y: 420, eta: 56, bottom: 340 }
-	{ name: "saar", x: 1740, y: 720, eta: 56, bottom: 340 }
-	{ name: "sophie", x: 1890, y: 360, eta: 56, bottom: 340 }
-	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
+# 	{ name: "judy", x: 1500, y: 620, eta: 56, bottom: 340 }
+# 	{ name: "laura", x: 1600, y: 420, eta: 56, bottom: 340 }
+# 	{ name: "saar", x: 1740, y: 720, eta: 56, bottom: 340 }
+# 	{ name: "sophie", x: 1890, y: 360, eta: 56, bottom: 340 }
+# 	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
 ]
 allGarmentors = []
 allGarY = []
@@ -240,21 +254,19 @@ btn_second = new Layer
 	height: 96
 	image: "images/btn_second.png"
 	y: 1069
-	x: 123
+btn_second.centerX()
 
 btn_request = new Layer
 	width: 508
 	height: 100
 	image: "images/btn_request.png"
-	x: 121
 	y: 919
+btn_request.centerX()
 
 btn_request.states.add
 	stateA:
 		y: 1069
-		x: 121
 	stateB:
-		x: 121
 		y: 919
 
 appStores = btn_second.copySingle()
@@ -267,7 +279,7 @@ btn_second.states.add
 		opacity: 0
 
 btn_request.onClick ->
-	pages.snapToPage(allPages[allPages.length - 1])
+	pages.snapToPage(allPages[allPages.length - 2])
 
 btn_second.onClick ->
 	pages.snapToNextPage("down")
@@ -276,18 +288,19 @@ btn_second.onClick ->
 pages.on "change:currentPage", ->
 	current = pages.verticalPageIndex(pages.currentPage)
 	last = allIndicators.length - 1
+	cta = allIndicators.length - 2
 	usp.html = sections[current].content
-	
+
 	# Indicate the active page
 	for i,indicator of allIndicators
 		indicator.states.switch("inactive")
 		indicator.animate
-			properties: y: indicatorYs[i] - indicatorSize * 2 * current
+			properties: y: indicatorYs[i] - indicatorSize * 2 * (current - 0.5)
 			time: 0.2
 			curve: "ease-in-out"
 	allIndicators[current].states.switch("active")
 		
-	if current != 0 or current != last
+	if current != 0 or current != cta and current != last
 		btn_second.ignoreEvents = true
 		usp.animate properties: x: (pages.width - usp.width) / 2 + indicatorSize
 		usp.style = "text-align": "left"
@@ -301,9 +314,11 @@ pages.on "change:currentPage", ->
 		btn_request.states.switch("stateA")
 		btn_second.states.switch("hide")
 	
-	if current == 0 || current == last
+	if current == 0 || current == cta || current == last
 		usp.style = "text-align": "center"
 		usp.animate properties: x: (pages.width - usp.width) / 2
+		
+		# Hide indicators
 		for indicator in allIndicators
 			indicator.animate
 				properties: x: -indicator.width
@@ -316,7 +331,7 @@ pages.on "change:currentPage", ->
 		btn_second.ignoreEvents = false
 		logo.states.switch("default")
 	
-	if current == last
+	if current == cta
 		pageOverlay.animate properties: opacity: 0
 		appStores.animate
 			properties: opacity: 1
@@ -325,17 +340,17 @@ pages.on "change:currentPage", ->
 		appStores.animate properties: opacity: 0
 	
 	# Animate Garmentors
-	if current == last
+	if current == cta
 		for i,garmentor of allGarmentors
 			garmentor.animate
-				properties: y: garmentor.y - 50, opacity: 1
-				time: 0.8
-				curve: "ease-in-out"
+				properties: y: allGarY[i] - 50, opacity: 1
+				curve: "spring(100,15,10)"
 				delay: i * 0.2
 	else
 		for i,garmentor of allGarmentors
 			garmentor.y = allGarY[i] + 50
 			garmentor.opacity = 0
+
 
 # if you are skimming through skyline, prevent page scroll
 cityScroll.onScroll ->

@@ -5,17 +5,17 @@
   "deviceOrientation" : 0,
   "sharedPrototype" : 0,
   "contentScale" : 1,
-  "deviceType" : "apple-iphone-6s-silver",
+  "deviceType" : "apple-iphone-6s-gold",
   "selectedHand" : "",
   "updateDelay" : 0.3,
   "deviceScale" : "fit",
   "foldedCodeRanges" : [
-    "{313, 772}",
-    "{1086, 1361}",
-    "{2448, 538}",
-    "{2987, 2942}",
-    "{5930, 555}",
-    "{6486, 2212}"
+    "{313, 909}",
+    "{1223, 1374}",
+    "{2598, 584}",
+    "{3183, 2952}",
+    "{6136, 564}",
+    "{6701, 2301}"
   ],
   "orientation" : 0,
   "fullScreen" : false
