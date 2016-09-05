@@ -171,8 +171,8 @@ skylineOverlay.style = "background": "linear-gradient(to bottom, rgba(24,48,81,0
 garmentors = [
 	{ name: "annabel", x: 400, y: 450, eta: 22, bottom: 260 }
 	{ name: "ashley", x: 800, y: 450, eta: 24, bottom: 300 }
-	{ name: "charity", x: 900, y: 750, eta: 30, bottom: 300 }
 	{ name: "you", x: 800, y: 450, eta: "", bottom: 300 }
+	{ name: "charity", x: 900, y: 750, eta: 30, bottom: 300 }
 	{ name: "courtney", x: 1000, y: 350, eta: 39, bottom: 340 }
 	{ name: "estefania", x: 1200, y: 730, eta: 45, bottom: 300 }
 	{ name: "jordan", x: 1340, y: 400, eta: 50, bottom: 280 }
