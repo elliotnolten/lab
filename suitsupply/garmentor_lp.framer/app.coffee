@@ -187,7 +187,7 @@ allGarmentors = []
 for i,gar of garmentors
 	deviation = Utils.randomNumber(-0.02,0.02)
 	xPos = (skyline.width - 720) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(120,680)
+	yPos = Utils.randomNumber(220,580)
 	garmentor = new Layer
 		parent: skyline
 		image: "images/garmentors/#{gar.name}.png"
