@@ -11,6 +11,9 @@ Framer.Info =
 # <<< Framer Fold <<<
 
 Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto:300';")
+bg = new BackgroundLayer backgroundColor: "#183150"
+Framer.Defaults.Animation =
+	curve: "spring(200,15,10)"
 
 # Variables
 sections = [
@@ -41,7 +44,7 @@ sections = [
 	}
 	{
 		content: ""
-		image: ""
+		image: "footer.png"
 		name: "footer"
 	}
 ]
@@ -66,6 +69,7 @@ indicatorSize = 56
 pages = new PageComponent
 	width: Screen.width, height: Screen.height
 pages.scrollHorizontal = false
+pages.contentInset = bottom: -800
 
 pageOverlay = new Layer
 	width: Screen.width, height: Screen.height, backgroundColor: null
@@ -110,8 +114,16 @@ for i,indicator of allIndicators
 	if index > 0 && index < allIndicators.length - 1
 		indicator.opacity = 1
 
+# The last page is smaller
+allPages[allPages.length - 1].height = 432
+
 # All other layers
+# Fixed layers
+fixed = new Layer
+	backgroundColor: null
+	width: Screen.width, height: Screen.height
 logo = new Layer
+	parent: fixed
 	image: "images/g_logo.svg"
 	width: 248 * 2, height: 19 * 2
 	y: 200
@@ -125,6 +137,7 @@ logo.states.add
 		
 # USP text
 usp = new Layer
+	parent: fixed
 	html: sections[0].content
 	width: page.width - 96 * 2 - 24 * 2, height: page.height / 2
 	y: 300
@@ -139,6 +152,7 @@ usp.style =
 usp.centerX()
 
 ios = new Layer
+	parent: fixed
 	width: 750
 	height: 80
 	image: "images/ios.png"
@@ -259,7 +273,7 @@ btn_second.centerX()
 btn_request = new Layer
 	width: 508
 	height: 100
-	image: "images/btn_request.png"
+	image: "images/btn_find.png"
 	y: 919
 btn_request.centerX()
 
@@ -285,10 +299,19 @@ btn_second.onClick ->
 	pages.snapToNextPage("down")
 
 # Events
+last = allIndicators.length - 1
+cta = allIndicators.length - 2
+
+hideIndicators = () ->
+	# Show indicators
+	print "show indicators"
+	for i, indicator of allIndicators
+		indicator.animate
+			properties: midX: indicatorSize
+			delay: i * 0.1
+
 pages.on "change:currentPage", ->
 	current = pages.verticalPageIndex(pages.currentPage)
-	last = allIndicators.length - 1
-	cta = allIndicators.length - 2
 	usp.html = sections[current].content
 
 	# Indicate the active page
@@ -300,30 +323,24 @@ pages.on "change:currentPage", ->
 			curve: "ease-in-out"
 	allIndicators[current].states.switch("active")
 		
-	if current != 0 or current != cta and current != last
+	if current != 0 or current != cta or current != last
 		btn_second.ignoreEvents = true
 		usp.animate properties: x: (pages.width - usp.width) / 2 + indicatorSize
 		usp.style = "text-align": "left"
 		logo.states.switch("small")
-		for i, indicator of allIndicators
-			indicator.animate
-				properties: midX: indicatorSize
-				delay: i * 0.1
-				time: 0.3
-				curve: "ease-in-out"
 		btn_request.states.switch("stateA")
 		btn_second.states.switch("hide")
+		hideIndicators()
 	
 	if current == 0 || current == cta || current == last
 		usp.style = "text-align": "center"
 		usp.animate properties: x: (pages.width - usp.width) / 2
 		
 		# Hide indicators
+		print "hide indicators"
 		for indicator in allIndicators
 			indicator.animate
 				properties: x: -indicator.width
-				time: 0.2
-				curve: "ease-in-out"
 		btn_request.states.switch("stateB")
 	
 	if current == 0
@@ -331,7 +348,7 @@ pages.on "change:currentPage", ->
 		btn_second.ignoreEvents = false
 		logo.states.switch("default")
 	
-	if current == cta
+	if current >= cta
 		pageOverlay.animate properties: opacity: 0
 		appStores.animate
 			properties: opacity: 1
@@ -344,13 +361,25 @@ pages.on "change:currentPage", ->
 		for i,garmentor of allGarmentors
 			garmentor.animate
 				properties: y: allGarY[i] - 50, opacity: 1
-				curve: "spring(100,15,10)"
 				delay: i * 0.2
 	else
 		for i,garmentor of allGarmentors
 			garmentor.y = allGarY[i] + 50
 			garmentor.opacity = 0
-
+	
+	# If current page is cta and beyond, show 'download' button
+	if current >= cta then btn_request.image = "images/btn_download.png" else btn_request.image = "images/btn_find.png"
+	
+	# if current page is last, move buttons up with cta page
+	if current == last
+		btn_request.parent = allPages[cta]
+		appStores.parent = allPages[cta]
+		logo.parent = allPages[cta]
+	else
+		Utils.delay 0.5, ->
+			btn_request.parent = fixed
+			appStores.parent = fixed
+			logo.parent = fixed
 
 # if you are skimming through skyline, prevent page scroll
 cityScroll.onScroll ->
