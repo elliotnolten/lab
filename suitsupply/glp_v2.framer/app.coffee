@@ -10,14 +10,20 @@ Framer.Info =
 
 # <<< Framer Fold <<<
 
-# Globals and settings
+# Globals, settings and wrappers
 screenW = Screen.width
 screenH = Screen.height
 
 Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto:300';")
-bg = new BackgroundLayer backgroundColor: "#183150"
+
+bg = new BackgroundLayer backgroundColor: "#f2f2f2"
 Framer.Defaults.Animation =
 	curve: "spring(200,20,10)"
+
+site = new PageComponent
+	width: screenW, height: screenH
+site.scrollHorizontal = false
+site.directionLock = true
 
 # Sections
 sections = [
@@ -48,7 +54,7 @@ sections = [
 ]
 
 # Skyline
-city = new Layer width: screenW, height: screenH, backgroundColor: null
+city = new Layer width: screenW, height: screenH, backgroundColor: null, parent: site.content
 
 sky = new Layer
 	parent: city
@@ -64,18 +70,12 @@ skyline = new Layer
 	parent: city
 	width: 2000, height: screenH
 	x: -screenW / 2, backgroundColor: null
-	
+# 	
 buildings = new Layer
 	parent: skyline
 	width: skyline.width, height: 366
-	image: "images/skylineNY.png"
-	maxY: screenH - 79
-
-water = new Layer
-	parent: city
-	width: 2500, height: 79
-	image: "images/water.png"
-	x: -screenW / 2, maxY: screenH
+	image: "images/ny.png"
+	y: Align.bottom
 
 # List of garmentors
 garmentors = [
@@ -153,8 +153,9 @@ buildings.bringToFront()
 
 # Pages
 allPages = []
-pages = new PageComponent width: Screen.width, height: Screen.height
+pages = new PageComponent width: Screen.width, height: Screen.height, parent: site.content
 pages.scrollVertical = false
+pages.directionLock = true
 
 pagesTotalWidth = screenW * (sections.length - 1)
 
@@ -190,6 +191,7 @@ for i,section of sections
 fixed = new Layer
 	backgroundColor: null
 	width: Screen.width, height: Screen.height
+	parent: site.content
 	
 logo = new Layer
 	parent: fixed
@@ -202,27 +204,41 @@ logo.states.add small: scale: 0.5, y: 120
 
 logo.states.animationOptions =
 	curve: "spring(200,40,10)"
-	
-ios = new Layer
-	parent: fixed
-	width: 750
-	height: 80
-	image: "images/ios.png"
-ios.onClick ->
-	pages.snapToPage(allPages[0])
 
 cta = new Layer
+	parent: fixed
 	width: 252 * 2, height: 108 * 2
 	image: "images/cta.png"
 	maxY: Screen.height - 48
 cta.centerX()
 
 ss_logo = new Layer
+	parent: fixed
 	image: "images/sslogo.svg"
 	width: 120 * 2, height: 14 * 2
 	x: 24 * 2, y: 64 * 2
 
 ss_logo.states.add hide: opacity: 0
+
+ios = new Layer
+	width: 750
+	height: 80
+
+ios.style = 
+	"background": "url(images/ios.png) rgba(250,250,250,0.9)"
+	"-webkit-backdrop-filter": "blur(10px)"
+	"box-shadow": "0 1px 0 #B2B2B2"
+
+ios.onClick ->
+	pages.snapToPage(allPages[0])
+
+# Footer
+footer = new Layer
+	width: 750, height: 560
+	image: "images/footer.png"
+	backgroundColor: "#f2f2f2"
+# Add footer as page to site
+site.addPage(footer,"bottom")
 
 # Behavior
 for i,garmentor of allGarmentors
@@ -249,7 +265,6 @@ showGarmentor = Utils.throttle 0.5, (garmentor) ->
 pages.onMove ->
 	sky.x = Utils.modulate pages.scrollX, [0,pagesTotalWidth], [-screenW / 2,-sky.width + screenW * 1.25]
 	skyline.x = Utils.modulate pages.scrollX, [0,pagesTotalWidth], [-screenW / 2,-skyline.width + screenW * 1.25]
-	water.x = Utils.modulate pages.scrollX, [0,pagesTotalWidth], [-screenW / 2,-water.width + screenW * 1.5]
 
 
 # Page events
@@ -278,3 +293,20 @@ pages.on "change:currentPage", ->
 			garmentor.children[0].animate
 				properties: scale: 1, opacity: 1
 				delay: 0.6 + 0.2
+
+# Toggles
+hash = ""
+location = ""
+
+if window.location.hash
+	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
+	location = hash
+else
+	location = "amsterdam"
+
+if location == "amsterdam"
+	buildings.image = "images/ams.png"
+else if location == "newyork"
+	buildings.image = "images/ny.png"
+else if location == "dallas"
+	buildings.image = "images/dal.png"
