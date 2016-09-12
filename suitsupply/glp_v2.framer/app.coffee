@@ -91,6 +91,9 @@ pageOverlay = new Layer
 	width: Screen.width, height: Screen.height, backgroundColor: null
 pageOverlay.style = "background": "linear-gradient(to bottom, rgba(24,48,81,0.6), rgba(24,48,81,0))"
 
+if isFullscreen
+	sky.width = screenW * 2
+
 skyline = new Layer
 	parent: city
 	width: sky.width * 1.5
@@ -103,7 +106,7 @@ buildings = new Layer
 	image: "images/ny.png"
 	y: Align.bottom
 
-if isFullscreen then buildings.y = Align.bottom(100)
+if isFullscreen then buildings.y = Align.bottom(200 * x)
 
 # List of garmentors
 garmentors = [
