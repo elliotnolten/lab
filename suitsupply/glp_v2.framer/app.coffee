@@ -25,6 +25,19 @@ site = new PageComponent
 site.scrollHorizontal = false
 site.directionLock = true
 
+x = Utils.devicePixelRatio()
+
+isFullscreen = Framer.Device.deviceType.indexOf("fullscreen") != -1
+isPhone = Framer.Device.deviceType.indexOf("iphone") != -1
+isTablet = Framer.Device.deviceType.indexOf("ipad") != -1
+isRetina = true
+
+if isPhone || isTablet then isRetina = true else isRetina = false
+
+if Utils.isPhone() || Utils.isTablet() then isRetina = true else isRetina = false
+
+if isRetina then x = 2 else x = 1
+
 # Sections
 sections = [
 	{
@@ -53,12 +66,24 @@ sections = [
 	}
 ]
 
+verticalSections =
+	top: { top: 0, bottom: 0.45 * screenH }
+	middle: { top: 0.45 * screenH, bottom: 0.75 * screenH}
+	bottom: {top: 0.75 * screenH, bottom: screenH}
+
+verticalParts = new Layer width: screenW, height: screenH, backgroundColor: null
+verticalParts.bringToFront()
+
+for i,s of verticalSections
+	section = new Layer width: verticalParts.width, height: s.bottom - s.top, y: s.top, backgroundColor: null
+# 	section.style = "border-bottom": "#{x}px solid rgba(255,255,255,0.5)"
+
 # Skyline
 city = new Layer width: screenW, height: screenH, backgroundColor: null, parent: site.content
 
 sky = new Layer
 	parent: city
-	width: 1846, height: screenH, x: -screenW / 2
+	width: screenW * sections.length * 0.5, height: screenH, x: -screenW / 2
 	image: "images/sky.png"
 
 pageOverlay = new Layer
@@ -68,14 +93,17 @@ pageOverlay.style = "background": "linear-gradient(to bottom, rgba(24,48,81,0.6)
 
 skyline = new Layer
 	parent: city
-	width: 2000, height: screenH
+	width: sky.width * 1.5
+	height: screenH
 	x: -screenW / 2, backgroundColor: null
 # 	
 buildings = new Layer
 	parent: skyline
-	width: skyline.width, height: 366
+	width: skyline.width, height: skyline.width / 1500 * 352
 	image: "images/ny.png"
 	y: Align.bottom
+
+if isFullscreen then buildings.y = Align.bottom(100)
 
 # List of garmentors
 garmentors = [
@@ -86,25 +114,27 @@ garmentors = [
 	{ name: "courtney", x: 1000, y: 350, eta: 39, bottom: 340 }
 	{ name: "estefania", x: 1200, y: 730, eta: 45, bottom: 300 }
 	{ name: "jordan", x: 1340, y: 400, eta: 50, bottom: 280 }
-# 	{ name: "judy", x: 1500, y: 620, eta: 56, bottom: 340 }
-# 	{ name: "laura", x: 1600, y: 420, eta: 56, bottom: 340 }
-# 	{ name: "saar", x: 1740, y: 720, eta: 56, bottom: 340 }
+	{ name: "judy", x: 1500, y: 620, eta: 56, bottom: 340 }
+	{ name: "laura", x: 1600, y: 420, eta: 56, bottom: 340 }
+	{ name: "saar", x: 1740, y: 720, eta: 56, bottom: 340 }
 # 	{ name: "sophie", x: 1890, y: 360, eta: 56, bottom: 340 }
 # 	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
 ]
 allGarmentors = []
 allGarY = []
 allGarHeight = []
+garTop = verticalSections.middle.top
+garBottom = buildings.minY + 200 * x
 
 for i,gar of garmentors
 	
-	deviation = Utils.randomNumber(-0.02,0.02)
+	deviation = Utils.randomNumber(-0.05,0.05)
 	xPos = (skyline.width - 360) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(720,900)
+	yPos = Utils.randomNumber(garTop,garBottom)
 	
 	garmentor = new Layer
 		parent: skyline
-		size: 34 * 2
+		size: 34 * x
 		x: xPos + xPos * deviation, y: yPos
 		backgroundColor: null
 	
@@ -117,31 +147,33 @@ for i,gar of garmentors
 		
 	ring = new Layer
 		parent: avatar
-		width: garmentor.width + 24, height: garmentor.height + 24
-		borderRadius: (garmentor.width + 24) / 2, backgroundColor: null
+		width: garmentor.width + 12 * x, height: garmentor.height + 12 * x
+		borderRadius: (garmentor.width + 12 * x) / 2, backgroundColor: null
 	ring.style =
-		"border": "6px solid #183051"
+		"border": 3 * x + "px solid #183051"
 	ring.center()
 	
 	eta = new Layer
-		parent: avatar, html: "ETA #{gar.eta} min", backgroundColor: null, height: 40, y: -56
+		parent: garmentor, html: "ETA #{gar.eta} min", backgroundColor: null, height: 20 * x, y: -28 * x
 	eta.centerX()
 	eta.style = 
 		"text-align": "center"
-		"font-size": "28px"
-		"line-height": "42px"
+		"font-size": 14 * x + "px"
+		"line-height": "1.5"
 		"font-family": "Roboto"
 		"font-weight": "300"
 	
-	garmentor.scale = Utils.randomNumber(0.5,1.25)
+	avatar.scale = Utils.randomNumber(0.5,1.25)
 	
 	if gar.name == "you"
 		eta.html = "you"
 		ring.opacity = 0
+		garmentor.y = ( garBottom + garTop ) / 2
 	
 	pointer = new Layer
+		name: "pointer"
 		parent: garmentor
-		width: 2, height: Screen.height - garmentor.height + 40, y: garmentor.height + 40
+		width: x, height: Screen.height - garmentor.height + 20 * x, y: garmentor.height + 20 * x
 		backgroundColor: "rgba(255,255,255,0.5)"
 	pointer.centerX()
 	pointer.scaleY = 0
@@ -168,7 +200,7 @@ for i,section of sections
 		
 	icon = new Layer
 		parent: page
-		size: 72 * 2, y: 256
+		size: 72 * x, y: 128 * x
 		backgroundColor: null
 		image: "images/#{section.icon}"
 	icon.centerX()
@@ -177,12 +209,12 @@ for i,section of sections
 		parent: page
 		html: section.content
 		backgroundColor: null
-		width: page.width - 56 * 4, y: 215 * 2
+		width: 280 * x, y: 215 * x
 	usp.centerX()
 	usp.style =
 		"font-family": "Roboto"
 		"font-weight": "300"
-		"font-size": "32px"
+		"font-size": 16 * x + "px"
 		"line-height": "1.5"
 	
 	allPages.push(page)
@@ -196,41 +228,53 @@ fixed = new Layer
 logo = new Layer
 	parent: fixed
 	image: "images/g_logo.svg"
-	width: 248 * 2, height: 19 * 2
-	y: 300
+	width: 248 * x, height: 19 * x
+	y: 150 * x
+	
 logo.centerX()
 
-logo.states.add small: scale: 0.5, y: 120
+logo.states.add small: scale: 0.5, y: 60 * x
 
 logo.states.animationOptions =
 	curve: "spring(200,40,10)"
 
 cta = new Layer
 	parent: fixed
-	width: 252 * 2, height: 108 * 2
+	width: 252 * x, height: 48 * x
 	image: "images/cta.png"
-	maxY: Screen.height - 48
+	y: Screen.height - 96 * x
 cta.centerX()
+
+if isFullscreen
+	cta.width = 250 * x
+	cta.height = 108 * x
+	cta.image = "images/cta_tab.png"
+	cta.y = Screen.height - 156 * x
 
 ss_logo = new Layer
 	parent: fixed
 	image: "images/sslogo.svg"
-	width: 120 * 2, height: 14 * 2
-	x: 24 * 2, y: 64 * 2
+	width: 120 * x, height: 14 * x
+	x: 24 * x, y: 64 * x
 
 ss_logo.states.add hide: opacity: 0
 
-ios = new Layer
-	width: 750
-	height: 80
+if isPhone || isTablet
 
-ios.style = 
-	"background": "url(images/ios.png) rgba(250,250,250,0.9)"
-	"-webkit-backdrop-filter": "blur(10px)"
-	"box-shadow": "0 1px 0 #B2B2B2"
-
-ios.onClick ->
-	pages.snapToPage(allPages[0])
+	ios = new Layer
+		width: screenW
+		height: 40 * x
+	
+	ios.style = 
+		"background": "url(images/ios.png) rgba(250,250,250,0.9)"
+		"-webkit-backdrop-filter": "blur(10px)"
+		"box-shadow": "0 1px 0 #B2B2B2"
+	if isTablet
+		ios.style = "background-image": "url(images/ios_tab.png)"
+			
+	
+	ios.onClick ->
+		pages.snapToPage(allPages[0])
 
 # Footer
 footer = new Layer
@@ -242,18 +286,16 @@ site.addPage(footer,"bottom")
 
 # Behavior
 for i,garmentor of allGarmentors
-	# If garmentor is in viewport
-	if screenW + screenW * 0.2 > garmentor.x
-		# Animate pointer
-		garmentor.children[1].animate
-			properties: scaleY: 1
-			time: 0.3
-			curve: "ease-in-out"
-			delay: i * 0.3 + 0.5
-		# Then pop images
-		garmentor.children[0].animate
-			properties: scale: 1, opacity: 1
-			delay: i * 0.3 + 0.8
+	# Animate pointer
+	garmentor.children[2].animate
+		properties: scaleY: 1
+		time: 0.3
+		curve: "ease-in-out"
+		delay: i * 0.3 + 0.5
+	# Then pop images
+	garmentor.children[0].animate
+		properties: scale: 1, opacity: 1
+		delay: i * 0.3 + 1
 
 firstPage = 0
 lastPage = allPages.length - 1
@@ -302,7 +344,7 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = "amsterdam"
+	location = Utils.randomChoice(["amsterdam","newyork","dallas"])
 
 if location == "amsterdam"
 	buildings.image = "images/ams.png"
