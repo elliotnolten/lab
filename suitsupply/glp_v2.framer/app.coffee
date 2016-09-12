@@ -34,7 +34,7 @@ isRetina = true
 
 if isPhone || isTablet then isRetina = true else isRetina = false
 
-if Utils.isPhone() || Utils.isTablet() then isRetina = true else isRetina = false
+# if Utils.isPhone() && isPhone then isRetina = true else isRetina = false
 
 if isRetina then x = 2 else x = 1
 
@@ -67,8 +67,8 @@ sections = [
 ]
 
 verticalSections =
-	top: { top: 0, bottom: 0.45 * screenH }
-	middle: { top: 0.45 * screenH, bottom: 0.75 * screenH}
+	top: { top: 0, bottom: 0.5 * screenH }
+	middle: { top: 0.5 * screenH, bottom: 0.75 * screenH}
 	bottom: {top: 0.75 * screenH, bottom: screenH}
 
 verticalParts = new Layer width: screenW, height: screenH, backgroundColor: null
@@ -114,9 +114,6 @@ garmentors = [
 	{ name: "courtney", x: 1000, y: 350, eta: 39, bottom: 340 }
 	{ name: "estefania", x: 1200, y: 730, eta: 45, bottom: 300 }
 	{ name: "jordan", x: 1340, y: 400, eta: 50, bottom: 280 }
-	{ name: "judy", x: 1500, y: 620, eta: 56, bottom: 340 }
-	{ name: "laura", x: 1600, y: 420, eta: 56, bottom: 340 }
-	{ name: "saar", x: 1740, y: 720, eta: 56, bottom: 340 }
 # 	{ name: "sophie", x: 1890, y: 360, eta: 56, bottom: 340 }
 # 	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
 ]
@@ -124,7 +121,7 @@ allGarmentors = []
 allGarY = []
 allGarHeight = []
 garTop = verticalSections.middle.top
-garBottom = buildings.minY + 200 * x
+garBottom = buildings.minY + 100 * x
 
 for i,gar of garmentors
 	
@@ -163,10 +160,11 @@ for i,gar of garmentors
 		"font-family": "Roboto"
 		"font-weight": "300"
 	
-	avatar.scale = Utils.randomNumber(0.5,1.25)
+	avatar.scale = Utils.randomNumber(0.75,1.25)
 	
 	if gar.name == "you"
 		eta.html = "you"
+		eta.scale = 1
 		ring.opacity = 0
 		garmentor.y = ( garBottom + garTop ) / 2
 	
@@ -245,7 +243,7 @@ cta = new Layer
 	y: Screen.height - 96 * x
 cta.centerX()
 
-if isFullscreen
+if isFullscreen || isTablet
 	cta.width = 250 * x
 	cta.height = 108 * x
 	cta.image = "images/cta_tab.png"
@@ -291,7 +289,7 @@ for i,garmentor of allGarmentors
 		properties: scaleY: 1
 		time: 0.3
 		curve: "ease-in-out"
-		delay: i * 0.3 + 0.5
+		delay: i * 0.3
 	# Then pop images
 	garmentor.children[0].animate
 		properties: scale: 1, opacity: 1
