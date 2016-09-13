@@ -47,7 +47,7 @@
 
             if (coordinates.indexOf('_') != -1) { return };
 
-            gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + markers + '&key=' + apiKey;
+            gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + '&key=' + apiKey;
 
             $('#images').delay(2000).append('<h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="630" height="240"/></a>');
 
