@@ -24,10 +24,15 @@ isPhone = Framer.Device.deviceType.indexOf("iphone") != -1
 isTablet = Framer.Device.deviceType.indexOf("ipad") != -1
 
 if isPhone || isTablet then isRetina = true else isRetina = false
-if isFullscreen and Utils.isPhone() || Utils.isTablet() then isRetina = true else isRetina = false
+if isFullscreen
+	if Utils.isPhone() || Utils.isTablet()
+		isRetina = true
+	else
+		isRetina = false
+		
 if isRetina then x = 2 else x = 1
 
-Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto:300';")
+Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,700|Roboto:300,700';")
 
 bg = new BackgroundLayer backgroundColor: "#f2f2f2"
 Framer.Defaults.Animation =
@@ -43,7 +48,7 @@ site.mouseWheelEnabled = isFullscreen
 # Sections
 sections = [
 	{
-		content: "Use the suitsupply app to get your perfect fit. Garmentors available between 10am and 6pm."
+		content: "Use the suitsupply app to get your perfect fit."
 		image: "section1.png"
 		name: "intro"
 		icon: ""
@@ -144,8 +149,8 @@ for i,gar of garmentors
 		parent: garmentor
 		image: "images/garmentors/#{gar.name}.png"
 		width: garmentor.width, height: garmentor.height
-		opacity: 1
-		scale: 0.8
+		opacity: 0
+		scale: 0.5
 		
 	ring = new Layer
 		parent: avatar
@@ -156,7 +161,7 @@ for i,gar of garmentors
 	ring.center()
 	
 	eta = new Layer
-		parent: garmentor, html: "ETA #{gar.eta} min", backgroundColor: null, height: 20 * x, y: -28 * x
+		parent: garmentor, html: "ETA #{gar.eta} min", backgroundColor: null, height: 20 * x, y: -28 * x, opacity: 0
 	eta.centerX()
 	eta.style = 
 		"text-align": "center"
@@ -174,17 +179,52 @@ for i,gar of garmentors
 		garmentor.y = ( garBottom + garTop ) / 2
 	
 	pointer = new Layer
-		name: "pointer"
 		parent: garmentor
 		width: x, height: Screen.height - garmentor.height + 20 * x, y: garmentor.height + 20 * x
 		backgroundColor: "rgba(255,255,255,0.5)"
 	pointer.centerX()
-	pointer.scaleY = 1
+	pointer.scaleY = 0
 	
 	allGarmentors.push(garmentor)
 	allGarY.push(yPos)
 
 buildings.bringToFront()
+
+# Show garmentors
+showGarmentors = (layer,i) ->
+	avatar = layer.children[0]
+	pointer = layer.children[2]
+	delay = 0.2
+
+	pointer.animate
+		properties: scaleY: 1
+		curve: "ease-in-out"
+		time: 0.3
+		delay: delay * i
+	
+	avatar.animate
+		properties:
+			scale: 1
+			opacity: 1
+		curve: "spring(200,20,10)"
+		delay: (0.3 + delay) * i
+
+hideGarmentors = (layer,i) ->
+	avatar = layer.children[0]
+	pointer = layer.children[2]
+	delay = 0.2
+
+	pointer.animate
+		properties: scaleY: 0
+		curve: "ease-in-out"
+		time: 0.3
+		delay: 0.1
+	
+	avatar.animate
+		properties:
+			scale: 0.5
+			opacity: 0
+		curve: "spring(200,20,10)"
 
 # Pages
 allPages = []
@@ -253,8 +293,28 @@ cta = new Layer
 	parent: fixed
 	width: 252 * x, height: 48 * x
 	image: "images/cta.png"
-	y: Screen.height - 96 * x
+	y: usp.maxY
 cta.centerX()
+
+ctaHide = new Animation
+	layer: cta
+	properties: opacity: 0
+	curve: "ease-in-out"
+	time: 0.2
+
+ctaShow = ctaHide.reverse()
+
+ctaMoveDown = () ->
+	ctaHide.start()
+	ctaHide.onAnimationEnd ->
+		cta.y = screenH - cta.height - 48 * x
+		ctaShow.start()
+
+ctaMoveUp = () ->
+	ctaHide.start()
+	ctaHide.onAnimationEnd ->
+		cta.y = usp.maxY
+		ctaShow.start()
 
 if isFullscreen || isTablet
 	cta.width = 250 * x
@@ -287,25 +347,38 @@ if isPhone || isTablet || isFullscreen and Utils.isPhone()
 	ios.onClick ->
 		pages.snapToPage(allPages[0])
 
-
-arrDown = new Layer
-	width: 19 * 2 * x, height: 10 * 2 * x
+readMore = new Layer
+	width: 100 * x, height: 50 * x
+	backgroundColor: null
 	parent: allPages[0]
-	x: Align.center, y: usp.maxY
+	html: "Read more"
+	x: Align.center
+	y: cta.maxY + 48 * x
 
-arrDown.style = "background": "url(images/arr_down.png) no-repeat center center transparent"
+readMore.style = 
+	"font-size": "#{16*x}px"
+	"font-family": "Roboto Condensed"
+	"text-transform": "uppercase"
+	"text-align": "center"
+	"line-height": "1.5"
+	
+arrDown = new Layer
+	width: 19 * x, height: 10 * x
+	parent: readMore
+	x: Align.center, y: Align.bottom
+	image: "images/arr_down.png"
 
 arrDownAnimation = new Animation
 	layer: arrDown
 	properties:
 		opacity: 0
-		y: usp.maxY + arrDown.height
+		y: Align.bottom(arrDown.height)
 	time: 0.5
 	delay: 1
 	curve: "eae-in-out"
 
 arrDownAnimation.onAnimationEnd ->
-	arrDown.y = usp.maxY
+	arrDown.y = Align.bottom
 	arrDown.animate
 		properties: opacity: 1
 		time: 0.4
@@ -330,12 +403,16 @@ summary = new Layer
 	image: "images/summary.png"	
 	x: Align.center
 
-footerImg = new Layer
-	backgroundColor: "#e9e9e9"
+footerBottom = new Layer
 	parent: footer
+	width: footer.width, height: 280 * x
+	backgroundColor: "#e9e9e9"
+	y: summary.maxY + cta.height + 48 * x
+	
+footerImg = new Layer
+	parent: footerBottom
 	width: 375 * x, height: 280 * x
 	image: "images/footer.png"
-	y: summary.maxY + cta.height + 48 * x
 # Add footer as page to site
 site.addPage(footer,"bottom")
 
@@ -372,7 +449,7 @@ site.on "change:currentPage", ->
 		cta.y = Screen.height - 96 * x
 
 # Click on down arrow go to next page
-arrDown.onClick ->
+readMore.onClick ->
 	pages.snapToPage(allPages[1])
 
 # Page events
@@ -383,10 +460,24 @@ pages.on "change:currentPage", ->
 	if current == 1
 		logo.states.switch("small")
 		ss_logo.states.switch("hide")
+		# and show garmentors and animate skyline
+		skylineMoveRight.start()
+		for i,gar of allGarmentors
+			showGarmentors(gar,i)
+		# move cta down
+		if pages.direction == "down" then ctaMoveDown()
+		
 	# When you come back on first page make garmentor logo big and show ss logo again
 	if current == 0
 		logo.states.switch("default")
 		ss_logo.states.switch("default")
+		# and hide garmentors and stop skyline animation
+		skylineMoveRight.stop()
+		skylineMoveLeft.stop()
+		for i,gar of allGarmentors
+			hideGarmentors(gar,i)
+		# and move cta back up
+		ctaMoveUp()
 
 pages.onScroll ->
 	currentPage = pages.verticalPageIndex(pages.currentPage)
@@ -424,8 +515,6 @@ skylineMoveRight.onAnimationEnd ->
 
 skylineMoveLeft.onAnimationEnd ->
 	skylineMoveRight.start()
-	
-skylineMoveRight.start()
 
 # print skyline.x - skylineA
 # print allGarmentors[allGarmentors.length - 1].x
@@ -436,9 +525,7 @@ skyline.on "change:x", ->
 # 	print @x - skylineA
 	for i,gar of allGarmentors
 		garX = gar.x - @x
-		
-	
-	
+
 
 # Toggles
 hash = ""
