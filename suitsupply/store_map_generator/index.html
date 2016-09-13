@@ -2,21 +2,25 @@
 <html>
 <head>
   <title>Suitsupply Stores map generator</title>
+
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript">
+
+    // My key AIzaSyDctYwPekyWYM_PI7NncYv90vBoJ9fSqSg
 
     (function($) {
 
       var gMapsAPI = 'https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap',
-          gMapsOptions =
-            {
-              zoom: 15,
-              size: '420x160',
-              key:'AIzaSyDctYwPekyWYM_PI7NncYv90vBoJ9fSqSg',
-              scale: 2,
-              markers: 'icon:marker.png'
-            },
-          gMapsParams = [];
+      gMapsOptions =
+      {
+        zoom: 15,
+        size: '420x160',
+        scale: 2
+      },
+      gMapsParams = [],
+      markerURL = 'http%3A%2F%2Fgoo.gl%2FJhVos6',
+      apiKey = '',
+      images = [];
 
       $.each(gMapsOptions, function(key,val) {
         var optionSet = key + '=' + val;
@@ -26,29 +30,52 @@
 
       var jqxhr = $.getJSON( 'stores.json', function(data) {
 
-        $.each(data, function(key,val) {
-          if (key > 5) { return };
-          var address = val.Address.split(' ').join('+'),
-              city = val.Coordinates.split(' ').join('+');
-              coordinates = address + '+' + city,
-              name = coordinates.split('+').join(''),
-              gMapsImgURL = '';
+        $('form').submit(function( event ) {
+          event.preventDefault();
+          apiKey = $('input[type=text]').val();
 
-          if (coordinates.indexOf('_') != -1) { return };
+          $.each(data, function(key,val) {
+            if (key > 5) { return };
+            var address = val.Address.split(' ').join('+'),
+            city = val.Coordinates.split(' ').join('+');
+            coordinates = address + '+' + city,
+            name = coordinates.split('+').join(''),
+            gMapsImgURL = '',
+            markers = '&markers=size:tiny%7Cicon:http%3A%2F%2Flab.nolten.co%2Fsuitsupply%2Fglp_v3b.framer%2Fimages%2Fgarmentors%2Fyou.png%7C' + coordinates;
 
-          gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams;
+            if (coordinates.indexOf('_') != -1) { return };
 
-          $('body').append('<a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="840" height="320"/></a>');
+            gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + markers + '&key=' + apiKey;
+
+            $('body').append('<h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="630" height="240"/></a>');
+
+          });
 
         });
 
       });
 
-  })(jQuery);
+    })(jQuery);
 
-</script>
+  </script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+  <style type="text/css">
+    body {
+      font-family: "Roboto Condensed";
+      font-weight: 300;
+    }
+    input {
+      font-size: 1.5em;
+      padding: 0.5em;
+    }
+  </style>
 </head>
 <body>
+
+  <form>
+    <input type="text" name="Google Maps API key" placeholder="Your API key please">
+    <input type="submit" value="Generate those maps!">
+  </form>
   
 </body>
 </html>
