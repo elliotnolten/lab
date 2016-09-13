@@ -6,8 +6,6 @@
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript">
 
-    // My key AIzaSyDctYwPekyWYM_PI7NncYv90vBoJ9fSqSg
-
     (function($) {
 
       var gMapsAPI = 'https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap',
@@ -20,7 +18,8 @@
       gMapsParams = [],
       markerURL = 'http%3A%2F%2Fgoo.gl%2FJhVos6',
       apiKey = '',
-      images = [];
+      images = [],
+      count = 5;
 
       $.each(gMapsOptions, function(key,val) {
         var optionSet = key + '=' + val;
@@ -33,9 +32,12 @@
         $('form').submit(function( event ) {
           event.preventDefault();
           apiKey = $('input[type=text]').val();
+          count = $('input[type=number').val();
+
+          $('#images').empty();
 
           $.each(data, function(key,val) {
-            if (key > 5) { return };
+            if (key > count - 1) { return };
             var address = val.Address.split(' ').join('+'),
             city = val.Coordinates.split(' ').join('+');
             coordinates = address + '+' + city,
@@ -47,7 +49,7 @@
 
             gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + markers + '&key=' + apiKey;
 
-            $('body').append('<h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="630" height="240"/></a>');
+            $('#images').delay(2000).append('<h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="630" height="240"/></a>');
 
           });
 
@@ -68,14 +70,21 @@
       font-size: 1.5em;
       padding: 0.5em;
     }
+    a {
+      display: block;
+      margin-bottom: 4em;
+    }
   </style>
 </head>
 <body>
 
   <form>
     <input type="text" name="Google Maps API key" placeholder="Your API key please">
+    <input type="number" name="count" placeholder="How many maps">
     <input type="submit" value="Generate those maps!">
   </form>
+
+  <div id="images"></div>
   
 </body>
 </html>
