@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Suitsupply Stores map generator</title>
+  <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript">
+
+    (function($) {
+
+      var gMapsAPI = 'https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap',
+          gMapsOptions =
+            {
+              zoom: 15,
+              size: '420x160',
+              key:'AIzaSyDctYwPekyWYM_PI7NncYv90vBoJ9fSqSg',
+              scale: 2,
+              markers: 'icon:marker.png'
+            },
+          gMapsParams = [];
+
+      $.each(gMapsOptions, function(key,val) {
+        var optionSet = key + '=' + val;
+        gMapsParams.push(optionSet);
+      });
+      gMapsParams = '&' + gMapsParams.join('&');
+
+      var jqxhr = $.getJSON( 'stores.json', function(data) {
+
+        $.each(data, function(key,val) {
+          if (key > 5) { return };
+          var address = val.Address.split(' ').join('+'),
+              city = val.Coordinates.split(' ').join('+');
+              coordinates = address + '+' + city,
+              name = coordinates.split('+').join(''),
+              gMapsImgURL = '';
+
+          if (coordinates.indexOf('_') != -1) { return };
+
+          gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams;
+
+          $('body').append('<a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="840" height="320"/></a>');
+
+        });
+
+      });
+
+  })(jQuery);
+
+</script>
+</head>
+<body>
+  
+</body>
+</html>

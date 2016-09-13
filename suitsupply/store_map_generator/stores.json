@@ -1,0 +1,354 @@
+[
+ {
+   "Address": "Mooierstraat 1-5-7",
+   "Coordinates": "Amersfoort"
+ },
+ {
+   "Address": "Willemsparkweg 37-41",
+   "Coordinates": "Amsterdam"
+ },
+ {
+   "Address": "Willemsparkweg 37",
+   "Coordinates": "Amsterdam"
+ },
+ {
+   "Address": "Frankrijklei 123a",
+   "Coordinates": "Antwerpen"
+ },
+ {
+   "Address": "Willemsplein 36",
+   "Coordinates": "Arnhem"
+ },
+ {
+   "Address": "3400 Around Lenox Road NE",
+   "Coordinates": "Atlanta"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Austin"
+ },
+ {
+   "Address": "ShopL2-10, Parkview Green Fang Cao Di, 9 DongDaQiao rd",
+   "Coordinates": "Beijing"
+ },
+ {
+   "Address": "8500 Beverly Blvd, Beverly Center",
+   "Coordinates": "Beverly Hills"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Boston"
+ },
+ {
+   "Address": "Wilhelminastraat 22",
+   "Coordinates": "Breda"
+ },
+ {
+   "Address": "Marnixlaan 23",
+   "Coordinates": "Brussel"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Charleston"
+ },
+ {
+   "Address": "945 North Rush Street",
+   "Coordinates": "Chicago"
+ },
+ {
+   "Address": "gronnegade 10",
+   "Coordinates": "Copenhagen"
+ },
+ {
+   "Address": "Suitsupply Shop-in-shop @ Stanley Korshak",
+   "Coordinates": "Dallas"
+ },
+ {
+   "Address": "3700 McKinney Avenue",
+   "Coordinates": "Dallas"
+ },
+ {
+   "Address": "Verwersstraat 7",
+   "Coordinates": "Den Bosch"
+ },
+ {
+   "Address": "299 Detroit St",
+   "Coordinates": "Denver"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Dubai"
+ },
+ {
+   "Address": "K�nigsallee 61",
+   "Coordinates": "D�sseldorf"
+ },
+ {
+   "Address": "Roosevelt Field Mall 630 Old Country Rd",
+   "Coordinates": "Garden City"
+ },
+ {
+   "Address": "80 Mason Street",
+   "Coordinates": "Greenwich"
+ },
+ {
+   "Address": "Brugstraat 15",
+   "Coordinates": "Groningen"
+ },
+ {
+   "Address": "Zijlstraat 70-74",
+   "Coordinates": "Haarlem"
+ },
+ {
+   "Address": "Kaufmannshaus",
+   "Coordinates": "Hamburg"
+ },
+ {
+   "Address": "Kapelstraat 44",
+   "Coordinates": "Hasselt"
+ },
+ {
+   "Address": "Wemenstraat 23",
+   "Coordinates": "Hengelo"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Hong Kong"
+ },
+ {
+   "Address": "A4 Hoofddorp Den Ruygen Hoek-Oost",
+   "Coordinates": "Hoofddorp"
+ },
+ {
+   "Address": "2601 Westheimer Rd",
+   "Coordinates": "Houston"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Kansas City"
+ },
+ {
+   "Address": "Burgemeester van Nispen van Sevenaerstraat 2",
+   "Coordinates": "Laren"
+ },
+ {
+   "Address": "The Grand Canal Shoppes",
+   "Coordinates": "Las Vegas"
+ },
+ {
+   "Address": "Aalmarkt 9",
+   "Coordinates": "Leiden"
+ },
+ {
+   "Address": "Batavia Stad Fashion Outlet",
+   "Coordinates": "Lelystad"
+ },
+ {
+   "Address": "15-18 Lime Street",
+   "Coordinates": "London"
+ },
+ {
+   "Address": "9 Vigo Street",
+   "Coordinates": "London"
+ },
+ {
+   "Address": "Westfield Shopping Centre , Ariel Way, Unit 2098",
+   "Coordinates": "London"
+ },
+ {
+   "Address": "4-6 Ram Place",
+   "Coordinates": "London"
+ },
+ {
+   "Address": "405 N. Robertson Blvd.",
+   "Coordinates": "Los Angeles"
+ },
+ {
+   "Address": "Bredestraat 17",
+   "Coordinates": "Maastricht"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Madrid"
+ },
+ {
+   "Address": "McArthurGlen Luxemburg Outlet",
+   "Coordinates": "Messancy"
+ },
+ {
+   "Address": "Avenida Presidente Masaryk 427",
+   "Coordinates": "Mexico City"
+ },
+ {
+   "Address": "Located in penthouse",
+   "Coordinates": "Miami Beach"
+ },
+ {
+   "Address": "14 Corso Monforte",
+   "Coordinates": "Milan"
+ },
+ {
+   "Address": "21 Volodarskogo Street",
+   "Coordinates": "Minsk"
+ },
+ {
+   "Address": "2148-2150 Rue de la Montagne",
+   "Coordinates": "Montreal"
+ },
+ {
+   "Address": "______ 119072, ____________ __________ 8 ________ 1, _______ _______",
+   "Coordinates": "Moscow"
+ },
+ {
+   "Address": "2 Petrovka st.",
+   "Coordinates": "Moscow"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Munchen"
+ },
+ {
+   "Address": "Suitsupply Shop-in-Shop @ Bloomingdale's",
+   "Coordinates": "New York"
+ },
+ {
+   "Address": "635 Madison Avenue",
+   "Coordinates": "New York"
+ },
+ {
+   "Address": "453 Broome Street",
+   "Coordinates": "New York"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Panama city"
+ },
+ {
+   "Address": "1601 Locust Street",
+   "Coordinates": "Philadelphia"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Plano"
+ },
+ {
+   "Address": "Sia Damas, Galleria Riga SC",
+   "Coordinates": "Riga"
+ },
+ {
+   "Address": "Stadsweide 24-26",
+   "Coordinates": "Roermond"
+ },
+ {
+   "Address": "Rosada 69",
+   "Coordinates": "Roosendaal"
+ },
+ {
+   "Address": "Rodezand 9-13",
+   "Coordinates": "Rotterdam"
+ },
+ {
+   "Address": "175 Maiden Ln San Francisco, CA 94108",
+   "Coordinates": "San Francisco"
+ },
+ {
+   "Address": "",
+   "Coordinates": "San Jose"
+ },
+ {
+   "Address": "Vertrekpassage 203",
+   "Coordinates": "Schiphol"
+ },
+ {
+   "Address": "Scottsdale Quarter",
+   "Coordinates": "Scottsdale"
+ },
+ {
+   "Address": "1331 Fifth Avenue",
+   "Coordinates": "Seattle"
+ },
+ {
+   "Address": "900 Secaucus Road",
+   "Coordinates": "Secaucus"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Seoul"
+ },
+ {
+   "Address": "__________819_",
+   "Coordinates": "Shanghai"
+ },
+ {
+   "Address": "_________169_",
+   "Coordinates": "Shanghai"
+ },
+ {
+   "Address": "ION Orchard 03-15",
+   "Coordinates": "Singapore"
+ },
+ {
+   "Address": "Hyde Park 1525 W.Swann Ave FL",
+   "Coordinates": "Tampa"
+ },
+ {
+   "Address": "Plaats 18",
+   "Coordinates": "The Hague"
+ },
+ {
+   "Address": "Ellen Pankhurststraat 7",
+   "Coordinates": "Tilburg"
+ },
+ {
+   "Address": "9-11 Hazelton Avenue",
+   "Coordinates": "Toronto"
+ },
+ {
+   "Address": "Oudkerkhof 39-41",
+   "Coordinates": "Utrecht"
+ },
+ {
+   "Address": "Proostwetering 80 M",
+   "Coordinates": "Utrecht"
+ },
+ {
+   "Address": "1136 Abbott Kinney Boulevard",
+   "Coordinates": "Venice Beach"
+ },
+ {
+   "Address": "Europa SC",
+   "Coordinates": "Vilnius"
+ },
+ {
+   "Address": "Stationsstraat 22",
+   "Coordinates": "Waalwijk"
+ },
+ {
+   "Address": "2828 Pennsylvania Avenue NW",
+   "Coordinates": "Washington"
+ },
+ {
+   "Address": "",
+   "Coordinates": "Washington"
+ },
+ {
+   "Address": "Turnhoutsebaan 5 unit 273",
+   "Coordinates": "Wijnegem"
+ },
+ {
+   "Address": "Rijksstraatweg 50",
+   "Coordinates": "Wilp"
+ },
+ {
+   "Address": "Van Voordenpark 1-C",
+   "Coordinates": "Zaltbommel"
+ },
+ {
+   "Address": "Luttekestraat 42",
+   "Coordinates": "Zwolle"
+ },
+ {
+   "Address": "N�schelerstrasse 26",
+   "Coordinates": "Z�rich"
+ }
+]
