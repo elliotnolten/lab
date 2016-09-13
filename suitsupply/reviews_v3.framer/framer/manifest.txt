@@ -1,26 +1,6 @@
 app.coffee
 employees.json
-framer/backups/backup-2016-07-14 13.21.42.coffee
-framer/backups/backup-2016-07-14 13.23.42.coffee
-framer/backups/backup-2016-07-14 13.24.42.coffee
-framer/backups/backup-2016-07-14 17.58.35.coffee
-framer/backups/backup-2016-07-18 14.02.49.coffee
-framer/backups/backup-2016-07-19 09.10.21.coffee
-framer/backups/backup-2016-07-19 10.04.21.coffee
-framer/backups/backup-2016-07-20 22.51.15.coffee
-framer/backups/backup-2016-07-20 22.52.15.coffee
-framer/backups/backup-2016-07-20 22.54.15.coffee
-framer/backups/backup-2016-07-20 22.55.15.coffee
-framer/backups/backup-2016-07-20 22.56.15.coffee
-framer/backups/backup-2016-07-20 22.57.15.coffee
-framer/backups/backup-2016-07-21 11.00.39.coffee
-framer/backups/backup-2016-07-21 11.01.39.coffee
-framer/backups/backup-2016-07-21 20.11.23.coffee
-framer/backups/backup-2016-07-21 20.53.44.coffee
-framer/backups/backup-2016-07-21 21.06.44.coffee
-framer/backups/backup-2016-07-21 21.14.44.coffee
-framer/backups/backup-2016-07-21 21.47.45.coffee
-framer/backups/backup-2016-07-25 11.12.29.coffee
+framer/backups/backup-2016-09-12 16.23.53.coffee
 framer/coffee-script.js
 framer/config.json
 framer/framer.generated.js
@@ -28,7 +8,6 @@ framer/framer.init.js
 framer/framer.js
 framer/framer.js.map
 framer/framer.modules.js
-framer/images/background.png
 framer/images/cursor-active.png
 framer/images/cursor-active@2x.png
 framer/images/cursor.png
@@ -38,16 +17,6 @@ framer/images/icon-152.png
 framer/images/icon-180.png
 framer/images/icon-192.png
 framer/images/icon-76.png
-framer/images/icon-arrow.png
-framer/images/icon-arrow@2x.png
-framer/images/icon-close.png
-framer/images/icon-close@2x.png
-framer/images/icon-framer.png
-framer/images/icon-framer@2x.png
-framer/images/icon-share.png
-framer/images/icon-share@2x.png
-framer/manifest.txt
-framer/mirror.css
 framer/preview.png
 framer/style.css
 framer/version
