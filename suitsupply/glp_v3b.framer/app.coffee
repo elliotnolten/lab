@@ -526,6 +526,8 @@ skyline.on "change:x", ->
 	for i,gar of allGarmentors
 		garX = gar.x - @x
 
+cta.onClick ->
+	window.open("https://itunes.apple.com/nl/app/suitsupply/id1038908407?mt=8")
 
 # Toggles
 hash = ""
