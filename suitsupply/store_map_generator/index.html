@@ -4,6 +4,7 @@
   <title>Suitsupply Stores map generator</title>
 
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="node_modules/downloadjs/download.min.js"></script>
   <script type="text/javascript">
 
     (function($) {
@@ -13,13 +14,14 @@
       {
         zoom: 15,
         size: '420x160',
-        scale: 2
+        scale: 1,
+        format: 'png'
       },
       gMapsParams = [],
-      markerURL = 'http%3A%2F%2Fgoo.gl%2FJhVos6',
+      markerURL = 'http://lab.nolten.co/suitsupply/store_map_generator/marker.png',
       apiKey = '',
       images = [],
-      count = 5;
+      count = 1;
 
       $.each(gMapsOptions, function(key,val) {
         var optionSet = key + '=' + val;
@@ -41,17 +43,40 @@
             var address = val.Address.split(' ').join('+'),
             city = val.Coordinates.split(' ').join('+');
             coordinates = address + '+' + city,
-            name = coordinates.split('+').join(''),
+            name = coordinates.split('+').join('') + '.png',
             gMapsImgURL = '',
-            markers = '&markers=size:tiny%7Cicon:http%3A%2F%2Flab.nolten.co%2Fsuitsupply%2Fglp_v3b.framer%2Fimages%2Fgarmentors%2Fyou.png%7C' + coordinates;
+            markers = '&markers=icon:' + markerURL + '%7C' + coordinates;
 
             if (coordinates.indexOf('_') != -1) { return };
 
-            gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + '&key=' + apiKey;
+            gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + '&key=' + apiKey + markers;
 
-            $('#images').delay(2000).append('<h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '" download="hoi"><img src="' + gMapsImgURL + '" width="630" height="240"/></a>');
+            $('#images').append('<div><h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '"s><img src="' + gMapsImgURL + '" width="630" height="240"/></a></div>');
 
           });
+
+            $('#images').find('div').each(function() {
+
+              var a = $(this).find('a'),
+                  link = a.attr('href'),
+                  name = $(this).find('h1').text().replace(/\s/g, '');
+
+              a.click(function(e) {
+
+                e.preventDefault();
+
+                var x=new XMLHttpRequest();
+                x.open( "GET", link , true);
+                x.responseType="blob";
+                x.onload= function(e){download(e.target.response, name + ".png", "image/png");};
+                x.send();
+
+              });
+              
+            });
+
+
+          
 
         });
 
