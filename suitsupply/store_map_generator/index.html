@@ -78,17 +78,16 @@
       });
       gMapsParams = '&' + gMapsParams.join('&');
 
-      var jqxhr = $.getJSON( 'stores.json', function(data) {
+      var jqxhr = $.getJSON( 'https://sheetsu.com/apis/v1.0/590765a01854', function(data) {
 
         $('form').submit(function( event ) {
           event.preventDefault();
           apiKey = $('input[type=text]').val();
-          count = $('input[type=number').val();
+          // count = $('input[type=number').val();
 
           $('#images').empty();
 
           $.each(data, function(key,val) {
-            if (key > count - 1) { return };
             var address = val.Address.split(' ').join('+'),
             city = val.Coordinates.split(' ').join('+');
             coordinates = address + '+' + city,
@@ -133,7 +132,7 @@
 
   <form>
     <input type="text" name="Google Maps API key" placeholder="Your API key please">
-    <input type="number" name="count" placeholder="How many maps">
+    <!-- <input type="number" name="count" placeholder="How many maps"> -->
     <input type="submit" value="Generate those maps!">
   </form>
 
