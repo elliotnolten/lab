@@ -537,7 +537,7 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = Utils.randomChoice(["amsterdam","newyork","dallas"])
+	location = Utils.randomChoice(["amsterdam","newyork"])
 
 if location == "amsterdam"
 	buildings.image = "images/ams.png"

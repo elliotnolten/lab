@@ -21,7 +21,56 @@
       markerURL = 'http://lab.nolten.co/suitsupply/store_map_generator/marker.png',
       apiKey = '',
       images = [],
+      // ssStores = 'https://sheetsu.com/apis/v1.0/590765a01854',
       count = 1;
+
+      var generateMaps = function(html) {
+
+        var r = $.Deferred();
+
+        $('#images').append(html);
+
+        $('form').after('<input type="button" value="Download all maps">');
+
+        map = $('#images').find('div');
+
+        downloadAll(map);
+
+        return r;
+
+      };
+
+      var downloadMap = function(el) {
+
+        var a = el.find('a'),
+            link = a.attr('href'),
+            name = el.find('h1').text().replace(/\s/g, ''),
+            x = new XMLHttpRequest();
+
+          x.open( "GET", link , true);
+          x.responseType="blob";
+          x.onload= function(e){
+            download(e.target.response, name + ".png", "image/png");
+          };
+          x.send();
+
+      };
+
+      var downloadAll = function(map) {
+        
+        var r = $.Deferred();
+
+        $('input[type="button"]').click(function(e) {
+          e.preventDefault();
+          map.each(function() {
+
+            downloadMap($(this));
+            
+          });
+        });
+      
+        return r;
+      };
 
       $.each(gMapsOptions, function(key,val) {
         var optionSet = key + '=' + val;
@@ -51,32 +100,11 @@
 
             gMapsImgURL = gMapsAPI + '&center=' + coordinates + gMapsParams + '&key=' + apiKey + markers;
 
-            $('#images').append('<div><h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '"s><img src="' + gMapsImgURL + '" width="630" height="240"/></a></div>');
+            images.push('<div><h1>' + val.Address + ' ' + val.Coordinates + '</h1><a href="' + gMapsImgURL + '"s><img src="' + gMapsImgURL + '" width="630" height="240"/></a></div>');
 
           });
 
-            $('#images').find('div').each(function() {
-
-              var a = $(this).find('a'),
-                  link = a.attr('href'),
-                  name = $(this).find('h1').text().replace(/\s/g, '');
-
-              a.click(function(e) {
-
-                e.preventDefault();
-
-                var x=new XMLHttpRequest();
-                x.open( "GET", link , true);
-                x.responseType="blob";
-                x.onload= function(e){download(e.target.response, name + ".png", "image/png");};
-                x.send();
-
-              });
-              
-            });
-
-
-          
+          generateMaps(images);
 
         });
 
