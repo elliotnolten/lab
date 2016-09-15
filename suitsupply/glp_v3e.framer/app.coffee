@@ -7,6 +7,8 @@ Framer.Info =
 	description: ""
 	author: "Elliot Nolten"
 	twitter: "@elliotnolten"
+	
+Framer.Extras.Preloader.setLogo("http://a2.mzstatic.com/eu/r30/Purple71/v4/28/5f/9d/285f9d2a-8128-4cae-d6f5-a3a5c8632127/icon175x175.jpeg")
 
 # <<< Framer Fold <<<
 
