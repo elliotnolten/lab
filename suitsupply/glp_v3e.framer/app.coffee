@@ -460,7 +460,7 @@ pages.on "change:currentPage", ->
 	
 	# If first page is left, shrink garmentor logo and hide ss logo
 	if current == 1
-		logo.states.switch("small")
+# 		logo.states.switch("small")
 		ss_logo.states.switch("hide")
 		# and show garmentors and animate skyline
 		skylineMoveRight.start()
@@ -474,7 +474,7 @@ pages.on "change:currentPage", ->
 		
 	# When you come back on first page make garmentor logo big and show ss logo again
 	if current == 0
-		logo.states.switch("default")
+# 		logo.states.switch("default")
 		ss_logo.states.switch("default")
 		# and hide garmentors and stop skyline animation
 		skylineMoveRight.stop()
@@ -497,12 +497,14 @@ pages.on "change:currentPage", ->
 		ctaHide.start()
 		# show readMore
 		readMore.opacity = 1
+	
+pages.content.on "change:y", ->
+	logo.scale = Utils.modulate pages.content.y, [0,-1334], [1,0.5], true
+	logo.y = Utils.modulate pages.content.y, [0,-1334], [banner.maxY + 48 * x,20 * x], true
 
-pages.onScroll ->
 	currentPage = pages.verticalPageIndex(pages.currentPage)
 	
-	deltaY = Math.abs pages.scrollY - pages.currentPage.y
-	# Fade out currentPage
+	deltaY = Math.abs (-pages.content.y) - pages.currentPage.y
 	pages.currentPage.opacity = Utils.modulate deltaY, [0,200], [1,0], false
 	pages.currentPage.scale = Utils.modulate deltaY, [0,200], [1,0.9], false
 	
@@ -513,8 +515,6 @@ pages.onScroll ->
 		if pages.direction == "down"
 			site.scrollVertical = true
 			pages.scrollVertical = false
-	
-	
 	
 # Skyline pan
 skylineA = -screenW / 2
@@ -534,9 +534,6 @@ skylineMoveRight.onAnimationEnd ->
 
 skylineMoveLeft.onAnimationEnd ->
 	skylineMoveRight.start()
-
-# print skyline.x - skylineA
-# print allGarmentors[allGarmentors.length - 1].x
 
 # Sky pan, dependant on x change of skyline
 skyline.on "change:x", ->
