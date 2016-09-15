@@ -48,23 +48,23 @@ site.mouseWheelEnabled = isFullscreen
 sections = [
 	{
 		title: ""
-		content: "The Garmentor is a stylist from Suitsupply who helps you with your alterations."
+		content: "Our Garmentors are trained specialists to assist you in finding the perfect fit for your suit, jacket or trousers at your home or office."
 		name: "intro"
 		icon: ""
 	}
 	{
 		title: "Find a Garmentor"
-		content: "Our Garmentors are available nearby you and can be ordered with the Suitsupply app."
+		content: "Download the Suitsupply app to find out which Garmentor is nearby. Schedule a fitting session on-demand."
 		name: "usp1"
 	}
 	{
 		title: "Have it tailored"
-		content: "Our on-demand Garmentor visits you at any location. He will check your suit, jacket or trousers for alterations."
+		content: "Our Garmentor checks your fit, pins your alterations and takes your item to have it tailored."
 		name: "usp2"
 	}
 	{
 		title: "Get it delivered"
-		content: "The fitting session, delivery and returns are free of charge. Pay only for your alterations.<br><br>Open the app and order a Garmentor."
+		content: "Your tailored item will be delivered at your doorstep within a few days.<br><br>The fitting session, pick-up and delivery are free of charge. Pay for alterations on site."
 		name: "usp3"
 	}
 ]
@@ -266,24 +266,57 @@ for i,section of sections
 
 allPages[0].opacity = 1
 
+allPages[0].children[0].y = 248 * x
+
 # Fixed elements
 fixed = new Layer
 	backgroundColor: null
 	width: Screen.width, height: Screen.height
 	parent: site.content
+
+if isPhone || isTablet || isFullscreen and Utils.isPhone()
+
+	ios = new Layer
+		width: screenW
+		height: 40 * x
+	
+	ios.style = 
+		"background": "url(images/ios.png) rgba(250,250,250,0.9)"
+		"-webkit-backdrop-filter": "blur(10px)"
+		"box-shadow": "0 1px 0 #B2B2B2"
+	if isTablet
+		ios.style = "background-image": "url(images/ios_tab.png)"
+			
+	
+	ios.onClick ->
+		pages.snapToPage(allPages[0])
+	
+	banner = new Layer
+		width: screenW, height: 83 * x
+		image: "images/smartappbanner.png"
+		parent: allPages[0]
+		y: ios.maxY
 	
 logo = new Layer
 	parent: fixed
-	image: "images/g_logo.svg"
-	width: 254 * x, height: 19 * x
-	y: 150 * x
-	
+	image: "images/g_logo.png"
+	width: 280 * x, height: 16 * x
+	y: banner.maxY + 48 * x	
 logo.centerX()
 
 logo.states.add small: scale: 0.5, y: 60 * x
 
 logo.states.animationOptions =
 	curve: "spring(200,40,10)"
+
+ss_logo = new Layer
+	parent: fixed
+	image: "images/by_ss.png"
+	width: 77 * x, height: 6 * x
+	x: Align.center, y: logo.maxY + 12 * x
+ss_logo.states.add
+	hide: opacity: 0
+	
 
 cta = new Layer
 	parent: fixed
@@ -306,37 +339,12 @@ if isFullscreen || isTablet
 	cta.image = "images/cta_tab.png"
 	cta.y = Screen.height - 156 * x
 
-ss_logo = new Layer
-	parent: fixed
-	image: "images/sslogo.svg"
-	width: 120 * x, height: 14 * x
-	x: 24 * x, y: 64 * x
-
-ss_logo.states.add hide: opacity: 0
-
-if isPhone || isTablet || isFullscreen and Utils.isPhone()
-
-	ios = new Layer
-		width: screenW
-		height: 40 * x
-	
-	ios.style = 
-		"background": "url(images/ios.png) rgba(250,250,250,0.9)"
-		"-webkit-backdrop-filter": "blur(10px)"
-		"box-shadow": "0 1px 0 #B2B2B2"
-	if isTablet
-		ios.style = "background-image": "url(images/ios_tab.png)"
-			
-	
-	ios.onClick ->
-		pages.snapToPage(allPages[0])
-
 readMore = new Layer
 	width: 100 * x, height: 50 * x
 	backgroundColor: null
 	parent: fixed
 	x: Align.center
-	y: 340 * x
+	y: allPages[0].children[0].maxY + 24 * x
 
 readMore.style = 
 	"font-size": "#{16*x}px"
@@ -348,7 +356,7 @@ readMore.style =
 readMoreTxt = new Layer
 	parent: readMore
 	width: readMore.width, height: readMore.height / 2
-	html: "Read more"
+	html: "How it works"
 	backgroundColor: null
 
 readMore.states.add
@@ -399,6 +407,8 @@ appstore.states.add
 	show:
 		y: 0
 appstore.states.switchInstant("hide")
+
+		
 
 # Footer
 footer = new Layer
@@ -548,7 +558,7 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = Utils.randomChoice(["amsterdam","newyork"])
+	location = Utils.randomChoice(["amsterdam"])
 
 if location == "amsterdam"
 	buildings.image = "images/ams.png"
