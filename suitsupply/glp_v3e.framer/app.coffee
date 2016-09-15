@@ -297,6 +297,15 @@ if isPhone || isTablet || isFullscreen and Utils.isPhone()
 		image: "images/smartappbanner.png"
 		parent: fixed
 		y: 0
+	appstoreURL = "https://itunes.apple.com/nl/app/suitsupply/id1038908407?mt=8"
+	link = new Layer
+		parent: banner
+		width: 83 * x
+		height: 83 * x
+		ignoreEvents: false
+		backgroundColor: null
+		html: "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
+		x: Align.right
 	
 logo = new Layer
 	parent: fixed
@@ -325,6 +334,14 @@ cta = new Layer
 	image: "images/cta.png"
 	y: Align.bottom(-48 * x)
 cta.centerX()
+link = new Layer
+	parent: cta
+	width: cta.width
+	height: cta.width
+	ignoreEvents: false
+	backgroundColor: null
+	html: "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
+
 
 ctaHide = new Animation
 	layer: cta
@@ -396,18 +413,6 @@ arrDownAnimation.start()
 
 arrDown.onClick ->
 	pages.snapToPage(allPages[1])
-
-# Appstore
-appstore = new Layer
-	width: screenW, height: screenH
-	image: "images/appstore.png"
-
-appstore.states.add
-	hide:
-		y: screenH
-	show:
-		y: 0
-appstore.states.switchInstant("hide")
 
 		
 
@@ -542,12 +547,6 @@ skyline.on "change:x", ->
 # 	print @x - skylineA
 	for i,gar of allGarmentors
 		garX = gar.x - @x
-
-cta.onClick ->
-	appstore.states.next("show")
-
-appstore.onSwipeDown ->
-	@states.next("hide")
 
 # Toggles
 hash = ""
