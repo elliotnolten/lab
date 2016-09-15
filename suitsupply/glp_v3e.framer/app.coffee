@@ -524,7 +524,7 @@ skylineMoveRight = new Animation
 	layer: skyline
 	properties:
 		x: skylineB
-	time: 30
+	time: 10
 	curve: "ease-out-out"
 skylineMoveLeft = skylineMoveRight.reverse()
 
@@ -558,7 +558,7 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = Utils.randomChoice(["amsterdam"])
+	location = "amsterdam"
 
 if location == "amsterdam"
 	buildings.image = "images/ams.png"
