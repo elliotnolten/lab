@@ -295,7 +295,7 @@ if isPhone || isTablet || isFullscreen and Utils.isPhone()
 	banner = new Layer
 		width: screenW, height: 83 * x
 		image: "images/smartappbanner.png"
-		parent: allPages[0]
+		parent: fixed
 		y: 0
 	
 logo = new Layer
@@ -501,6 +501,7 @@ pages.on "change:currentPage", ->
 pages.content.on "change:y", ->
 	logo.scale = Utils.modulate pages.content.y, [0,-1334], [1,0.5], true
 	logo.y = Utils.modulate pages.content.y, [0,-1334], [banner.maxY + 48 * x,20 * x], true
+	banner.y = Utils.modulate pages.content.y, [0,-banner.height], [0,-banner.height], true
 
 	currentPage = pages.verticalPageIndex(pages.currentPage)
 	
