@@ -240,13 +240,16 @@ for i,section of sections
 		parent: page
 		html: section.content
 		backgroundColor: null
-		width: 280 * x, y: 200 * x
+		width: 280 * x, y: 130 * x
 	usp.centerX()
 	usp.style =
 		"font-family": "Roboto"
 		"font-weight": "300"
 		"font-size": 16 * x + "px"
 		"line-height": "1.5"
+
+	if i == "0"
+		usp.y = (150 + 48) * x
 	
 	title = new Layer
 		parent: usp
@@ -264,10 +267,6 @@ for i,section of sections
 	
 	allPages.push(page)
 
-allPages[0].opacity = 1
-
-allPages[0].children[0].y = 248 * x
-
 # Fixed elements
 fixed = new Layer
 	backgroundColor: null
@@ -275,27 +274,29 @@ fixed = new Layer
 	parent: site.content
 
 if isPhone || isTablet || isFullscreen and Utils.isPhone()
-
-	ios = new Layer
-		width: screenW
-		height: 40 * x
 	
-	ios.style = 
-		"background": "url(images/ios.png) rgba(250,250,250,0.9)"
-		"-webkit-backdrop-filter": "blur(10px)"
-		"box-shadow": "0 1px 0 #B2B2B2"
-	if isTablet
-		ios.style = "background-image": "url(images/ios_tab.png)"
-			
-	
-	ios.onClick ->
-		pages.snapToPage(allPages[0])
+# 	if not Utils.isSafari() || not Utils.isChrome()
+# 
+# 		ios = new Layer
+# 			width: screenW
+# 			height: 40 * x
+# 		
+# 		ios.style = 
+# 			"background": "url(images/ios.png) rgba(250,250,250,0.9)"
+# 			"-webkit-backdrop-filter": "blur(10px)"
+# 			"box-shadow": "0 1px 0 #B2B2B2"
+# 		if isTablet
+# 			ios.style = "background-image": "url(images/ios_tab.png)"
+# 				
+# 		
+# 		ios.onClick ->
+# 			pages.snapToPage(allPages[0])
 	
 	banner = new Layer
 		width: screenW, height: 83 * x
 		image: "images/smartappbanner.png"
 		parent: allPages[0]
-		y: ios.maxY
+		y: 0
 	
 logo = new Layer
 	parent: fixed
@@ -304,13 +305,13 @@ logo = new Layer
 	y: banner.maxY + 48 * x	
 logo.centerX()
 
-logo.states.add small: scale: 0.5, y: 60 * x
+logo.states.add small: scale: 0.5, y: 20 * x
 
 logo.states.animationOptions =
 	curve: "spring(200,40,10)"
 
 ss_logo = new Layer
-	parent: fixed
+	parent: allPages[0]
 	image: "images/by_ss.png"
 	width: 77 * x, height: 6 * x
 	x: Align.center, y: logo.maxY + 12 * x
@@ -361,7 +362,7 @@ readMoreTxt = new Layer
 
 readMore.states.add
 	hide: 
-		y: 275 * x
+		y: 220 * x
 
 readMoreTxt.states.add
 	hide: opacity: 0
