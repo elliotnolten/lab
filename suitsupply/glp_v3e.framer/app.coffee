@@ -32,7 +32,7 @@ if isFullscreen
 		
 if isRetina then x = 2 else x = 1
 
-Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,700|Roboto:300,700';")
+Utils.insertCSS("@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed:400|Roboto:300,700';")
 
 bg = new BackgroundLayer backgroundColor: "#f2f2f2"
 Framer.Defaults.Animation =
@@ -42,34 +42,30 @@ site = new PageComponent
 	width: screenW, height: screenH
 site.scrollHorizontal = false
 site.scrollVertical = false
-site.directionLock = true
 site.mouseWheelEnabled = isFullscreen
 
 # Sections
 sections = [
 	{
-		content: "Use the suitsupply app to get your perfect fit."
-		image: "section1.png"
+		title: ""
+		content: "The Garmentor is a stylist from Suitsupply who helps you with your alterations."
 		name: "intro"
 		icon: ""
 	}
 	{
-		content: "On demand fitting session at home or office with one of our Garmentors"
-		image: "section2.png"
+		title: "Find a Garmentor"
+		content: "Our Garmentors are available nearby you and can be ordered with the Suitsupply app."
 		name: "usp1"
-		icon: "pin.svg"
 	}
 	{
-		content: "Your garmentor will assist you finding the perfect fit"
-		image: "section3.png"
+		title: "Have it tailored"
+		content: "Our on-demand Garmentor visits you at any location. He will check your suit, jacket or trousers for alterations."
 		name: "usp2"
-		icon: "ruler.svg"
 	}
 	{
-		content: "Pay for your alterations on-site and have your altered items delivered at your doorstep."
-		image: "section4.png"
+		title: "Get it delivered"
+		content: "The fitting session, delivery and returns are free of charge. Pay only for your alterations.<br><br>Open the app and order a Garmentor."
 		name: "usp3"
-		icon: "styled.svg"
 	}
 ]
 
@@ -117,20 +113,14 @@ if isFullscreen then buildings.y = Align.bottom(50 * x)
 
 # List of garmentors
 garmentors = [
-	{ name: "annabel", x: 400, y: 450, eta: 22, bottom: 260 }
-	{ name: "ashley", x: 800, y: 450, eta: 24, bottom: 300 }
-	{ name: "you", x: 800, y: 450, eta: "", bottom: 300 }
-	{ name: "charity", x: 900, y: 750, eta: 30, bottom: 300 }
-	{ name: "courtney", x: 1000, y: 350, eta: 39, bottom: 340 }
-	{ name: "estefania", x: 1200, y: 730, eta: 45, bottom: 300 }
-	{ name: "jordan", x: 1340, y: 400, eta: 50, bottom: 280 }
-# 	{ name: "sophie", x: 1890, y: 360, eta: 56, bottom: 340 }
-# 	{ name: "travis", x: 2000, y: 420, eta: 56, bottom: 340 }
+	{ name: "benjamin", eta: 22 }
+	{ name: "you"}
+	{ name: "sebastiaan", eta: 24 }
 ]
 allGarmentors = []
 allGarY = []
 allGarHeight = []
-garTop = verticalSections.middle.top - 50 * x
+garTop = verticalSections.middle.top - 0 * x
 garBottom = buildings.minY + 40 * x
 
 for i,gar of garmentors
@@ -142,7 +132,7 @@ for i,gar of garmentors
 	garmentor = new Layer
 		parent: skyline
 		size: 34 * x
-		x: xPos + xPos * deviation, y: yPos
+		x: 100 * x * i + 500, y: yPos
 		backgroundColor: null
 	
 	avatar = new Layer
@@ -230,7 +220,6 @@ hideGarmentors = (layer,i) ->
 allPages = []
 pages = new PageComponent width: screenW, height: screenH, parent: site.content
 pages.scrollHorizontal = false
-pages.directionLock = true
 pages.animationOptions =
 	curve: "spring(100,20,0)"
 
@@ -246,13 +235,6 @@ for i,section of sections
 		y: i * pages.height
 		backgroundColor: null
 		opacity: 1
-		
-	icon = new Layer
-		parent: page
-		size: 72 * x, y: 128 * x
-		backgroundColor: null
-		image: "images/#{section.icon}"
-	icon.centerX()
 	
 	usp = new Layer
 		parent: page
@@ -265,6 +247,20 @@ for i,section of sections
 		"font-weight": "300"
 		"font-size": 16 * x + "px"
 		"line-height": "1.5"
+	
+	title = new Layer
+		parent: usp
+		html: section.title
+		backgroundColor: null
+		width: usp.width, height: 27 * x
+		x: Align.left, y: Align.top(-(27 + 26) * x)
+	title.style =
+		"font-family": "Roboto Condensed"
+		"text-transform": "uppercase"
+		"font-size": "#{18*x}px"
+		"line-height": "1.5"
+		"letter-spacing": "1.33px"
+		"font-weight": "400"
 	
 	allPages.push(page)
 
@@ -293,28 +289,16 @@ cta = new Layer
 	parent: fixed
 	width: 252 * x, height: 48 * x
 	image: "images/cta.png"
-	y: usp.maxY
+	y: Align.bottom(-48 * x)
 cta.centerX()
 
 ctaHide = new Animation
 	layer: cta
-	properties: opacity: 0
+	properties: opacity: 0, y: Align.bottom
 	curve: "ease-in-out"
 	time: 0.2
 
 ctaShow = ctaHide.reverse()
-
-ctaMoveDown = () ->
-	ctaHide.start()
-	ctaHide.onAnimationEnd ->
-		cta.y = screenH - cta.height - 48 * x
-		ctaShow.start()
-
-ctaMoveUp = () ->
-	ctaHide.start()
-	ctaHide.onAnimationEnd ->
-		cta.y = usp.maxY
-		ctaShow.start()
 
 if isFullscreen || isTablet
 	cta.width = 250 * x
@@ -351,9 +335,8 @@ readMore = new Layer
 	width: 100 * x, height: 50 * x
 	backgroundColor: null
 	parent: fixed
-	html: "Read more"
 	x: Align.center
-	y: cta.maxY + 48 * x
+	y: 340 * x
 
 readMore.style = 
 	"font-size": "#{16*x}px"
@@ -361,6 +344,19 @@ readMore.style =
 	"text-transform": "uppercase"
 	"text-align": "center"
 	"line-height": "1.5"
+
+readMoreTxt = new Layer
+	parent: readMore
+	width: readMore.width, height: readMore.height / 2
+	html: "Read more"
+	backgroundColor: null
+
+readMore.states.add
+	hide: 
+		y: 275 * x
+
+readMoreTxt.states.add
+	hide: opacity: 0
 	
 arrDown = new Layer
 	width: 19 * x, height: 10 * x
@@ -392,24 +388,29 @@ arrDownAnimation.start()
 arrDown.onClick ->
 	pages.snapToPage(allPages[1])
 
+# Appstore
+appstore = new Layer
+	width: screenW, height: screenH
+	image: "images/appstore.png"
+
+appstore.states.add
+	hide:
+		y: screenH
+	show:
+		y: 0
+appstore.states.switchInstant("hide")
+
 # Footer
 footer = new Layer
-	width: screenW, height: (210 + 280 + 48) * x + cta.height
+	width: screenW, height: (280) * x + cta.height
 	backgroundColor: "#f2f2f2"
-
-summary = new Layer
-	parent: footer
-	width: 375 * x, height: 210 * x
-	image: "images/summary.png"	
-	x: Align.center
 
 footerBottom = new Layer
 	parent: footer
 	width: footer.width, height: 280 * x
 	backgroundColor: "#e9e9e9"
-	y: summary.maxY + cta.height + 48 * x
 	
-footerImg = new Layer
+footerImg = new Layer	
 	parent: footerBottom
 	width: 375 * x, height: 280 * x
 	image: "images/footer.png"
@@ -433,24 +434,14 @@ site.on "change:currentPage", ->
 	if site.direction == "up"	
 		site.scrollVertical = false
 		pages.scrollVertical = true
-	
-	# If current page is footer, place cta in footer
-	if site.verticalPageIndex(site.currentPage) == 3
-		cta.parent = footer
-		cta.animate properties: opacity: 0
-		Utils.delay 0.1, ->
-			cta.animate properties: opacity: 1
-		cta.y = summary.maxY
-	else
-		cta.parent = fixed
-		cta.animate properties: opacity: 0
-		Utils.delay 0.1, ->
-			cta.animate properties: opacity: 1
-		cta.y = Screen.height - 96 * x
 
 # Click on down arrow go to next page
 readMore.onClick ->
-	pages.snapToNextPage()
+	current = pages.verticalPageIndex(pages.currentPage)
+	next = current + 1
+	if next < sections.length
+		nextPage = allPages[current + 1]
+		pages.snapToPage(nextPage)
 
 # Page events
 pages.on "change:currentPage", ->
@@ -465,7 +456,10 @@ pages.on "change:currentPage", ->
 		for i,gar of allGarmentors
 			showGarmentors(gar,i)
 		# move cta down
-		if pages.direction == "down" then ctaMoveDown()
+		if pages.direction == "down" then ctaHide.start()
+		# Remove "read more" text
+		readMore.states.next("hide")
+		readMoreTxt.states.next("hide")
 		
 	# When you come back on first page make garmentor logo big and show ss logo again
 	if current == 0
@@ -477,7 +471,21 @@ pages.on "change:currentPage", ->
 		for i,gar of allGarmentors
 			hideGarmentors(gar,i)
 		# and move cta back up
-		ctaMoveUp()
+		ctaShow.start()
+		# Place "read more" text back
+		readMore.states.next("default")
+		readMoreTxt.states.next("default")
+	
+	if current == lastPage
+		# show cta
+		ctaShow.start()
+		# Hide readmore
+		readMore.opacity = 0
+	if current == lastPage - 1
+		# hide cta
+		ctaHide.start()
+		# show readMore
+		readMore.opacity = 1
 
 pages.onScroll ->
 	currentPage = pages.verticalPageIndex(pages.currentPage)
@@ -499,7 +507,7 @@ pages.onScroll ->
 	
 # Skyline pan
 skylineA = -screenW / 2
-skylineB = -skyline.width + screenW * 1.25
+skylineB = -skyline.width / 5
 
 # Continuous motion
 skylineMoveRight = new Animation
@@ -527,7 +535,10 @@ skyline.on "change:x", ->
 		garX = gar.x - @x
 
 cta.onClick ->
-	window.open("https://itunes.apple.com/nl/app/suitsupply/id1038908407?mt=8")
+	appstore.states.next("show")
+
+appstore.onSwipeDown ->
+	@states.next("hide")
 
 # Toggles
 hash = ""
@@ -545,3 +556,5 @@ else if location == "newyork"
 	buildings.image = "images/ny.png"
 else if location == "dallas"
 	buildings.image = "images/dal.png"
+
+
