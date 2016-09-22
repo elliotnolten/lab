@@ -72,9 +72,9 @@ sections = [
 ]
 
 verticalSections =
-	top: { top: 0, bottom: 0.5 * screenH }
-	middle: { top: 0.5 * screenH, bottom: 0.75 * screenH}
-	bottom: {top: 0.75 * screenH, bottom: screenH}
+	top: { top: 0, bottom: 0.4 * screenH }
+	middle: { top: 0.4 * screenH, bottom: 0.6 * screenH}
+	bottom: {top: 0.6 * screenH, bottom: screenH}
 
 verticalParts = new Layer width: screenW, height: screenH, backgroundColor: null
 verticalParts.bringToFront()
@@ -107,9 +107,9 @@ skyline = new Layer
 # 	
 buildings = new Layer
 	parent: skyline
-	width: skyline.width, height: skyline.width / 1500 * 352
+	width: skyline.width, height: skyline.width / 3 * 1.5
 	image: "images/ny.png"
-	y: Align.bottom
+	y: Align.bottom(20 * x)
 
 if isFullscreen then buildings.y = Align.bottom(50 * x)
 
@@ -122,8 +122,8 @@ garmentors = [
 allGarmentors = []
 allGarY = []
 allGarHeight = []
-garTop = verticalSections.middle.top - 0 * x
-garBottom = buildings.minY + 40 * x
+garTop = verticalSections.middle.top
+garBottom = verticalSections.bottom.top
 
 for i,gar of garmentors
 	
@@ -561,8 +561,8 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = "ny"
+	location = "newyork"
 
-buildings.image = "images/#{location}.png"
+buildings.image = "images/#{location}@1x.png"
 
 
