@@ -108,6 +108,7 @@
           html2canvas(el, {
             onrendered: function(canvas) {
               imgURL = canvas.toDataURL();
+              console.log(imgURL);
               $('#img-out').append(canvas);
               canvas.title = title;
               el.remove();

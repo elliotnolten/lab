@@ -115,9 +115,9 @@ if isFullscreen then buildings.y = Align.bottom(50 * x)
 
 # List of garmentors
 garmentors = [
-	{ name: "benjamin", eta: 22 }
+	{ name: "benjamin" }
 	{ name: "you"}
-	{ name: "sebastiaan", eta: 24 }
+	{ name: "sebastiaan" }
 ]
 allGarmentors = []
 allGarY = []
@@ -151,22 +151,20 @@ for i,gar of garmentors
 	ring.style =
 		"border": 3 * x + "px solid #183051"
 	ring.center()
-	
-	eta = new Layer
-		parent: garmentor, html: "ETA #{gar.eta} min", backgroundColor: null, height: 20 * x, y: -28 * x, opacity: 0
-	eta.centerX()
-	eta.style = 
-		"text-align": "center"
-		"font-size": 14 * x + "px"
-		"line-height": "1.5"
-		"font-family": "Roboto"
-		"font-weight": "300"
+
 	
 	avatar.scale = Utils.randomNumber(0.75,1.25)
 	
 	if gar.name == "you"
-		eta.html = "you"
-		eta.scale = 1
+		you = new Layer
+			parent: avatar, html: gar.name, backgroundColor: null, height: 20 * x, y: -28 * x, opacity: 1
+		you.centerX()
+		you.style = 
+			"text-align": "center"
+			"font-size": 14 * x + "px"
+			"line-height": "1.5"
+			"font-family": "Roboto"
+			"font-weight": "300"		
 		ring.opacity = 0
 		garmentor.y = ( garBottom + garTop ) / 2
 	
@@ -185,7 +183,7 @@ buildings.bringToFront()
 # Show garmentors
 showGarmentors = (layer,i) ->
 	avatar = layer.children[0]
-	pointer = layer.children[2]
+	pointer = layer.children[1]
 	delay = 0.2
 
 	pointer.animate
@@ -203,7 +201,7 @@ showGarmentors = (layer,i) ->
 
 hideGarmentors = (layer,i) ->
 	avatar = layer.children[0]
-	pointer = layer.children[2]
+	pointer = layer.children[1]
 	delay = 0.2
 
 	pointer.animate
@@ -313,8 +311,10 @@ logo = new Layer
 	parent: fixed
 	image: "images/g_logo.png"
 	width: 280 * x, height: 16 * x
-	y: banner.maxY + 48 * x	
+	y: 48 * x	
 logo.centerX()
+
+if isPhone || isTablet || isFullscreen and Utils.isPhone() then logo.y = banner.maxY + 48 * x
 
 logo.states.add small: scale: 0.5, y: 20 * x
 
@@ -507,8 +507,11 @@ pages.on "change:currentPage", ->
 	
 pages.content.on "change:y", ->
 	logo.scale = Utils.modulate pages.content.y, [0,-1334], [1,0.5], true
-	logo.y = Utils.modulate pages.content.y, [0,-1334], [banner.maxY + 48 * x,20 * x], true
-	banner.y = Utils.modulate pages.content.y, [0,-banner.height], [0,-banner.height], true
+	if isPhone || isTablet || isFullscreen and Utils.isPhone()
+		banner.y = Utils.modulate pages.content.y, [0,-banner.height], [0,-banner.height], true
+		logo.y = Utils.modulate pages.content.y, [0,-1334], [banner.maxY + 48 * x,20 * x], true
+	else
+		logo.y = Utils.modulate pages.content.y, [0,-1334], [48 * x,20 * x], true
 
 	currentPage = pages.verticalPageIndex(pages.currentPage)
 	
@@ -558,13 +561,8 @@ if window.location.hash
 	hash = window.location.hash.substring(1); #Puts hash in variable, and removes the # character
 	location = hash
 else
-	location = "amsterdam"
+	location = "ny"
 
-if location == "amsterdam"
-	buildings.image = "images/ams.png"
-else if location == "newyork"
-	buildings.image = "images/ny.png"
-else if location == "dallas"
-	buildings.image = "images/dal.png"
+buildings.image = "images/#{location}.png"
 
 

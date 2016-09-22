@@ -5,14 +5,15 @@
   "deviceOrientation" : 0,
   "sharedPrototype" : 0,
   "contentScale" : 1,
-  "deviceType" : "fullscreen",
+  "deviceType" : "custom",
   "selectedHand" : "",
   "updateDelay" : 0,
-  "deviceScale" : 1,
+  "deviceScale" : "fit",
   "foldedCodeRanges" : [
     "{0, 1211}",
     "{1212, 903}",
     "{2116, 187}"
   ],
-  "orientation" : 0
+  "orientation" : 0,
+  "fullScreen" : false
 }
