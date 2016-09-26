@@ -168,7 +168,7 @@ buildings = new Layer
 	parent: skyline
 	width: skyline.width, height: skyline.width / 3 * 1.5
 	image: "images/ny.png"
-	y: Align.bottom(60 * x)
+	y: Align.bottom(90 * x)
 	backgroundColor: null
 
 if isFullscreen then buildings.y = Align.bottom(50 * x)
@@ -672,7 +672,7 @@ showGarmentor = Utils.throttle 0.5, (garmentor) ->
 		properties: opacity: 1
 
 site.onScroll ->
-	if site.direction == "up" && site.currentPage == city
+	if site.direction == "up" && site.currentPage == pages
 		site.scrollVertical = false
 		pages.scrollVertical = true
 
@@ -688,6 +688,9 @@ readMore.onClick ->
 	if next < sections.length
 		nextPage = allPages[current + 1]
 		pages.snapToPage(nextPage)
+
+# Move skyline down
+skyline.y = 50 * x
 
 # Page events
 pages.on "change:currentPage", ->
@@ -709,6 +712,10 @@ pages.on "change:currentPage", ->
 		# Remove "read more" text
 		readMore.states.next("hide")
 		readMoreTxt.states.next("hide")
+		# Move skyline back to original position
+		skyline.animate
+			properties: y: 0
+			curve: "spring(300,30,10)"
 		
 	# When you come back on first page make garmentor logo big and show ss logo again
 	if current == 0
@@ -726,17 +733,29 @@ pages.on "change:currentPage", ->
 		# Place "read more" text back
 		readMore.states.next("default")
 		readMoreTxt.states.next("default")
+		# Move skyline down
+		skyline.animate
+			properties: y: 50 * x
+			curve: "spring(300,30,10)"
 	
 	if current == lastPage
 		# show cta
 		ctaShow.start()
 		# Hide readmore
 		readMore.opacity = 0
+		# Move skyline down
+		skyline.animate
+			properties: y: 50 * x
+			curve: "spring(300,30,10)"
 	if current == lastPage - 1
 		# hide cta
 		ctaHide.start()
 		# show readMore
 		readMore.opacity = 1
+		# Move skyline back to original position
+		skyline.animate
+			properties: y: 0
+			curve: "spring(300,30,10)"
 	
 pages.content.on "change:y", ->
 	logo.scale = Utils.modulate pages.content.y, [0,-1334], [1,0.5], true
