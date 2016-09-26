@@ -454,7 +454,7 @@ garClose.onClick ->
 			width: 90 * x
 			height: 90 * x
 			x: (screenW - 90 * x) / 2
-			y: garView.y + 80 * x
+			y: garView.y + 85 * x
 			borderRadius: 100
 		curve: curve
 	gBgOneB = new Animation
