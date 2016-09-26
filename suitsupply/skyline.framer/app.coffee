@@ -26,6 +26,7 @@ breakpoints = [
 cities = [ 
 	{name: "newyork"}
 	{name: "amsterdam"}
+	{name: "dallas"}
 ]
 
 screenW = Screen.width
@@ -132,6 +133,8 @@ mHval = new Layer
 	parent: mH, width: 100, height: 20, backgroundColor: null, rotationZ: 270, html: breakpoints[0].height, x: -40, y: 100
 mHval.style = "text-align": "center"
 
+mouseMove = new Layer width: screenW, height: screenH, backgroundColor: null
+
 toggle.onClick ->
 	truth = trueFalse()
 	vw.clip = truth
@@ -212,6 +215,7 @@ buildings.onDragStart ->
 	buildingsEnd = buildings.maxX
 	skyStart = sky.minX
 	skyEnd = sky.maxX
+
 	
 buildings.on "change:x", ->
 	sky.x = Utils.modulate buildings.x, [buildingsStart, buildingsEnd], [skyStart, skyEnd], false

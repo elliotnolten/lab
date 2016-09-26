@@ -19,6 +19,8 @@ orient = require "OrientationEvents"
 screenW = Screen.width
 screenH = Screen.height
 x = Utils.devicePixelRatio()
+curve = "spring(300,40,10)"
+
 
 # Detect device type
 isFullscreen = Framer.Device.deviceType.indexOf("fullscreen") != -1
@@ -45,6 +47,9 @@ site = new PageComponent
 site.scrollHorizontal = false
 site.scrollVertical = false
 site.mouseWheelEnabled = isFullscreen
+
+# Check if skyline is moving to right
+moveRight = true
 
 # Sections
 sections = [
@@ -83,139 +88,6 @@ for i,s of verticalSections
 	section = new Layer width: verticalParts.width, height: s.bottom - s.top, y: s.top, backgroundColor: null
 # 	section.style = "border-bottom": "#{x}px solid rgba(255,255,255,0.5)"
 
-# Skyline
-city = new Layer width: screenW, height: screenH, backgroundColor: null, parent: site.content
-
-sky = new Layer
-	parent: city
-	width: screenW * sections.length * 0.5, height: screenH, x: -screenW / 2
-	image: "images/sky.png"
-
-pageOverlay = new Layer
-	parent: city
-	width: Screen.width, height: Screen.height, backgroundColor: null
-pageOverlay.style = "background": "linear-gradient(to bottom, rgba(24,48,81,0.6), rgba(24,48,81,0))"
-
-if isFullscreen
-	sky.width = screenW * 2
-
-skyline = new Layer
-	parent: city
-	width: sky.width * 1.5
-	height: screenH
-	x: -screenW / 2, backgroundColor: null
-# 	
-buildings = new Layer
-	parent: skyline
-	width: skyline.width, height: skyline.width / 3 * 1.5
-	image: "images/ny.png"
-	y: Align.bottom(20 * x)
-
-if isFullscreen then buildings.y = Align.bottom(50 * x)
-
-# List of garmentors
-garmentors = [
-	{ name: "benjamin" }
-	{ name: "you"}
-	{ name: "sebastiaan" }
-]
-allGarmentors = []
-allGarY = []
-allGarHeight = []
-garTop = verticalSections.middle.top
-garBottom = verticalSections.bottom.top
-
-for i,gar of garmentors
-	
-	deviation = Utils.randomNumber(-0.05,0.05)
-	xPos = (skyline.width - 360) / garmentors.length * i + 360
-	yPos = Utils.randomNumber(garTop,garBottom)
-	
-	garmentor = new Layer
-		parent: skyline
-		size: 34 * x
-		x: 100 * x * i + 500, y: yPos
-		backgroundColor: null
-	
-	avatar = new Layer
-		parent: garmentor
-		image: "images/garmentors/#{gar.name}.png"
-		width: garmentor.width, height: garmentor.height
-		opacity: 0
-		scale: 0.5
-		
-	ring = new Layer
-		parent: avatar
-		width: garmentor.width + 12 * x, height: garmentor.height + 12 * x
-		borderRadius: (garmentor.width + 12 * x) / 2, backgroundColor: null
-	ring.style =
-		"border": 3 * x + "px solid #183051"
-	ring.center()
-
-	
-	avatar.scale = Utils.randomNumber(0.75,1.25)
-	
-	if gar.name == "you"
-		you = new Layer
-			parent: avatar, html: gar.name, backgroundColor: null, height: 20 * x, y: -28 * x, opacity: 1
-		you.centerX()
-		you.style = 
-			"text-align": "center"
-			"font-size": 14 * x + "px"
-			"line-height": "1.5"
-			"font-family": "Roboto"
-			"font-weight": "300"		
-		ring.opacity = 0
-		garmentor.y = ( garBottom + garTop ) / 2
-	
-	pointer = new Layer
-		parent: garmentor
-		width: x, height: Screen.height - garmentor.height + 20 * x, y: garmentor.height + 20 * x
-		backgroundColor: "rgba(255,255,255,0.5)"
-	pointer.centerX()
-	pointer.scaleY = 0
-	
-	allGarmentors.push(garmentor)
-	allGarY.push(yPos)
-
-buildings.bringToFront()
-
-# Show garmentors
-showGarmentors = (layer,i) ->
-	avatar = layer.children[0]
-	pointer = layer.children[1]
-	delay = 0.2
-
-	pointer.animate
-		properties: scaleY: 1
-		curve: "ease-in-out"
-		time: 0.3
-		delay: delay * i
-	
-	avatar.animate
-		properties:
-			scale: 1
-			opacity: 1
-		curve: "spring(200,20,10)"
-		delay: (0.3 + delay) * i
-
-hideGarmentors = (layer,i) ->
-	avatar = layer.children[0]
-	pointer = layer.children[1]
-	delay = 0.2
-
-	pointer.animate
-		properties: scaleY: 0
-		curve: "ease-in-out"
-		time: 0.3
-		delay: 0.1
-	
-	avatar.animate
-		properties:
-			scale: 0.5
-			opacity: 0
-		curve: "spring(200,20,10)"
-
 # Pages
 allPages = []
 pages = new PageComponent width: screenW, height: screenH, parent: site.content
@@ -247,6 +119,7 @@ for i,section of sections
 		"font-weight": "300"
 		"font-size": 16 * x + "px"
 		"line-height": "1.5"
+		"color": "white"
 
 	if i == "0"
 		usp.y = (150 + 48) * x
@@ -266,6 +139,359 @@ for i,section of sections
 		"font-weight": "400"
 	
 	allPages.push(page)
+
+# Skyline
+city = new Layer width: screenW, height: screenH, backgroundColor: null, parent: site.content
+
+sky = new Layer
+	parent: site.content
+	width: screenW * sections.length * 0.5, height: screenH, x: -screenW / 2
+	image: "images/sky.png"
+sky.placeBehind(pages)
+
+pageOverlay = new Layer
+	parent: site.content
+	width: Screen.width, height: Screen.height, backgroundColor: null
+pageOverlay.style = "background": "linear-gradient(to bottom, rgba(24,48,81,0.6), rgba(24,48,81,0))"
+pageOverlay.placeBefore(sky)
+
+if isFullscreen
+	sky.width = screenW * 2
+
+skyline = new Layer
+	parent: city
+	width: sky.width * 1.5
+	height: screenH
+	x: -screenW / 2, backgroundColor: null
+# 	
+buildings = new Layer
+	parent: skyline
+	width: skyline.width, height: skyline.width / 3 * 1.5
+	image: "images/ny.png"
+	y: Align.bottom(20 * x)
+	backgroundColor: null
+
+if isFullscreen then buildings.y = Align.bottom(50 * x)
+
+# List of garmentors
+garmentors = [
+	{ name: "benjamin", since: "July 2015", rating: "Excellent" }
+	{ name: "you"}
+	{ name: "sebastiaan", since: "June 2015", rating: "Good" }
+]
+allGarmentors = []
+allGarY = []
+allGarHeight = []
+garTop = verticalSections.middle.top
+garBottom = verticalSections.bottom.top
+
+for i,gar of garmentors
+	
+	deviation = Utils.randomNumber(-0.05,0.05)
+	xPos = (skyline.width - 360) / garmentors.length * i + 360
+	yPos = Utils.randomNumber(garTop,garBottom)
+	
+	garmentor = new Layer
+		parent: skyline
+		size: 34 * x
+		x: 100 * x * i + 500, y: yPos
+		backgroundColor: null
+	
+	avatar = new Layer
+		parent: garmentor
+		image: "images/garmentors/#{gar.name}.png"
+		width: garmentor.width, height: garmentor.height
+		opacity: 0
+		scale: 0.5
+		
+	ring = new Layer
+		parent: garmentor
+		width: garmentor.width + 12 * x, height: garmentor.height + 12 * x
+		borderRadius: (garmentor.width + 12 * x) / 2, backgroundColor: null
+		opacity: 0
+	ring.style =
+		"border": 3 * x + "px solid #183051"
+	ring.center()
+	
+	if gar.name == "you"
+		you = new Layer
+			parent: avatar, html: gar.name, backgroundColor: null, height: 20 * x, y: -28 * x, opacity: 1
+		you.centerX()
+		you.style = 
+			"text-align": "center"
+			"font-size": 14 * x + "px"
+			"line-height": "1.5"
+			"font-family": "Roboto"
+			"font-weight": "300"		
+		ring.style = "border": "none"
+		garmentor.y = ( garBottom + garTop ) / 2
+	
+	pointer = new Layer
+		parent: garmentor
+		width: x, height: Screen.height - garmentor.height + 20 * x, y: garmentor.height + 20 * x
+		backgroundColor: "rgba(255,255,255,0.5)"
+	pointer.centerX()
+	pointer.scaleY = 0
+	
+	allGarmentors.push(garmentor)
+	allGarY.push(yPos)
+
+buildings.bringToFront()
+
+# Show garmentors
+showGarmentors = (layer,i) ->
+	avatar = layer.children[0]
+	ring = layer.children[1]
+	pointer = layer.children[2]
+	delay = 0.2
+
+	pointer.animate
+		properties: scaleY: 1
+		curve: "ease-in-out"
+		time: 0.3
+		delay: delay * i
+	
+	avatar.animate
+		properties:
+			scale: 1
+			opacity: 1
+		curve: "spring(200,20,10)"
+		delay: (0.3 + delay) * i
+	
+	ring.animate
+		properties:
+			scale: 1
+			opacity: 1
+		curve: "spring(200,20,10)"
+		delay: (0.3 + delay) * i
+
+hideGarmentors = (layer,i) ->
+	avatar = layer.children[0]
+	ring = layer.children[1]
+	pointer = layer.children[2]
+	delay = 0.2
+
+	pointer.animate
+		properties: scaleY: 0
+		curve: "ease-in-out"
+		time: 0.3
+		delay: 0.1
+	
+	avatar.animate
+		properties:
+			scale: 0.5
+			opacity: 0
+		curve: "spring(200,20,10)"
+	
+	ring.animate
+		properties:
+			scale: 0.5
+			opacity: 0
+		curve: "spring(200,20,10)"
+
+# Garmentor detail view
+garMask = new Layer
+	width: screenW, height: screenH, backgroundColor: "rgba(0,0,0,0.5)"
+	
+garView = new Layer
+	width: screenW - 32 * x, height: 276 * x, backgroundColor: null
+	borderRadius: 2 * x, x: Align.center, y: Align.center
+
+garName = new Layer
+	parent: garView, width: garView.width, height: 27 * x, backgroundColor: null
+	html: garmentors[0].name, y: 30 * x
+garName.style =
+	"font-family": "Roboto Condensed"
+	"color": "#183051"
+	"text-transform": "uppercase"
+	"font-size": "#{18 * x}px"
+	"line-height": "#{27 * x}px"
+	"text-align": "center"
+	"letter-spacing": "1px"
+
+garSince = new Layer
+	parent: garView, width: 120 * x, height: 42 * x, x: Align.left(30 * x), y: Align.bottom(-24 * x)
+	html: "Since", backgroundColor: null
+garSince.style =
+	"font-family": "Roboto Condensed"
+	"color": "#183051"
+	"text-transform": "uppercase"
+	"font-size": "#{12 * x}px"
+	"line-height": "#{18 * x}px"
+	"letter-spacing": "1px"
+garSinceVal = new Layer
+	parent: garSince, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].since
+garSinceVal.style =
+	"font-family": "Roboto"
+	"color": "#183051"
+	"font-size": "#{16 * x}px"
+	"line-height": "#{24 * x}px"
+	"font-weight": "300"
+	"text-transform": "capitalize"
+
+garR = new Layer
+	parent: garView, width: 120 * x, height: 42 * x, x: Align.right(-30 * x), y: Align.bottom(-24 * x)
+	html: "Rating", backgroundColor: null
+garR.style =
+	"font-family": "Roboto Condensed"
+	"color": "#183051"
+	"text-transform": "uppercase"
+	"font-size": "#{12 * x}px"
+	"line-height": "#{18 * x}px"
+	"letter-spacing": "1px"
+garRVal = new Layer
+	parent: garR, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].rating
+garRVal.style =
+	"font-family": "Roboto"
+	"color": "#183051"
+	"font-size": "#{16 * x}px"
+	"line-height": "#{24 * x}px"
+	"font-weight": "300"
+	"text-transform": "capitalize"
+	
+garClose = new Layer
+	parent: garView, html: "close", width: 72 * x, height: 24 * x, x: Align.right, y: Align.bottom(42 * x), backgroundColor: null
+garClose.style =
+	"font-family": "Roboto Condensed"
+	"color": "#FFF"
+	"text-transform": "uppercase"
+	"font-size": "#{16 * x}px"
+	"line-height": "#{24 * x}px"
+	"text-align": "left"
+	"letter-spacing": "1px"
+	"background": "url(images/close.png) no-repeat right center"
+
+garMask.states.add hide: opacity: 0
+garMask.states.animationOptions = curve: curve
+garView.states.add hide: opacity: 0
+garView.states.animationOptions = curve: curve
+
+garMask.states.switchInstant("hide")
+garView.states.switchInstant("hide")
+
+# Garmentors popin'
+gStartX = 0
+gStartY = 0
+gCopy = []
+gBg = []
+gCopyOne = []
+gCopyOneB = []
+gBgOne = []
+gBgOneB = []
+gBgTwo = []
+gBgTwoB = []
+
+for i,g of allGarmentors
+	g.onClick ->
+		# Get the Garmentor info
+		garInfo = garmentors[i]
+		garName.html = garInfo.name
+		garSinceVal.html = garInfo.since
+		garRVal.html = garInfo.rating
+		if garName.html == "you" then return
+		# Pause skyline animation
+		if moveRight
+			skylineMoveRight.stop()
+		else
+			skylineMoveLeft.stop()
+		
+		# Record start position
+		gStartX = @children[0].screenFrame.x
+		gStartY = @children[0].screenFrame.y
+		
+		# Copy avatar
+		@children[0].animate properties: opacity: 0
+		gCopy = @children[0].copy()
+		gCopy.x = gStartX
+		gCopy.y = gStartY
+		gCopy.bringToFront()
+		gBg = new Layer
+			backgroundColor: "white", x: gStartX, y: gStartY, borderRadius: 100
+			width: gCopy.width, height: gCopy.height
+		gBg.placeBehind(garView)
+		
+		gCopyOne = new Animation
+			layer: gCopy
+			properties:
+				width: 100 * x
+				height: 100 * x
+				x: (screenW - 100 * x) / 2
+				y: garView.y + 80 * x
+			curve: curve
+		
+		gBgOne = new Animation
+			layer: gBg
+			properties:
+				width: 90 * x
+				height: 90 * x
+				x: (screenW - 90 * x) / 2
+				y: garView.y + 80 * x
+			curve: curve
+		
+		gBgTwo = new Animation
+			layer: gBg
+			properties:
+				width: screenW - 32 * x
+				height: 276 * x
+				borderRadius: 2 * x
+				x: 16 * x
+				y: (screenH - 276 * x) / 2
+		
+		gCopyOne.onAnimationStart ->
+			gBgOne.start()
+		gBgOne.onAnimationEnd ->
+			gBgTwo.start()
+		gBgTwo.onAnimationStart ->
+			garMask.states.next("default")
+			garView.states.next("default")
+		gCopyOne.start()
+		
+garClose.onClick ->
+	gBgTwoB = new Animation
+		layer: gBg
+		properties: 
+			width: 90 * x
+			height: 90 * x
+			x: (screenW - 90 * x) / 2
+			y: garView.y + 80 * x
+			borderRadius: 100
+		curve: curve
+	gBgOneB = new Animation
+		layer: gBg
+		properties:
+			x: gStartX
+			y: gStartY
+			width: 34 * x
+			height: 34 * x
+		curve: curve
+	gCopyOneB = new Animation
+		layer: gCopy
+		properties:
+			width: 34 * x
+			height: 34 * x
+			x: gStartX
+			y: gStartY
+		curve: curve
+	
+	garView.states.next("hide")
+	gBgTwoB.start()
+	
+	gBgTwoB.onAnimationEnd ->
+		gBgOneB.start()
+		gCopyOneB.start()
+		garMask.states.next("hide")
+	
+	gCopyOneB.onAnimationDidEnd ->
+		gCopy.destroy()
+		gBg.destroy()
+		gCopy = []
+		gBg = []
+		for i,g of allGarmentors
+			g.children[0].opacity = 1
+		if moveRight
+			skylineMoveRight.start()
+		else
+			skylineMoveLeft.start()
 
 # Fixed elements
 fixed = new Layer
@@ -470,7 +696,10 @@ pages.on "change:currentPage", ->
 # 		logo.states.switch("small")
 		ss_logo.states.switch("hide")
 		# and show garmentors and animate skyline
-		skylineMoveRight.start()
+		if moveRight
+			skylineMoveRight.start()
+		else
+			skylineMoveLeft.start()
 		for i,gar of allGarmentors
 			showGarmentors(gar,i)
 		# move cta down
@@ -484,8 +713,10 @@ pages.on "change:currentPage", ->
 # 		logo.states.switch("default")
 		ss_logo.states.switch("default")
 		# and hide garmentors and stop skyline animation
-		skylineMoveRight.stop()
-		skylineMoveLeft.stop()
+		if moveRight
+			skylineMoveRight.stop()
+		else
+			skylineMoveLeft.stop()
 		for i,gar of allGarmentors
 			hideGarmentors(gar,i)
 		# and move cta back up
@@ -536,9 +767,14 @@ skylineMoveRight = new Animation
 	layer: skyline
 	properties:
 		x: skylineB
-	time: 10
-	curve: "ease-out-out"
+	time: 5
+	curve: "ease-in-out"
 skylineMoveLeft = skylineMoveRight.reverse()
+
+skylineMoveRight.onAnimationStart ->
+	moveRight = true
+skylineMoveLeft.onAnimationStart ->
+	moveRight = false
 
 skylineMoveRight.onAnimationEnd ->
 	skylineMoveLeft.start()
