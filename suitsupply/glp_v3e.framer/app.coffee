@@ -168,7 +168,7 @@ buildings = new Layer
 	parent: skyline
 	width: skyline.width, height: skyline.width / 3 * 1.5
 	image: "images/ny.png"
-	y: Align.bottom(20 * x)
+	y: Align.bottom(60 * x)
 	backgroundColor: null
 
 if isFullscreen then buildings.y = Align.bottom(50 * x)
