@@ -384,11 +384,12 @@ gBgTwoB = []
 for i,g of allGarmentors
 	g.onClick ->
 		# Get the Garmentor info
-		garInfo = garmentors[i]
+		index = allGarmentors.indexOf(@)
+		garInfo = garmentors[index]
 		garName.html = garInfo.name
 		garSinceVal.html = garInfo.since
 		garRVal.html = garInfo.rating
-		if garName.html == "you" then return
+		if garInfo.name == "you" then return
 		# Pause skyline animation
 		if moveRight
 			skylineMoveRight.stop()
