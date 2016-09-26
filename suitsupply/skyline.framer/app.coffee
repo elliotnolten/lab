@@ -16,10 +16,12 @@ breakpoints = [
 	{name: "small landscape", width: 480, height: 320, landscape: true}
 	{name: "iPhone 7 portrait", width: 375, height: 667, landscape: false}
 	{name: "iPhone 7 landscape", width: 667, height: 375, landscape: true}
+	{name: "Facebook Ad", width: 600, height: 600, landscape: true}
 	{name: "medium", width: 768, height: 1024, landscape: false}
 	{name: "large", width: 1024, height: 768, landscape: true}
 	{name: "xlarge", width: 1280, height: 800, landscape: true}
 	{name: "xxlarge", width: 1440, height: 900, landscape: true}
+	{name: "Full HD", width: 1920, height: 1080, landscape: true}
 	{name: "xxxlarge", width: 2560, height: 1440, landscape: true}
 ]
 
