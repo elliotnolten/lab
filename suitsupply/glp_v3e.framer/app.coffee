@@ -436,11 +436,12 @@ for i,g of allGarmentors
 				borderRadius: 2 * x
 				x: 16 * x
 				y: (screenH - 276 * x) / 2
+			curve: curve
 		
 		gCopyOne.onAnimationStart ->
 			gBgOne.start()
-		gBgOne.onAnimationEnd ->
-			gBgTwo.start()
+			Utils.delay 0.2, -> gBgTwo.start()
+			
 		gBgTwo.onAnimationStart ->
 			garMask.states.next("default")
 			garView.states.next("default")
@@ -461,8 +462,9 @@ garClose.onClick ->
 		properties:
 			x: gStartX
 			y: gStartY
-			width: 34 * x
-			height: 34 * x
+			width: 0
+			height: 0
+			opacity: 0
 		curve: curve
 	gCopyOneB = new Animation
 		layer: gCopy
@@ -476,7 +478,7 @@ garClose.onClick ->
 	garView.states.next("hide")
 	gBgTwoB.start()
 	
-	gBgTwoB.onAnimationEnd ->
+	Utils.delay 0.5, ->
 		gBgOneB.start()
 		gCopyOneB.start()
 		garMask.states.next("hide")
@@ -767,8 +769,8 @@ skylineMoveRight = new Animation
 	layer: skyline
 	properties:
 		x: skylineB
-	time: 5
-	curve: "ease-in-out"
+	time: 10
+	curve: "ease-out"
 skylineMoveLeft = skylineMoveRight.reverse()
 
 skylineMoveRight.onAnimationStart ->
