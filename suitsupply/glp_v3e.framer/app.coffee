@@ -20,6 +20,7 @@ screenW = Screen.width
 screenH = Screen.height
 x = Utils.devicePixelRatio()
 curve = "spring(300,40,10)"
+appstoreURL = "https://itunes.apple.com/nl/app/suitsupply/id1038908407?mt=8"
 
 
 # Detect device type
@@ -291,7 +292,9 @@ hideGarmentors = (layer,i) ->
 
 # Garmentor detail view
 garMask = new Layer
-	width: screenW, height: screenH, backgroundColor: "rgba(0,0,0,0.5)"
+	width: screenW, height: screenH, backgroundColor: "rgba(25,49,80,0.5)"
+garMask.style =
+	"-webkit-backdrop-filter": "blur(10px)"
 	
 garView = new Layer
 	width: screenW - 32 * x, height: 276 * x, backgroundColor: null
@@ -309,45 +312,61 @@ garName.style =
 	"text-align": "center"
 	"letter-spacing": "1px"
 
-garSince = new Layer
-	parent: garView, width: 120 * x, height: 42 * x, x: Align.left(30 * x), y: Align.bottom(-24 * x)
-	html: "Since", backgroundColor: null
-garSince.style =
-	"font-family": "Roboto Condensed"
-	"color": "#183051"
-	"text-transform": "uppercase"
-	"font-size": "#{12 * x}px"
-	"line-height": "#{18 * x}px"
-	"letter-spacing": "1px"
-garSinceVal = new Layer
-	parent: garSince, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].since
-garSinceVal.style =
-	"font-family": "Roboto"
-	"color": "#183051"
-	"font-size": "#{16 * x}px"
-	"line-height": "#{24 * x}px"
-	"font-weight": "300"
-	"text-transform": "capitalize"
+# garSince = new Layer
+# 	parent: garView, width: 120 * x, height: 42 * x, x: Align.left(30 * x), y: Align.bottom(-24 * x)
+# 	html: "Since", backgroundColor: null
+# garSince.style =
+# 	"font-family": "Roboto Condensed"
+# 	"color": "#183051"
+# 	"text-transform": "uppercase"
+# 	"font-size": "#{12 * x}px"
+# 	"line-height": "#{18 * x}px"
+# 	"letter-spacing": "1px"
+# garSinceVal = new Layer
+# 	parent: garSince, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].since
+# garSinceVal.style =
+# 	"font-family": "Roboto"
+# 	"color": "#183051"
+# 	"font-size": "#{16 * x}px"
+# 	"line-height": "#{24 * x}px"
+# 	"font-weight": "300"
+# 	"text-transform": "capitalize"
+# 
+# garR = new Layer
+# 	parent: garView, width: 120 * x, height: 42 * x, x: Align.right(-30 * x), y: Align.bottom(-24 * x)
+# 	html: "Rating", backgroundColor: null
+# garR.style =
+# 	"font-family": "Roboto Condensed"
+# 	"color": "#183051"
+# 	"text-transform": "uppercase"
+# 	"font-size": "#{12 * x}px"
+# 	"line-height": "#{18 * x}px"
+# 	"letter-spacing": "1px"
+# garRVal = new Layer
+# 	parent: garR, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].rating
+# garRVal.style =
+# 	"font-family": "Roboto"
+# 	"color": "#183051"
+# 	"font-size": "#{16 * x}px"
+# 	"line-height": "#{24 * x}px"
+# 	"font-weight": "300"
+# 	"text-transform": "capitalize"
 
-garR = new Layer
-	parent: garView, width: 120 * x, height: 42 * x, x: Align.right(-30 * x), y: Align.bottom(-24 * x)
-	html: "Rating", backgroundColor: null
-garR.style =
-	"font-family": "Roboto Condensed"
-	"color": "#183051"
-	"text-transform": "uppercase"
-	"font-size": "#{12 * x}px"
-	"line-height": "#{18 * x}px"
-	"letter-spacing": "1px"
-garRVal = new Layer
-	parent: garR, width: garSince.width, height: 24 * x, y: 18 * x, backgroundColor: null, html: garmentors[0].rating
-garRVal.style =
-	"font-family": "Roboto"
-	"color": "#183051"
-	"font-size": "#{16 * x}px"
-	"line-height": "#{24 * x}px"
-	"font-weight": "300"
-	"text-transform": "capitalize"
+garCTA = new Layer
+	parent: garView	
+	width: 254 * x, height: 50 * x
+	image: "images/cta.png", x: Align.center
+	y: 200 * x
+garLink = new Layer
+	parent: garCTA
+	width: garCTA.width
+	height: garCTA.height
+	ignoreEvents: false
+	backgroundColor: null
+	html: ""
+garCTA.ignoreEvents = true
+	
+garCTAactive = false
 	
 garClose = new Layer
 	parent: garView, html: "close", width: 72 * x, height: 24 * x, x: Align.right, y: Align.bottom(42 * x), backgroundColor: null
@@ -387,8 +406,10 @@ for i,g of allGarmentors
 		index = allGarmentors.indexOf(@)
 		garInfo = garmentors[index]
 		garName.html = garInfo.name
-		garSinceVal.html = garInfo.since
-		garRVal.html = garInfo.rating
+# 		garSinceVal.html = garInfo.since
+# 		garRVal.html = garInfo.rating
+		garCTAactive = true
+		
 		if garInfo.name == "you" then return
 		# Pause skyline animation
 		if moveRight
@@ -446,9 +467,12 @@ for i,g of allGarmentors
 		gBgTwo.onAnimationStart ->
 			garMask.states.next("default")
 			garView.states.next("default")
+			garLink.html = "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
 		gCopyOne.start()
 		
 garClose.onClick ->
+	garCTAactive = false
+	garLink.html = ""
 	gBgTwoB = new Animation
 		layer: gBg
 		properties: 
@@ -496,13 +520,14 @@ garClose.onClick ->
 		else
 			skylineMoveLeft.start()
 
+
 # Fixed elements
 fixed = new Layer
 	backgroundColor: null
 	width: Screen.width, height: Screen.height
 	parent: site.content
 
-if isPhone || isTablet || isFullscreen and Utils.isPhone()
+# if isPhone || isTablet || isFullscreen and Utils.isPhone()
 	
 # 	if not Utils.isSafari() || not Utils.isChrome()
 # 
@@ -521,29 +546,29 @@ if isPhone || isTablet || isFullscreen and Utils.isPhone()
 # 		ios.onClick ->
 # 			pages.snapToPage(allPages[0])
 	
-	banner = new Layer
-		width: screenW, height: 83 * x
-		image: "images/smartappbanner.png"
-		parent: fixed
-		y: 0
-	appstoreURL = "https://itunes.apple.com/nl/app/suitsupply/id1038908407?mt=8"
-	link = new Layer
-		parent: banner
-		width: 83 * x
-		height: 83 * x
-		ignoreEvents: false
-		backgroundColor: null
-		html: "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
-		x: Align.right
+# 	banner = new Layer
+# 		width: screenW, height: 83 * x
+# 		image: "images/smartappbanner.png"
+# 		parent: fixed
+# 		y: 0
+	
+# 	link = new Layer
+# 		parent: banner
+# 		width: 83 * x
+# 		height: 83 * x
+# 		ignoreEvents: false
+# 		backgroundColor: null
+# 		html: "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
+# 		x: Align.right
 	
 logo = new Layer
 	parent: fixed
 	image: "images/g_logo.png"
 	width: 280 * x, height: 16 * x
-	y: 48 * x	
+	y: 88 * x	
 logo.centerX()
 
-if isPhone || isTablet || isFullscreen and Utils.isPhone() then logo.y = banner.maxY + 48 * x
+# if isPhone || isTablet || isFullscreen and Utils.isPhone() then logo.y = banner.maxY + 48 * x
 
 logo.states.add small: scale: 0.5, y: 20 * x
 
@@ -568,7 +593,7 @@ cta.centerX()
 link = new Layer
 	parent: cta
 	width: cta.width
-	height: cta.width
+	height: cta.height
 	ignoreEvents: false
 	backgroundColor: null
 	html: "<a href='#{appstoreURL}' target='_blank' style='position:absolute; width: 100%; height: 100%;'></a>"
@@ -610,7 +635,7 @@ readMoreTxt = new Layer
 
 readMore.states.add
 	hide: 
-		y: 220 * x
+		y: 180 * x
 
 readMoreTxt.states.add
 	hide: opacity: 0
@@ -709,7 +734,7 @@ pages.on "change:currentPage", ->
 		for i,gar of allGarmentors
 			showGarmentors(gar,i)
 		# move cta down
-		if pages.direction == "down" then ctaHide.start()
+# 		if pages.direction == "down" then ctaHide.start()
 		# Remove "read more" text
 		readMore.states.next("hide")
 		readMoreTxt.states.next("hide")
@@ -750,7 +775,7 @@ pages.on "change:currentPage", ->
 			curve: "spring(300,30,10)"
 	if current == lastPage - 1
 		# hide cta
-		ctaHide.start()
+# 		ctaHide.start()
 		# show readMore
 		readMore.opacity = 1
 		# Move skyline back to original position
@@ -761,8 +786,8 @@ pages.on "change:currentPage", ->
 pages.content.on "change:y", ->
 	logo.scale = Utils.modulate pages.content.y, [0,-1334], [1,0.5], true
 	if isPhone || isTablet || isFullscreen and Utils.isPhone()
-		banner.y = Utils.modulate pages.content.y, [0,-banner.height], [0,-banner.height], true
-		logo.y = Utils.modulate pages.content.y, [0,-1334], [banner.maxY + 48 * x,20 * x], true
+# 		banner.y = Utils.modulate pages.content.y, [0,-banner.height], [0,-banner.height], true
+		logo.y = Utils.modulate pages.content.y, [0,-1334], [48 * x,20 * x], true
 	else
 		logo.y = Utils.modulate pages.content.y, [0,-1334], [48 * x,20 * x], true
 
