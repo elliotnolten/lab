@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<script type="text/javascript">
+		// This automatically sets the right viewport scale on mobile devices
+		(function() {
+ 		var scale = 1 / window.devicePixelRatio
+ 		var viewport = "width=device-width, height=device-height, initial-scale=" + scale + ", maximum-scale=" + scale + ", user-scalable=no"
+ 		var iOS = /iPad|iPhone|iPod/.test(navigator.platform)
+ 		if (iOS) { viewport += ", shrink-to-fit=no" }
+ 		document.write("<meta name=\"viewport\" content=\"" + viewport + "\">")
+		})()
+		</script>
+
+		<link rel="apple-touch-icon" href="framer/images/icon-120.png">
+		<link rel="apple-touch-icon" href="framer/images/icon-76.png" sizes="76x76">
+		<link rel="apple-touch-icon" href="framer/images/icon-120.png" sizes="120x120">
+		<link rel="apple-touch-icon" href="framer/images/icon-152.png" sizes="152x152">
+		<link rel="apple-touch-icon" href="framer/images/icon-180.png" sizes="180x180">
+		<link rel="apple-touch-icon" href="framer/images/icon-192.png" sizes="192x192">
+
+		<link rel="stylesheet" type="text/css" href="framer/style.css?nocache=6d40bc53861208d298f85019e08849ff">
+
+		<script src="framer/coffee-script.js"></script>
+		<script src="framer/framer.js?nocache=1096025c1f16849accc82c74e19f6307"></script>
+		<script src="framer/framer.generated.js?nocache=d38258cdc00f68150d72084ff5fea367"></script>
+		<script src="framer/framer.modules.js?nocache=16ddf72fafc6eb6c415ccacc0f41eb4b"></script>
+		<script>document.addEventListener("DOMContentLoaded", function() {window.__framerClientCodeId = 2;window.__framerNew = function (n,loc,th,i){if (i == null) { return i };i.__framerInstanceInfo = _.defaults({name:n,location:loc,hash:th},i.__framerInstanceInfo);_.defaults(i.__framerInstanceInfo,{name:"Untitled"});return i;};(function() {
+  var animationT, bg, borderRadius, collapseItem, colorSets, expandH, expandItem, expandW, findIndex, gradients, i, j, k, len, randColorSet, ref, todBg, todo, todoExps, todoH, todoIns, todoItem, todoList, todoN, todoP, todoW, todoYs, todos, val;
+
+  Framer.DeviceView.Devices["dribbble"] = {
+    "deviceType": "desktop",
+    "screenWidth": 800,
+    "screenHeight": 600,
+    "deviceImageWidth": 800,
+    "deviceImageHeight": 600
+  };
+
+  Framer.Device.deviceType = "dribbble";
+
+  gradients = JSON.parse(Utils.domLoadDataSync("https://raw.githubusercontent.com/Ghosh/uiGradients/master/gradients.json"));
+
+  colorSets = [];
+
+  for (i in gradients) {
+    val = gradients[i];
+    colorSets.push(val.colors.join(","));
+  }
+
+  randColorSet = Utils.randomChoice(colorSets);
+
+  bg = window.__framerNew("bg", "18:9-18:56", "#ed99e4b4",new Layer({
+    width: Screen.width,
+    height: Screen.height
+  }));
+
+  bg.style = {
+    "background": "linear-gradient(to bottom left, " + randColorSet + ")"
+  };
+
+  todoN = 4;
+
+  todoP = 20;
+
+  todoW = Screen.width * 0.5;
+
+  todoH = (Screen.height * 0.6) / todoN - todoP;
+
+  expandW = todoW * 1.2;
+
+  expandH = todoH * 3;
+
+  animationT = 0.2;
+
+  borderRadius = 4;
+
+  Framer.Defaults.Animation = {
+    curve: "spring(400,35,10)",
+    time: animationT
+  };
+
+  todos = [];
+
+  todoYs = [];
+
+  todoExps = [];
+
+  todoIns = [];
+
+  todoList = window.__framerNew("todoList", "41:15-41:91", "#9e4bf345",new Layer({
+    width: Screen.width,
+    height: (todoH + 2) * todoN,
+    backgroundColor: null
+  }));
+
+  todoList.centerY(-20);
+
+  for (i = j = 0, ref = todoN; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+    todo = window.__framerNew("todo", "48:12-48:109", "#17549e6db",new Layer({
+      width: todoW,
+      height: todoH,
+      y: (todoH + todoP) * i,
+      parent: todoList,
+      backgroundColor: null
+    }));
+    todo.centerX();
+    todBg = window.__framerNew("todBg", "51:13-56:0", "#132743344",new Layer({
+      parent: todo,
+      width: todo.width,
+      height: todo.height,
+      backgroundColor: "white",
+      borderRadius: borderRadius
+    }));
+    todos.push(todo);
+    todoYs.push(todo.y);
+    todoExps.push(false);
+    todoIns.push(todo.index);
+  }
+
+  findIndex = function(object, arr) {
+    var objects;
+    for (i in arr) {
+      objects = arr[i];
+      if (object === objects) {
+        return parseInt(i);
+      }
+    }
+  };
+
+  expandItem = function(layer, i) {
+    layer.bringToFront();
+    layer.children[0].animate({
+      properties: {
+        scaleX: expandW / todoW
+      }
+    });
+    layer.children[0].animate({
+      properties: {
+        height: expandH
+      },
+      delay: animationT
+    });
+    layer.animate({
+      properties: {
+        y: todoYs[i] - todoP * 1.5
+      },
+      delay: animationT
+    });
+    return layer.children[0].animate({
+      properties: {
+        shadowBlur: 40,
+        shadowY: 10,
+        shadowColor: "rgba(49,49,47,0.5)"
+      }
+    });
+  };
+
+  collapseItem = function(layer, i) {
+    layer.children[0].animate({
+      properties: {
+        height: todoH
+      }
+    });
+    layer.animate({
+      properties: {
+        y: todoYs[i]
+      }
+    });
+    layer.children[0].animate({
+      properties: {
+        shadowY: 0,
+        shadowBlur: 0
+      }
+    });
+    return layer.children[0].animate({
+      properties: {
+        scaleX: 1
+      },
+      delay: animationT
+    });
+  };
+
+  for (k = 0, len = todos.length; k < len; k++) {
+    todoItem = todos[k];
+    todoItem.children[0].onClick(function() {
+      var cI, item, n, results, todoWrap;
+      todoWrap = this.parent;
+      cI = findIndex(todoWrap, todos);
+      if (!todoExps[cI]) {
+        todoExps[cI] = true;
+      } else if (todoExps[cI]) {
+        todoExps[cI] = false;
+      }
+      if (todoExps[cI]) {
+        expandItem(todoWrap, cI);
+      }
+      if (!todoExps[cI]) {
+        collapseItem(todoWrap, cI);
+      }
+      results = [];
+      for (n in todos) {
+        item = todos[n];
+        i = parseInt(n);
+        if (i !== cI) {
+          item.index = todoIns[i];
+          if (i > cI) {
+            if (todoExps[cI]) {
+              item.animate({
+                properties: {
+                  y: todoYs[i - 1] + expandH - todoP * 1.5
+                },
+                delay: animationT
+              });
+            } else if (!todoExps[cI]) {
+              item.animate({
+                properties: {
+                  y: todoYs[i]
+                }
+              });
+            }
+            if (todoExps[i]) {
+              collapseItem(item);
+              todoExps[i] = false;
+            }
+          }
+          if (i < cI) {
+            item.animate({
+              properties: {
+                y: todoYs[i]
+              }
+            });
+            if (todoExps[i]) {
+              collapseItem(item);
+              results.push(todoExps[i] = false);
+            } else {
+              results.push(void 0);
+            }
+          } else {
+            results.push(void 0);
+          }
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    });
+  }
+
+}).call(this);
+})</script>
+
+	</head>
+	<body>
+	</body>
+</html>

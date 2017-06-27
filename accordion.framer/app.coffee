@@ -52,7 +52,7 @@ for i in [0...todoN]
 	todBg = new Layer
 		parent: todo
 		width: todo.width, height: todo.height
-		backgroundColor: "white", borderRadius: borderRadius, opacity: 0.5
+		backgroundColor: "white", borderRadius: borderRadius
 	
 	todos.push(todo)
 	todoYs.push(todo.y)
@@ -78,21 +78,19 @@ expandItem = (layer, i) ->
 		properties: y: todoYs[i] - todoP * 1.5
 		delay: animationT
 	# And expand shadow
-	layer.children[0].animate properties: shadowBlur: 40, shadowY: 10, shadowColor: "rgba(49,49,47,0.5)", opacity: 1
+	layer.children[0].animate properties: shadowBlur: 40, shadowY: 10, shadowColor: "rgba(49,49,47,0.5)"
 	
 # Function for collapsing an item
 collapseItem = (layer,i) ->
-	# First shrink the with
-	layer.children[0].animate properties: scaleX: 1
-	# Second collapse the height and move it back to original place
-	layer.children[0].animate
-		properties: height: todoH
-		delay: animationT
-	layer.animate
-		properties: y: todoYs[i]
-		delay: animationT
+	# First collapse the height and move it back to original place
+	layer.children[0].animate properties: height: todoH
+	layer.animate properties: y: todoYs[i]
 	# And shrink shadow
-	layer.children[0].animate properties: shadowY: 0, shadowBlur: 0, opacity: 0.5
+	layer.children[0].animate properties: shadowY: 0, shadowBlur: 0
+	# At last shrink the width
+	layer.children[0].animate
+		properties: scaleX: 1
+		delay: animationT
 		
 # Loop through all items
 for todoItem in todos
@@ -141,7 +139,6 @@ for todoItem in todos
 						# Move it back up with a delay
 						item.animate
 							properties: y: todoYs[i]
-							delay: animationT
 					# If the item is expanded
 					if todoExps[i]
 						# Collapse it
@@ -153,7 +150,7 @@ for todoItem in todos
 					# Move all items back to original position
 					item.animate
 						properties: y: todoYs[i]
-						delay: animationT
+# 						delay: animationT
 					# If the item is expanded
 					if todoExps[i]
 						# Collapse it
